@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class userSignUpService {
+public class UserSignUpService {
     private final UserSignUpRepository userSignUpRepository;
     private final PasswordEncoder passwordEncoder;
 

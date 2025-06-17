@@ -13,6 +13,9 @@
 
   <div th:insert="~{header :: header}"></div>
   <form th:action="@{/user}" th:method="post" th:object="${userForm}" class="signUp-wrapper">
+    <div th:if="${errorMessages}" th:each="error : ${errorMessages}">
+      <div th:text="${error}"></div>
+    </div>
     <h2 class="page-heading">
       ユーザー新規登録
     </h2>
@@ -20,44 +23,43 @@
     <div class="field">
       メールアドレス
     </div>
-    <input type="text" class="form-name">
+    <input type="text" th:field="*{email}" id="email" class="form-name">
 
     <div class="field">
       パスワード(6文字以上)
     </div>
-    <input type="text" class="form-name">
+    <input type="text" th:field="*{password}" id="password" class="form-name">
 
     <div class="field">
       パスワード再入力
     </div>
-    <input type="text" class="form-name">
+    <input type="text" th:field="*{passwordConfirmation}" id="passwordConfirmation" class="form-name">
 
     <div class="field">
       ユーザー名
     </div>
-    <input type="text" class="form-name">
+    <input type="text" th:field="*{nickname}" id="nickname" class="form-name">
 
     <div class="field">
       プロフィール
     </div>
-    <textarea class="textarea-name"></textarea>
+    <textarea th:field="*{profile}" id="profile" class="textarea-name"></textarea>
 
     <div class="field">
       所属
     </div>
-    <textarea class="textarea-name"></textarea>
+    <textarea th:field="*{affiliation}" id="affiliation" class="textarea-name"></textarea>
 
     <div class="field">
       役職
     </div>
-    <textarea class="textarea-name"></textarea>
+    <textarea th:field="*{position}" id="position" class="textarea-name"></textarea>
 
-    <!-- 送信ボタン -->
     <div class="actions">
       <input type="submit" value="新規登録" class="form-btn">
     </div>
 
-  </div>
+  </form>
   <div th:insert="~{footer :: footer}"></div>
 
 </body>
