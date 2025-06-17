@@ -1,5 +1,10 @@
 # protospace-b
 
+## 個々人で対応するべきこと
+
+- `protospace-b/src/main/resources/application.properties`を編集する。
+- DBを作成する。
+
 ```mermaid
 erDiagram
   users{
