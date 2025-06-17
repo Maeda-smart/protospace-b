@@ -1,0 +1,33 @@
+.login-wrapper{
+  margin-left: 100px;
+}
+
+.login-subtitle{
+  letter-spacing: 3px;
+  font-size: 50px;
+  font-weight: 200;
+}
+
+.field{
+  font-size: 30px;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 300px;
+  height: 35px;
+  font-size: 25px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+input[type=submit].btn{
+  background-color: rgb(72, 119, 177);
+  color: white;
+  height: 70px;
+  font-size: 30px;
+  padding: 0 30px;
+  border: none;
+  margin-top: 20px;
+  border-radius: 10px;
+}

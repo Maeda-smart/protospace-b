@@ -1,0 +1,115 @@
+* {
+  box-sizing: border-box;
+}
+
+.header {
+  background-color: #f1f8fe;
+  margin-bottom: 48px;
+  padding: 20px 0;
+}
+
+.inner {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title a {
+    text-decoration: none;
+    color: #3b4043;
+}
+
+.logo {
+  width: 200px;
+}
+
+img {
+  max-width: 100%;
+  vertical-align: bottom;
+}
+
+.nav_logout {
+  display: inline-block;
+  padding: 0.4em 1.6em;
+  font-size: 0.8em;
+  color: #87CEFA;
+  text-decoration: none;
+  user-select: none;
+}
+
+.nav_btn {
+  display: inline-block;
+  padding: 0.4em 1.6em;
+  font-size: 0.8em;
+  color: #87CEFA;
+  text-decoration: none;
+  user-select: none;
+  border: 1px #87CEFA solid;
+  border-radius: 3px;
+  transition: 0.4s ease;
+}
+
+.greeting {
+  margin-bottom: 20px;
+}
+
+.greeting_link {
+  text-decoration: underline;
+}
+
+a {
+  color: #3b4043;
+  text-decoration: none;
+}
+
+.card_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  min-height: calc(100vh - 161px);
+}
+
+.card {
+  width: 48%;
+  margin-bottom: 40px;
+}
+
+.card_img {
+  margin-bottom: 16px;
+}
+
+.card_title {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.card_summary {
+  font-size: 16px;
+}
+
+.card_user {
+    display: block;
+    font-size: 12px;
+    color: #999;
+    text-align: right;
+    text-decoration: underline;
+}
+
+.footer {
+  background-color: #999;
+  padding: 10px 0;
+}
+
+.copyright {
+  text-align: center;
+  color: #fff;
+  font-size: 10px;
+}
