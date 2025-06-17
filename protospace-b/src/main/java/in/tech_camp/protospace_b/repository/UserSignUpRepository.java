@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Options;
 
 import in.tech_camp.protospace_b.entity.UserEntity;
 
-public interface userSignUpRepository {
+public interface UserSignUpRepository {
   @Insert("INSERT INTO users(nickname, email, password, profile, affiliation, position)")
   @Options(useGeneratedKeys=true, keyProperty="id")
   void insert(UserEntity user);
