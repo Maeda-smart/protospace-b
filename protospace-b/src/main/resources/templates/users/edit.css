@@ -23,3 +23,12 @@ input[type=submit]{
   color: white;
   box-shadow: lightgray 0 2px 2px;
 }
+table{
+  text-align: left;
+}
+tbody th{
+  padding: 10 20 10 5;
+}
+tbody th:nth-child(1){
+  background-color: lightgray;
+}
