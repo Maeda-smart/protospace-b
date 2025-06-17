@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ProtoSpace</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+  <div th:insert="~{header :: header}"></div>
+  <main class="main">
+    <div class="inner">
+      <div class="greeting">
+        こんにちは、
+        <a class="greeting_link" href="#">bbbさん</a>
+      </div>
+      <div class="card_wrapper">
+        <div class="card">
+          <a href="#">
+            <img class="card_img" th:src="@{/protoType/sample.jpg}">
+          </a>
+          <div class="card_body">
+            <a class="card_title" href="#">fff</a>
+            <p class="card_summary">ddd</p>
+            <a class="card_user" href="#">by aaa</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div th:insert="~{footer :: footer}"></div>
+</body>
+</html>

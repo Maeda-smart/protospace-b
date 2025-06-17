@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <link href="protoType_detail.css" rel="stylesheet" type="text/css">
+    <title>ProtoSpace</title>
+</head>
+
+<body>
+
+<!-- ヘッダー -->
+<!-- <div th:insert="~{header :: header}"></div> -->
+
+<div class="main">
+    <div class = "protoType_detail">
+      <h2 class = "title">
+        ウェブアプリ1
+      </h2>
+
+      <a class="user_name" href="#">
+        by 名前
+      </a>
+
+      <div class="actions">
+        <input type="submit" value="編集する" class="btn">
+        <input type="submit" value="削除する" class="btn">
+      </div>
+
+      <div class="protoType_img" >
+        <img src="sample.jpg" width="400px" height="300px">
+      </div>
+
+      <h2 class="title">
+        キャッチコピー
+      </h2>
+      <div class="text">
+        テキストテキストテキストテキスト
+      </div>
+
+      <h2 class="title">
+        コンセプト
+      </h2>
+      <div class="text">
+        テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
+      </div>
+    </div>
+
+      <div class="comment_wrapper">
+        <div>
+          コメント
+        </div>
+        <div class="form">
+          <input type="text" class="form-name">
+        </div>
+        <input type="submit" value="送信する" class="submit-btn">
+        
+
+        <ul class="comments">
+          <li class="comment">
+            テキストテキストテキストテキストテキストテキスト
+            <a class="user_name" href="#">
+              (名前)
+            </a>
+          </li>
+
+          <li class="comment">
+            テキストテキストテキストテキストテキストテキスト
+            <a class="user_name" href="#">
+              (名前)
+            </a>
+          </li>
+        </ul>
+  </div>
+</div>
+
+<!-- フッダー -->
+<!-- <div th:insert="~{footer :: footer}"></div> -->
+
+</body>
+</html>

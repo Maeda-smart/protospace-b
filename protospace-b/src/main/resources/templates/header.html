@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<div th:fragment="header">
+  <header class="header">
+    <div class="inner">
+      <div class="nav">
+        <div class="nav_left">
+          <a class="title" href="#">
+            <img class="logo" th:src="@{/image/logo.png}">
+          </a>
+        </div>
+        <div class="nav_right">
+          <a class="nav_logout" rel="nofollow" data-method="delete" href="#">ログアウト</a>
+          <a class="nav_btn" href="#">New Proto</a>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+</html>

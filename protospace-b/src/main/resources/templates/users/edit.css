@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+}
+.main-content{
+  margin: 0 100px;
+}
+input{
+  display: block;
+}
+input.prototype{
+  width: 170px;
+}
+textarea.catchcopy, textarea.concept{
+  width: 500px;
+}
+input[type=submit]{
+  margin-top: 30px;
+  width: 120px;
+  height: 30px;
+  border: none;
+  border-radius: 2px;
+  background-color: #92cefc;
+  color: white;
+  box-shadow: lightgray 0 2px 2px;
+}
+table{
+  text-align: left;
+  border-collapse: collapse;
+}
+tbody th{
+  padding: 10 20 10 5;
+  border: 1px solid #dddddd;
+}
+tbody th:nth-child(1){
+  background-color: #eeeeee;
+}
