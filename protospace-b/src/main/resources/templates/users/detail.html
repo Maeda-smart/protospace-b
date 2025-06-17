@@ -1,28 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
-  <link href="edit.css" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/edit.css}" rel="stylesheet" type="text/css">
 </head>
 <div class="main-content">
-  <h2>名前さんの情報</h2>
+  <h2><span th:text="${user.nickname}"></span>さんの情報</h2>
   <table>
     <tbody>
       <tr>
         <th>名前</th>
-        <th>名前</th>
+        <th><span th:text="${user.nickname}"></span></th>
       </tr>
       <tr>
         <th>プロフィール</th>
-        <th>texttexttexttexttexttexttexttexttexttext</th>
+        <th><span th:text="${user.profile}"></span></th>
       </tr>
       <tr>
         <th>所属</th>
-        <th>texttexttext</th>
+        <th><span th:text="${user.affiliation}"></span></th>
       </tr>
       <tr>
         <th>役職</th>
-        <th>texttexttext</th>
+        <th><span th:text="${user.position}"></span></th>
       </tr>
     </tbody>
   </table>
   <h2>名前さんのプロトタイプ</h2>
   <div>トップページのを使いまわす</div>
 </div>
+</html>
