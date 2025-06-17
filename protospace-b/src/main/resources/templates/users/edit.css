@@ -25,10 +25,12 @@ input[type=submit]{
 }
 table{
   text-align: left;
+  border-collapse: collapse;
 }
 tbody th{
   padding: 10 20 10 5;
+  border: 1px solid #dddddd;
 }
 tbody th:nth-child(1){
-  background-color: lightgray;
+  background-color: #eeeeee;
 }
