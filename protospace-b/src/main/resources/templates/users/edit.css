@@ -23,3 +23,14 @@ input[type=submit]{
   color: white;
   box-shadow: lightgray 0 2px 2px;
 }
+table{
+  text-align: left;
+  border-collapse: collapse;
+}
+tbody th{
+  padding: 10 20 10 5;
+  border: 1px solid #dddddd;
+}
+tbody th:nth-child(1){
+  background-color: #eeeeee;
+}
