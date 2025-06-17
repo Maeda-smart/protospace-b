@@ -12,6 +12,9 @@ erDiagram
     VARCHAR(16) nickname
     VARCHAR(128) email UK
     VARCHAR(128) password
+    VARCHAR(512) profile
+    VARCHAR(128) affiliation
+    VARCHAR(128) position
   }
   prototype{
     SERIAL id PK
