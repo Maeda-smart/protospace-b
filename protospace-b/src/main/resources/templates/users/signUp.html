@@ -12,7 +12,7 @@
 <body>
 
   <div th:insert="~{header :: header}"></div>
-  <div class="signUp-wrapper">
+  <form th:action="@{/user}" th:method="post" th:object="${userForm}" class="signUp-wrapper">
     <h2 class="page-heading">
       ユーザー新規登録
     </h2>
