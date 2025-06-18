@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
-  <head>
-    <meta charset="UTF-8">
-    <title>PROTO SPACE</title>
-    <link rel="stylesheet" href="login.css" />
-  </head>
-  <body>
-    
-    <!-- 機能するか未確認 -->
-    <div th:insert="~{header :: header}"></div>
 
-    <div class="login-wrapper">
-      <div class="login-subtitle">
-        <h5>ユーザーログイン</h5>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <title>PROTO SPACE</title>
+  <link rel="stylesheet" th:href="@{/css/login.css}" />
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
 
-      <div class="login-inner">
-        <!-- action/objectは仮です　 -->
-        <form th:action="{/login}" th:object="${loginForm}" method="post">
-          <div class="field-wrapper">
-            <div class="field">
-              <div class="field-label">
-                <label for="email">メールアドレス</label>
-              </div>
-              <div class="field-input">
-                <input type="email" th:field="*{email}" id="email" required="required" />
-              </div>
-            </div>
+<body>
 
-            <div class="field">
-              <div class='field-label'>
-                <label for="password">パスワード(6文字以上)</label>
-              </div>
-              <div class='field-input'>
-                <input type="password" th:field="*{password}" id="password" required="required">
-              </div>
-              <div class='submit-btn'>
-                <input type="submit" value="ログイン" class="btn">
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
+  <div th:insert="~{header :: header}"></div>
+
+  <div class="login-wrapper">
+    <div class="login-subtitle">
+      <h5>ユーザーログイン</h5>
     </div>
 
-    <!-- 機能するか未確認 -->
-    <div th:insert="~{footer :: footer}"></div>
+    <div th:if="${loginError}" class="error-message" th:text="${loginError}"></div>
 
-  </body>
+    <div class="login-inner">
+      <form th:action="@{/login}" th:object="${loginForm}" method="post">
+        <div class="field-wrapper">
+          <div class="field">
+            <div class="field-label">
+              <label for="email">メールアドレス</label>
+            </div>
+            <div class="field-input">
+              <!-- nameはconfig用 -->
+              <input type="email" id="email" th:field="*{email}" name="username" required="required" />
+            </div>
+          </div>
+
+          <div class="field">
+            <div class='field-label'>
+              <label for="password">パスワード(6文字以上)</label>
+            </div>
+            <div class='field-input'>
+              <input type="password" th:field="*{password}" id="password" name="password" required="required">
+            </div>
+            <div class='submit-btn'>
+              <input type="submit" value="ログイン" class="btn">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div th:insert="~{footer :: footer}"></div>
+
+</body>
+
 </html>

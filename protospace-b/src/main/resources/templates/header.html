@@ -5,13 +5,17 @@
     <div class="inner">
       <div class="nav">
         <div class="nav_left">
-          <a class="title" href="#">
-            <img class="logo" th:src="@{/image/logo.png}">
+          <a class="title" th:href="@{/}">
+            <img class="logo" th:src="@{/image/logo.png}" alt="logo">
           </a>
         </div>
-        <div class="nav_right">
-          <a class="nav_logout" rel="nofollow" data-method="delete" href="#">ログアウト</a>
-          <a class="nav_btn" href="#">New Proto</a>
+        <div class="nav_right" th:if="${#authorization.expression('isAuthenticated()')}">
+          <a class="nav_logout" rel="nofollow" data-method="delete" th:href="@{/users/logout}">ログアウト</a>
+          <a class="nav_btn" th:href="@{/prototypes/new}">New Proto</a>
+        </div>
+        <div class="nav_right" th:if="${#authorization.expression('!isAuthenticated()')}">
+          <a class="nav_btn" th:href="@{/users/sign_up}">新規登録</a>
+          <a class="nav_btn" th:href="@{/users/login}">ログイン</a>
         </div>
       </div>
     </div>
