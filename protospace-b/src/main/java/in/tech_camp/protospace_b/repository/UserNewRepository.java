@@ -1,0 +1,13 @@
+package in.tech_camp.protospace_b.repository;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import in.tech_camp.protospace_b.entity.UserEntity;
+
+@Mapper
+public interface UserNewRepository {
+  // ユーザーidでユーザー情報を取得
+  @Select("SELECT * FROM users WHERE id = #{id}")
+  UserEntity findById(Integer id);
+}
