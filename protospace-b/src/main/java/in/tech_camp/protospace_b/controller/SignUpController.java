@@ -7,6 +7,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.form.UserForm;
 import in.tech_camp.protospace_b.service.UserSignUpService;
+import in.tech_camp.protospace_b.validation.ValidationOrder;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -29,7 +31,7 @@ public class SignUpController {
     }
 
     @PostMapping("/user")
-    public String postMethodName(@ModelAttribute("userForm") UserForm userForm, BindingResult result, Model model) {
+    public String postMethodName(@ModelAttribute("userForm") @Validated(ValidationOrder.class) UserForm userForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
             List<String> errorMessages = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
