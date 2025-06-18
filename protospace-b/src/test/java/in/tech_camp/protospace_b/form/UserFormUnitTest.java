@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
 import in.tech_camp.protospace_b.factory.UserFormFactory;
+import in.tech_camp.protospace_b.validation.ValidationPriority1;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -33,8 +34,8 @@ public class UserFormUnitTest {
 
         @Test
         public void SignUpWhenFilledAllInput() {
-          // Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm, ValidationPriority1.class);
-          // assertEquals(0, violations.size());
+          Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm, ValidationPriority1.class);
+          assertEquals(0, violations.size());
         }
     }
 
@@ -44,6 +45,8 @@ public class UserFormUnitTest {
         @Test
         public void ValidationErrorWhenNicknameIsBlank() {
             userForm.setNickname("");
+          Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm, ValidationPriority1.class);
+          assertEquals(1, violations.size());
         }
     }
 
