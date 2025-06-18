@@ -1,13 +1,11 @@
-package in.tech_camp.protospace_b.entity;
+package in.tech_camp.protospace_b.form;
 
 import lombok.Data;
 
 @Data
-public class PrototypeEntity {
-  private Integer id;
+public class PrototypeForm {
   private String prototypeName;
   private String catchCopy;
   private String concept;
   private String img;
-  private UserEntity user;
 }
