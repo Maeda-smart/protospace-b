@@ -42,7 +42,7 @@ public class UserForm {
   // 2つのパスワードが一致しているか確認
   public void validatePasswordConfirmation(BindingResult result) {
       if (!password.equals(passwordConfirmation)) {
-          result.rejectValue("passwordConfirmation", null, "Password confirmation doesn't match Password");
+          result.rejectValue("passwordConfirmation", "error.user", "Password confirmation doesn't match Password");
       }
   }
 }
