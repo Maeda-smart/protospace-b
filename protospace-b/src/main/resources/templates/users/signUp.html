@@ -12,6 +12,10 @@
 <body>
 
   <div th:insert="~{header :: header}"></div>
+
+  <div class="inner">
+    <div class="form_wrapper"
+  </div>
   <form th:action="@{/user}" th:method="post" th:object="${userForm}" class="signUp-wrapper">
     <div th:if="${errorMessages}" th:each="error : ${errorMessages}">
       <div th:text="${error}"></div>
