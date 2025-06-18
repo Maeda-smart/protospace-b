@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.form.UserForm;
+import in.tech_camp.protospace_b.repository.UserSignUpRepository;
 import in.tech_camp.protospace_b.service.UserSignUpService;
 import in.tech_camp.protospace_b.validation.ValidationOrder;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ import lombok.AllArgsConstructor;
 public class SignUpController {
 
     private final UserSignUpService userSignUpService;
+    private final UserSignUpRepository userSignUpRepository;
 
     @GetMapping("/users/sign_up")
     public String getMethodName(Model model) {
@@ -31,7 +33,10 @@ public class SignUpController {
     }
 
     @PostMapping("/user")
-    public String postMethodName(@ModelAttribute("userForm") @Validated(ValidationOrder.class) UserForm userForm, BindingResult result, Model model) {
+    public String signUp(@ModelAttribute("userForm") @Validated(ValidationOrder.class) UserForm userForm, BindingResult result, Model model) {
+        if(userSignUpRepository.existsByEmail(userForm.getEmail())){
+            result.rejectValue("email", "error.user", "Email already exists");
+        }
         if (result.hasErrors()) {
             List<String> errorMessages = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
