@@ -12,8 +12,8 @@ public class UserFormFactory{
   public static UserForm createUser(){
     UserForm userForm = new UserForm();
 
-    userForm.setNickname(faker.internet().emailAddress());
-    userForm.setEmail(faker.name().username());
+    userForm.setEmail(faker.internet().emailAddress());
+    userForm.setNickname(faker.name().username());
     userForm.setPassword(faker.internet().password(6, 128));
     userForm.setPasswordConfirmation(userForm.getPassword());
     userForm.setProfile(randomTextInRange(1, 128));
@@ -24,12 +24,11 @@ public class UserFormFactory{
   }
 
   private static String randomTextInRange(int min, int max){
-    Faker faker = new Faker();
     Random rand = new Random();
     StringBuilder sb = new StringBuilder();
     while (sb.length() < min) {
       sb.append(faker.lorem().sentence());
-      sb.append("");
+      sb.append(" ");
     }
     int len = min + rand.nextInt(max - min + 1);
     if (sb.length() > max){
