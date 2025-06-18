@@ -11,4 +11,5 @@ public class UserEntity {
   private String profile;
   private String affiliation;
   private String position;
+  // private List<PrototypeEntity> prototype;
 }
