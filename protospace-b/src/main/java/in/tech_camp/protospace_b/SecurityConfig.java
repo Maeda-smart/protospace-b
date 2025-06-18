@@ -9,8 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import jakarta.servlet.http.HttpServletResponse;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -20,7 +18,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         //ここに記述されたGETリクエストは許可されます（ログイン不要です)
-                        .requestMatchers(HttpMethod.GET, "/css/**", "/image/**", "/", "/users/sign_up", "/users/login", "/users/{userId:[0-9]+}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/css/**", "/favicon.ico", "/image/**", "/", "/users/sign_up", "/users/login", "/users/{userId:[0-9]+}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user").permitAll()
                         .anyRequest().authenticated())
                         //上記以外のリクエストは認証されたユーザーのみ許可されます(要ログイン)
@@ -28,23 +26,14 @@ public class SecurityConfig {
                 .formLogin(login -> login
                         .loginProcessingUrl("/login")
                         .loginPage("/users/login")
-                        //ログインフォームでログインボタンを押した際のパスを設定しています
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/users/login?error")
                         .usernameParameter("email")
-                        .successHandler((request, response, authentication)->{})
-                        //.successHandler(authenticationSuccessHandler())
-                        .failureHandler((request, response, exception)->{
-                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            response.setContentType("application/json");
-                            response.setCharacterEncoding("UTF-8");
-                            response.getWriter().write(
-                                "{\"error\":\"Invalid credentials\"}"
-                            );
-                        })
                         .permitAll()
                 )
 
                 .logout(logout -> logout
-                        .logoutUrl("/api/logout")
+                        .logoutUrl("/users/logout")
                         //ログアウトボタンを押した際のパスを設定しています
                         .logoutSuccessUrl("/"));
                         //ログアウト成功時のリダイレクト先です
