@@ -14,27 +14,30 @@
   <div th:insert="~{header :: header}"></div>
 
   <div class="inner">
-    <div class="form_wrapper"
-  </div>
-  <form th:action="@{/user}" th:method="post" th:object="${userForm}" class="signUp-wrapper">
+    <div class="form_wrapper">
+      <h2 class="page-heading">
+      ユーザー新規登録
+    </h2>
+    <form th:action="@{/user}" th:method="post" th:object="${userForm}" class="signUp-wrapper">
     <div th:if="${errorMessages}" th:each="error : ${errorMessages}">
       <div th:text="${error}"></div>
     </div>
-
-    <h2 class="page-heading">
-      ユーザー新規登録
-    </h2>
-
-    <div class="field">
-      メールアドレス
     </div>
-    <input type="text" th:field="*{email}" id="email" class="form-name">
 
     <div class="field">
-      パスワード(6文字以上)
+      <label for="email">メールアドレス</label>
+      <br>
+      <input type="text" th:field="*{email}" id="email" class="form-name">
+    </div>
+
+    <div class="field">
+      <label for="password">パスワード（6文字以上）</label>
     </div>
     <input type="text" th:field="*{password}" id="password" class="form-name">
 
+  </div>
+
+    
     <div class="field">
       パスワード再入力
     </div>
