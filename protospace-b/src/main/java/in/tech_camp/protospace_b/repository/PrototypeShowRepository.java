@@ -16,10 +16,13 @@ public interface PrototypeShowRepository {
   @Results(value = {
       @Result(property = "id", column = "id"),
       @Result(property = "user", column = "user_id", many = @Many(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
-      @Result(property="imgPath", column="img")
+      @Result(property = "imgPath", column = "img")
   })
   List<PrototypeEntity> showAll();
 
   @Select("SELECT * FROM prototype WHERE user_id = #{userId}")
+  @Results(value = {
+      @Result(property = "imgPath", column = "img")
+  })
   List<PrototypeEntity> showByUserId(Integer userId);
 }
