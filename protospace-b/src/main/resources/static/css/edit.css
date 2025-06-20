@@ -1,6 +1,9 @@
 * {
   box-sizing: border-box;
 }
+body{
+  margin: 0;
+}
 .main-content{
   margin: 0 100px;
 }
@@ -28,9 +31,12 @@ table{
   border-collapse: collapse;
 }
 tbody th{
-  padding: 10 20 10 5;
+  padding: 10px 20px 10px 5px;
   border: 1px solid #dddddd;
 }
 tbody th:nth-child(1){
   background-color: #eeeeee;
+}
+tbody th:nth-child(2){
+  width: 400px;
 }
