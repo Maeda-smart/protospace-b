@@ -8,27 +8,16 @@
   <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
-  <div th:insert="~{header :: header}"></div>
+  <div th:replace="~{header :: header}"></div>
   <main class="main">
     <div class="inner">
       <div class="greeting" th:if="${#authorization.expression('isAuthenticated()')}">
         こんにちは、
         <a class="greeting_link" th:href="${'/users/'+user.id}"><span th:text="${user.nickname}"></span>さん</a>
       </div>
-      <div class="card_wrapper" th:each="prototype : ${prototypes}">
-        <div class="card">
-          <a href="#">
-            <img class="card_img" th:src="@{${prototype.img}}">
-          </a>
-          <div class="card_body">
-            <a class="card_title" th:href="@{'/users/'+${prototype.id}}" th:text="${prototype.prototypeName}"></a>
-            <p class="card_summary" th:text="${prototype.catchCopy}"></p>
-            <a class="card_user" th:href="@{'/users/'+${prototype.user.id}}">by <span th:text="${prototype.user.nickname}"></span></a>
-          </div>
-        </div>
-      </div>
+      <div th:replace="~{prototypes :: prototypes}"></div>
     </div>
   </main>
-  <div th:insert="~{footer :: footer}"></div>
+  <div th:replace="~{footer :: footer}"></div>
 </body>
 </html>
