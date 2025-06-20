@@ -1,9 +1,14 @@
+.inner {
+  width: 90%;
+  margin: 0 auto;
+}
+
 .signUp-wrapper {
-  padding: 30px 0px 0px 200px;
+  min-height: calc(100vh-161px);
 }
 
 .field {
-  padding-top: 8px;
+  margin: 10px 0;
 }
 
 .form-name {
@@ -16,8 +21,12 @@
 }
 
 .page-heading {
-    font-size: 30px;
+    font-size: 25px;
     margin-bottom: 28px;
+}
+
+.actions {
+  margin-bottom: 40px;
 }
 
 .form-btn {
