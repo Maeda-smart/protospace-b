@@ -29,20 +29,20 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 
 public class PrototypeNewController {
-  @Autowired
-  private final PrototypeNewRepository prototypeNewRepository;
+    @Autowired
+    private final PrototypeNewRepository prototypeNewRepository;
 
-  @Autowired
-  private final UserNewRepository userNewRepository;
+    @Autowired
+    private final UserNewRepository userNewRepository;
 
-  @GetMapping("/protoType/prototypeNew")
-  public String showPrototypeNew(Model model){
-    model.addAttribute("prototypeForm", new PrototypeForm());
-    return "protoType/prototypeNew";
-  }
+    @GetMapping("/protoType/prototypeNew")
+    public String showPrototypeNew(Model model){
+        model.addAttribute("prototypeForm", new PrototypeForm());
+        return "prototype/prototypeNew";
+    }
 
-  @PostMapping("/prototypes")
-public String createPrototype(
+    @PostMapping("/prototypes")
+    public String createPrototype(
         @ModelAttribute("prototypeForm") @Validated(ValidationOrder.class) PrototypeForm prototypeForm,
         BindingResult result,
         @AuthenticationPrincipal CustomUserDetail currentUser,
@@ -50,7 +50,7 @@ public String createPrototype(
 
     System.out.println("currentUser: " + currentUser);
 
-    MultipartFile imageFile = prototypeForm.getImg();
+    MultipartFile imageFile = prototypeForm.getImgFile();
 
     System.out.println("imageFile: " + imageFile);
     if (imageFile != null) {
@@ -60,11 +60,11 @@ public String createPrototype(
     }
 
     try {
-        String uploadDir = "src/main/resources/static/uploads";
+        String uploadDir = "uploads";
         String fileName;
         if (imageFile != null && imageFile.getOriginalFilename() != null && !imageFile.getOriginalFilename().isEmpty()) {
             fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
-                      + "_" + imageFile.getOriginalFilename();
+                        + "_" + imageFile.getOriginalFilename();
             java.io.File dir = new java.io.File(uploadDir);
             if (!dir.exists()) dir.mkdirs();
             java.nio.file.Path imagePath = java.nio.file.Paths.get(uploadDir, fileName);
@@ -72,27 +72,27 @@ public String createPrototype(
         } else {
             model.addAttribute("errorMessage", "画像ファイルが選択されていません。");
             model.addAttribute("prototypeForm", prototypeForm);
-            return "protoType/prototypeNew";
+            return "prototype/prototypeNew";
         }
 
         Integer userId = (currentUser != null) ? currentUser.getId() : null;
         System.out.println("userId: " + userId);
         if (userId == null) {
             model.addAttribute("errorMessage", "ログインユーザーが取得できませんでした。");
-            return "protoType/prototypeNew";
+            return "prototype/prototypeNew";
         }
         UserEntity userEntity = userNewRepository.findById(userId);
         System.out.println("userEntity: " + userEntity);
         if (userEntity == null) {
             model.addAttribute("errorMessage", "ユーザーがデータベースに存在しません。");
-            return "protoType/prototypeNew";
+            return "prototype/prototypeNew";
         }
 
         PrototypeEntity prototype = new PrototypeEntity();
         prototype.setPrototypeName(prototypeForm.getPrototypeName());
         prototype.setCatchCopy(prototypeForm.getCatchCopy());
         prototype.setConcept(prototypeForm.getConcept());
-        prototype.setImg("/uploads/" + fileName);
+        prototype.setImgPath("/uploads/" + fileName);
         prototype.setUser(userEntity);
 
         prototypeNewRepository.insert(prototype);
@@ -100,15 +100,14 @@ public String createPrototype(
         } catch (IOException e) {
             model.addAttribute("errorMessage", "画像の保存に失敗しました。（" + e.getMessage() + "）");
             model.addAttribute("prototypeForm", prototypeForm);
-            return "protoType/prototypeNew";
+            return "prototype/prototypeNew";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "登録に失敗しました。（" + e.getMessage() + "）");
             model.addAttribute("prototypeForm", prototypeForm);
-            return "protoType/prototypeNew";
+            return "prototype/prototypeNew";
         }
 
     return "redirect:/";
 }
-
 }
 
