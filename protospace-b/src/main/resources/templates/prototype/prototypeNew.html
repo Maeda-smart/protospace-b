@@ -3,7 +3,7 @@
 </head>
 <header></header>
 <div class="main-content">
-  <h2>プロトタイプ編集</h2>
+  <h2>プロトタイプ投稿</h2>
   <form th:action="@{/prototypes}" th:object="${prototypeForm}" method="post" enctype="multipart/form-data">
     <h3>プロトタイプの名称</h3>
     <label for="prototypeName"></label>
@@ -20,7 +20,7 @@
 
     <h3>プロトタイプの画像</h3>
     <label for="img"></label>
-    <input type="file" id="img" name="img" th:field="*{img}">
+    <input type="file" id="img" name="img" th:field="*{imgFile}">
 
     <input type="submit" value="保存する">
   </form>

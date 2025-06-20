@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
     <meta charset="UTF-8">
-    <link href="protoType_detail.css" rel="stylesheet" type="text/css">
+    <link href="/css/prototypeDetail.css" rel="stylesheet" type="text/css">
     <title>ProtoSpace</title>
 </head>
 
@@ -13,36 +13,29 @@
 
 <div class="main">
     <div class = "protoType_detail">
-      <h2 class = "title">
-        ウェブアプリ1
-      </h2>
+      <h2 class="title" th:text="${prototype.prototypeName}"></h2>
 
-      <a class="user_name" href="#">
-        by 名前
-      </a>
+      <!-- ユーザー詳細ページ リンク -->
+      <a class="user_name" th:text="${prototype.user.nickname}" href="#"></a>
 
       <div class="actions">
         <input type="submit" value="編集する" class="btn">
         <input type="submit" value="削除する" class="btn">
       </div>
 
-      <div class="protoType_img" >
-        <img src="sample.jpg" width="400px" height="300px">
+      <div class="protoType_img">
+        <img th:src="@{${prototype.imgPath}}" width="400px" height="300px" alt="プロトタイプ画像">
       </div>
 
       <h2 class="title">
         キャッチコピー
       </h2>
-      <div class="text">
-        テキストテキストテキストテキスト
-      </div>
+      <div class="text" th:text="${prototype.catchCopy}"></div>
 
       <h2 class="title">
         コンセプト
       </h2>
-      <div class="text">
-        テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト
-      </div>
+      <div class="text" th:text="${prototype.concept}"></div>
     </div>
 
       <div class="comment_wrapper">
