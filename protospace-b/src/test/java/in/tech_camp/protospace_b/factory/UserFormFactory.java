@@ -1,15 +1,14 @@
 package in.tech_camp.protospace_b.factory;
 
-import java.util.Random;
-
 import com.github.javafaker.Faker;
 
 import in.tech_camp.protospace_b.form.UserForm;
+import static in.tech_camp.protospace_b.factory.RandomText.randomTextInRange;
 
-public class UserFormFactory{
+public class UserFormFactory {
   private static final Faker faker = new Faker();
 
-  public static UserForm createUser(){
+  public static UserForm createUser() {
     UserForm userForm = new UserForm();
 
     userForm.setEmail(faker.internet().emailAddress());
@@ -21,21 +20,5 @@ public class UserFormFactory{
     userForm.setPosition(randomTextInRange(1, 128));
 
     return userForm;
-  }
-
-  private static String randomTextInRange(int min, int max){
-    Random rand = new Random();
-    StringBuilder sb = new StringBuilder();
-    while (sb.length() < min) {
-      sb.append(faker.lorem().sentence());
-      sb.append(" ");
-    }
-    int len = min + rand.nextInt(max - min + 1);
-    if (sb.length() > max){
-      sb.setLength(max);
-    } else{
-      sb.setLength(len);
-    }
-    return sb.toString();
   }
 }
