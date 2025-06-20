@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <html>
+
 <head>
   <meta charset="UTF-8">
   <title>ProtoSpace</title>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
-  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
+
 <body>
   <div th:replace="~{header :: header}"></div>
   <main class="main">
@@ -20,4 +22,5 @@
   </main>
   <div th:replace="~{footer :: footer}"></div>
 </body>
+
 </html>

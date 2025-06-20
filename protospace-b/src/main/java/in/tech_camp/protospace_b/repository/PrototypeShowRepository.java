@@ -15,7 +15,8 @@ public interface PrototypeShowRepository {
   @Select("SELECT * FROM prototype")
   @Results(value = {
       @Result(property = "id", column = "id"),
-      @Result(property = "user", column="user_id", many=@Many(select="in.tech_camp.protospace_b.repository.UserDetailRepository.findById"))
+      @Result(property = "user", column = "user_id", many = @Many(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
+      @Result(property="imgPath", column="img")
   })
   List<PrototypeEntity> showAll();
 
