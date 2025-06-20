@@ -2,6 +2,8 @@ package in.tech_camp.protospace_b.controller;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import in.tech_camp.protospace_b.ImageUrl;
 import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
@@ -35,7 +38,9 @@ public class PrototypeNewController {
     @Autowired
     private final UserNewRepository userNewRepository;
 
-    @GetMapping("/protoType/prototypeNew")
+    private final ImageUrl imageUrl;
+
+    @GetMapping("/prototype/prototypeNew")
     public String showPrototypeNew(Model model){
         model.addAttribute("prototypeForm", new PrototypeForm());
         return "prototype/prototypeNew";
@@ -48,24 +53,22 @@ public class PrototypeNewController {
         @AuthenticationPrincipal CustomUserDetail currentUser,
         Model model) {
 
-    System.out.println("currentUser: " + currentUser);
 
     MultipartFile imageFile = prototypeForm.getImgFile();
-
     System.out.println("imageFile: " + imageFile);
+
     if (imageFile != null) {
         System.out.println("imageFileName: " + imageFile.getOriginalFilename());
-    } else {
-        System.out.println("imageFile is null（画像未選択）");
     }
 
     try {
-        String uploadDir = "uploads";
+        String uploadDir = imageUrl.getImageUrl();
         String fileName;
         if (imageFile != null && imageFile.getOriginalFilename() != null && !imageFile.getOriginalFilename().isEmpty()) {
             fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
                         + "_" + imageFile.getOriginalFilename();
             java.io.File dir = new java.io.File(uploadDir);
+
             if (!dir.exists()) dir.mkdirs();
             java.nio.file.Path imagePath = java.nio.file.Paths.get(uploadDir, fileName);
             Files.copy(imageFile.getInputStream(), imagePath);
@@ -76,7 +79,6 @@ public class PrototypeNewController {
         }
 
         Integer userId = (currentUser != null) ? currentUser.getId() : null;
-        System.out.println("userId: " + userId);
         if (userId == null) {
             model.addAttribute("errorMessage", "ログインユーザーが取得できませんでした。");
             return "prototype/prototypeNew";
