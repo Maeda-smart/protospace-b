@@ -13,7 +13,7 @@
     <div class="inner">
       <div class="greeting" th:if="${#authorization.expression('isAuthenticated()')}">
         こんにちは、
-        <a class="greeting_link" href="#"><span th:text="${user.nickname}"></span>さん</a>
+        <a class="greeting_link" th:href="${'/users/'+user.id}"><span th:text="${user.nickname}"></span>さん</a>
       </div>
       <div class="card_wrapper">
         <div class="card">
