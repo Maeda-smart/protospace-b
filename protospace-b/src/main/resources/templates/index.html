@@ -15,14 +15,14 @@
         こんにちは、
         <a class="greeting_link" th:href="${'/users/'+user.id}"><span th:text="${user.nickname}"></span>さん</a>
       </div>
-      <div class="card_wrapper">
+      <div class="card_wrapper" th:each="prototype : ${prototypes}">
         <div class="card">
           <a href="#">
-            <img class="card_img" th:src="@{/protoType/sample.jpg}">
+            <img class="card_img" th:src="@{${prototype.img}}">
           </a>
           <div class="card_body">
-            <a class="card_title" href="#">fff</a>
-            <p class="card_summary">ddd</p>
+            <a class="card_title" href="#" th:text="${prototype.prototypeName}"></a>
+            <p class="card_summary" th:text="${prototype.catchCopy}">ddd</p>
             <a class="card_user" href="#">by aaa</a>
           </div>
         </div>
