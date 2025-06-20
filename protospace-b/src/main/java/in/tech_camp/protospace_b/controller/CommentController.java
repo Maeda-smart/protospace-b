@@ -38,11 +38,12 @@ public class CommentController {
 
     PrototypeEntity prototype = prototypeDetailRepository.findByPrototypeId(prototypeId);
 
+    // バリデーション
     if (result.hasErrors()) {
         model.addAttribute("errorMessages", result.getAllErrors());
         model.addAttribute("prototype", prototype);
         model.addAttribute("commentForm", commentForm);
-        return "tweets/detail";
+        return "prototype/prototypeDetail";
     }
 
     // コメント情報をセット
@@ -50,6 +51,7 @@ public class CommentController {
     comment.setText(commentForm.getText());
     comment.setPrototype(prototype);
     comment.setUser(userDetailRepository.findById(currentUser.getId()));
+    System.out.println(comment);
 
     try {
       commentRepository.insert(comment);
@@ -57,9 +59,9 @@ public class CommentController {
       model.addAttribute("prototype", prototype);
       model.addAttribute("commentForm", commentForm);
       System.out.println("エラー：" + e);
-      return "prototype/prototypeDetail";
+      return "prototypes/prototypeDetail";
     }
 
-    return "redirect:/prototype/" + prototypeId;
+    return "redirect:/prototypes/" + prototypeId + "/detail";
   }
 }

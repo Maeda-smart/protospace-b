@@ -14,16 +14,17 @@ import in.tech_camp.protospace_b.entity.CommentEntity;
 
 @Mapper
 public interface CommentRepository {
-  @Select("SELECT c.*, u.id AS user_id, u.nickname AS user_nickname FROM comments c JOIN users u ON c.user_id = u.id WHERE c.tweet_id = #{tweetId}")
+@Select("SELECT c.*, u.id AS user_id, u.nickname AS user_nickname FROM comments c JOIN users u ON c.user_id = u.id WHERE c.prototype_id = #{prototypeId}")
  @Results(value = {
     @Result(property = "user.id", column = "user_id"),
     @Result(property = "user.nickname", column = "user_nickname"),
-    @Result(property = "tweet", column = "tweet_id", 
-            one = @One(select = "in.tech_camp.protospace_b.repository.TweetRepository.findById"))
+    @Result(property = "prototype", column = "prototype_id", 
+            one = @One(select = "in.tech_camp.protospace_b.repository.prototypeRepository.findById"))
   })
     List<CommentEntity> findByPrototypeId(Integer prototypeId);
 
-     @Insert("INSERT INTO comments (text, user_id, tweet_id) VALUES (#{text}, #{user.id}, #{tweet.id})")
+    // コメント保存
+     @Insert("INSERT INTO comments (text, user_id, prototype_id) VALUES (#{text}, #{user.id}, #{prototype.id})")
      @Options(useGeneratedKeys = true, keyProperty = "id")
      void insert(CommentEntity comment);
 }
