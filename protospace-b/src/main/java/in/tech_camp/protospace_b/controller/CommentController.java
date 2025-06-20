@@ -29,6 +29,7 @@ public class CommentController {
 
   private final UserDetailRepository userDetailRepository;
 
+  // コメント保存機能
   @PostMapping("/prototype/{prototypeId}/comment")
   public String createComment(@PathVariable("prototypeId") Integer prototypeId, 
                             @ModelAttribute("commentForm") @Validated(ValidationOrder.class) CommentForm commentForm,
@@ -44,6 +45,7 @@ public class CommentController {
         return "tweets/detail";
     }
 
+    // コメント情報をセット
     CommentEntity comment = new CommentEntity();
     comment.setText(commentForm.getText());
     comment.setPrototype(prototype);
