@@ -8,5 +8,5 @@ public class PrototypeForm {
   private String prototypeName;
   private String catchCopy;
   private String concept;
-  private MultipartFile img;
+  private MultipartFile imgFile;
 }

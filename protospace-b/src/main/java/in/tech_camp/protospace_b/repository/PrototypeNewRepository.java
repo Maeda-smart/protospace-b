@@ -11,7 +11,7 @@ import in.tech_camp.protospace_b.entity.PrototypeEntity;
 public interface PrototypeNewRepository {
 
     @Insert("INSERT INTO prototype (prototypeName, catchCopy, concept, img, user_id) " +
-            "VALUES (#{prototypeName}, #{catchCopy}, #{concept}, #{img}, #{user.id})")
+            "VALUES (#{prototypeName}, #{catchCopy}, #{concept}, #{imgPath}, #{user.id})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(PrototypeEntity prototype);
 
