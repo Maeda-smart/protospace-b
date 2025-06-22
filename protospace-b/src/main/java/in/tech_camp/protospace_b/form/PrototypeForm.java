@@ -9,4 +9,6 @@ public class PrototypeForm {
   private String catchCopy;
   private String concept;
   private MultipartFile imgFile;
+  // 編集用
+  private String imgPath;
 }

@@ -25,6 +25,9 @@
     <input type="file" id="img" name="img" th:field="*{imgFile}">
 
     <input type="submit" value="保存する">
+
+    <!-- 画像未変更時用 -->
+    <input type="hidden" th:field="*{imgPath}" />
   </form>
 </div>
 <footer></footer>
