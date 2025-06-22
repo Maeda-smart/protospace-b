@@ -40,9 +40,10 @@ public class CommentFormUnitTest {
   class コメントが作成できない場合 {
     @Test
     public void テキストが存在しなければ投稿できない () {
+      commentForm.setText("");
       Set<ConstraintViolation<CommentForm>> violations = validator.validate(commentForm, ValidationPriority1.class);
       assertEquals(1, violations.size());
-      assertEquals("Text can't be blank", violations.iterator().next().getMessage());
+      assertEquals("Comment can't be blank", violations.iterator().next().getMessage());
     }
   }
   

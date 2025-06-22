@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 public class CommentForm {
-  @NotBlank(message = "Comment can't be blank", groups = ValidationPriority1.class)
-  private  String text;
+  @NotBlank(message = "Comment can't be blank", groups=ValidationPriority1.class)
+  private String text;
 }

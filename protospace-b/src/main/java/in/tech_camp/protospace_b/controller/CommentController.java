@@ -1,6 +1,7 @@
 package in.tech_camp.protospace_b.controller;
 
-import org.hibernate.validator.internal.engine.groups.ValidationOrder;
+import java.util.List;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import in.tech_camp.protospace_b.form.CommentForm;
 import in.tech_camp.protospace_b.repository.CommentRepository;
 import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
 import in.tech_camp.protospace_b.repository.UserDetailRepository;
+import in.tech_camp.protospace_b.validation.ValidationOrder;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -36,13 +38,17 @@ public class CommentController {
                             BindingResult result,
                             @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
 
+    // プロトタイプ取得
     PrototypeEntity prototype = prototypeDetailRepository.findByPrototypeId(prototypeId);
+    // コメント取得
+    List<CommentEntity> comments = commentRepository.findByPrototypeId(prototypeId);
 
     // バリデーション
     if (result.hasErrors()) {
         model.addAttribute("errorMessages", result.getAllErrors());
         model.addAttribute("prototype", prototype);
         model.addAttribute("commentForm", commentForm);
+        model.addAttribute("comments", comments);
         return "prototype/prototypeDetail";
     }
 
@@ -51,7 +57,7 @@ public class CommentController {
     comment.setText(commentForm.getText());
     comment.setPrototype(prototype);
     comment.setUser(userDetailRepository.findById(currentUser.getId()));
-    System.out.println(comment);
+    // System.out.println(comment);
 
     try {
       commentRepository.insert(comment);

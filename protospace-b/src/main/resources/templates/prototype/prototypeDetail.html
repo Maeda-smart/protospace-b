@@ -45,16 +45,18 @@
         </div>
         <!-- コメントフォーム -->
         <form class="form" th:action="@{/prototype/{prototypeId}/comment(prototypeId=${prototype.id})}" method="post" th:object="${commentForm}">
+          <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">エラー</div>
           <input type="text" class="form-name" id="text" th:field="*{text}">
           <input type="submit" value="送信する" class="submit-btn">
         </form>
 
-        <div class="comments">
-         <div th:each="comment:${comments}">
-          <a th:href="@{/users/{userId}(userId=${comment.user.id})}" th:text="${comment.user.nickname}"></a>
-          <span th:text="${comment.text}">AAAA</span>
-        </div> 
-        </div>
+        <!-- コメント一覧表示 -->
+        <ul class="comments">
+         <li th:each="comment:${comments}">
+          <span th:text="${comment.text}">コメント内容</span>
+          <a th:href="@{/users/{userId}(userId=${comment.user.id})}" th:text="${comment.user.nickname}" class="user-name">ユーザー名</a>
+         </li> 
+      </ul>
   </div>
 </div>
 

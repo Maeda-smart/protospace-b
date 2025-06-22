@@ -19,7 +19,7 @@ public interface CommentRepository {
     @Result(property = "user.id", column = "user_id"),
     @Result(property = "user.nickname", column = "user_nickname"),
     @Result(property = "prototype", column = "prototype_id", 
-            one = @One(select = "in.tech_camp.protospace_b.repository.prototypeRepository.findById"))
+            one = @One(select = "in.tech_camp.protospace_b.repository.PrototypeDetailRepository.findByPrototypeId"))
   })
     List<CommentEntity> findByPrototypeId(Integer prototypeId);
 
