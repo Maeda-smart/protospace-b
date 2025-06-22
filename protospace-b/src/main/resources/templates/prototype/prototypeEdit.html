@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+<!-- フラグメント化予定 -->
 <head>
   <link th:href="@{/css/edit.css}" rel="stylesheet" type="text/css">
 </head>
 <header></header>
 <div class="main-content">
   <h2>プロトタイプ投稿</h2>
-  <form th:action="@{/prototypes}" th:object="${prototypeForm}" method="post" enctype="multipart/form-data">
+  <form th:action="@{/prototypes/{prototypeId}/edit/submit(prototypeId=${prototypeId})}" th:object="${prototypeForm}" method="post" enctype="multipart/form-data">
     <h3>プロトタイプの名称</h3>
     <label for="prototypeName"></label>
     <input type="text" id="prototypeName" name="prototypeName"
@@ -27,4 +28,3 @@
   </form>
 </div>
 <footer></footer>
-
