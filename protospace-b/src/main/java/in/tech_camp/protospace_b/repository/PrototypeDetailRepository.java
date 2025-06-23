@@ -1,12 +1,8 @@
 package in.tech_camp.protospace_b.repository;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.One;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
-
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
+// import in.tech_camp.protospace_b.entity.UserEntity;
+import org.apache.ibatis.annotations.*;
 
 // import java.util.List;
 
