@@ -3,24 +3,17 @@ package in.tech_camp.protospace_b.form;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import static org.mockito.Mockito.verify;
-
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.validation.BindingResult;
 
 import com.github.javafaker.Faker;
 
-import in.tech_camp.protospace_b.entity.UserEntity;
-import in.tech_camp.protospace_b.factory.UserFormFactory;
+import in.tech_camp.protospace_b.factory.PrototypeFormFactory;
 import in.tech_camp.protospace_b.validation.ValidationPriority1;
-import in.tech_camp.protospace_b.validation.ValidationPriority2;
-import static in.tech_camp.protospace_b.factory.RandomText.randomTextInRange;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -38,22 +31,18 @@ public class PrototypeFormUnitTest {
     public void setUp() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
-        PrototypeForm prototypeForm = new PrototypeForm();
-        prototypeForm.setPrototypeName(randomTextInRange(1, 128));
-        prototypeForm.setCatchCopy(randomTextInRange(1, 128));
-        prototypeForm.setConcept(randomTextInRange(1, 128));
-        prototypeForm.setImg(new MockMultipartFile("image", "image.jpg", "image/jpg", faker.avatar().image().getBytes()));
+        prototypeForm = PrototypeFormFactory.createPrototype();
         bindingResult = Mockito.mock(BindingResult.class);
     }
 
     @Nested
     class CanSubmitPrototype {
 
-        // @Test
-        // public void SubmitWhenFilledAllInput() {
-        //     Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm, ValidationPriority1.class);
-        //     assertEquals(0, violations.size());
-        // }
+        @Test
+        public void SubmitWhenFilledAllInput() {
+            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm, ValidationPriority1.class);
+            assertEquals(0, violations.size());
+        }
     }
 
     @Nested
