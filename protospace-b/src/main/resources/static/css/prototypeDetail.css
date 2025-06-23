@@ -49,7 +49,7 @@
     width: 40%;
     margin: 0 auto;
     padding: 16px 0;
-    
+    text-align: center;
 }
 
 .prototype_detail {
@@ -100,6 +100,11 @@
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 2px 0 rgba(0, 0, 0, 0.12);
     transition: 0.2s ease;
     margin-top: 7px;
+}
+
+.attention {
+  text-align: center;
+  color: #999;
 }
 
 .comment_lists {
