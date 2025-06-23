@@ -19,10 +19,11 @@
       <!-- ユーザー詳細ページ リンク -->
       <a class="user_name" th:text="${prototype.user.nickname}" href="#"></a>
 
-      <div class="actions">
-        <input type="submit" value="編集する" class="btn">
+      <form th:action="@{/prototypes/{prototypeId}/delete(prototypeId=${prototype.id})}" th:method="post">
         <input type="submit" value="削除する" class="btn">
-      </div>
+      </form>
+
+        <input type="submit" value="編集する" class="btn">
 
       <div class="protoType_img">
         <img th:src="@{${prototype.imgPath}}" width="400px" height="300px" alt="プロトタイプ画像">
