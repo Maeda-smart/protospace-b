@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <link href="/css/prototypeDetail.css" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
     <title>ProtoSpace</title>
 </head>
 
 <body>
 
 <!-- ヘッダー -->
-<!-- <div th:insert="~{header :: header}"></div> -->
+<div th:insert="~{header :: header}"></div>
 
 <div class="main">
     <div class = "protoType_detail">
@@ -42,32 +43,25 @@
         <div>
           コメント
         </div>
-        <div class="form">
-          <input type="text" class="form-name">
-        </div>
-        <input type="submit" value="送信する" class="submit-btn">
-        
+        <!-- コメントフォーム -->
+        <form class="form" th:action="@{/prototype/{prototypeId}/comment(prototypeId=${prototype.id})}" method="post" th:object="${commentForm}">
+          <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">エラー</div>
+          <input type="text" class="form-name" id="text" th:field="*{text}">
+          <input type="submit" value="送信する" class="submit-btn">
+        </form>
 
+        <!-- コメント一覧表示 -->
         <ul class="comments">
-          <li class="comment">
-            テキストテキストテキストテキストテキストテキスト
-            <a class="user_name" href="#">
-              (名前)
-            </a>
-          </li>
-
-          <li class="comment">
-            テキストテキストテキストテキストテキストテキスト
-            <a class="user_name" href="#">
-              (名前)
-            </a>
-          </li>
-        </ul>
+         <li th:each="comment:${comments}">
+          <span th:text="${comment.text}">コメント内容</span>
+          <a th:href="@{/users/{userId}(userId=${comment.user.id})}" th:text="${comment.user.nickname}" class="user-name">ユーザー名</a>
+         </li> 
+      </ul>
   </div>
 </div>
 
 <!-- フッダー -->
-<!-- <div th:insert="~{footer :: footer}"></div> -->
+<div th:insert="~{footer :: footer}"></div>
 
 </body>
 </html>
