@@ -52,6 +52,7 @@ public class PrototypeEditController {
       prototypeForm.setPrototypeName(prototypeEntity.getPrototypeName());
       prototypeForm.setCatchCopy(prototypeEntity.getCatchCopy());
       prototypeForm.setConcept(prototypeEntity.getConcept());
+      prototypeForm.setImgPath(prototypeEntity.getImgPath());
 
 
       model.addAttribute("prototypeForm", prototypeForm);
@@ -72,63 +73,71 @@ public class PrototypeEditController {
         Model model) {
 
 
-    MultipartFile imageFile = prototypeForm.getImgFile();
-    System.out.println("imageFile: " + imageFile);
-
-    if (imageFile != null) {
-        System.out.println("imageFileName: " + imageFile.getOriginalFilename());
-    }
-
     try {
+      MultipartFile imageFile = prototypeForm.getImgFile();
+      String newImgPath;
+
+      System.out.println("imageFile: " + imageFile);
+
+      if(imageFile == null || imageFile.getOriginalFilename() == null || imageFile.getOriginalFilename().isEmpty()) {
+        newImgPath = prototypeForm.getImgPath();
+        
+      } else {
         String uploadDir = imageUrl.getImageUrl();
         String fileName;
+
         if (imageFile != null && imageFile.getOriginalFilename() != null && !imageFile.getOriginalFilename().isEmpty()) {
             fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
                         + "_" + imageFile.getOriginalFilename();
+
+            //ターミナルライクな操作をするためのオブジェクト
             java.io.File dir = new java.io.File(uploadDir);
 
             if (!dir.exists()) dir.mkdirs();
+            // 相対パスの指定
             java.nio.file.Path imagePath = java.nio.file.Paths.get(uploadDir, fileName);
+            // 保存
             Files.copy(imageFile.getInputStream(), imagePath);
+
+            newImgPath = "/uploads/" + fileName;
+
         } else {
-            model.addAttribute("errorMessage", "画像ファイルが選択されていません。");
             model.addAttribute("prototypeForm", prototypeForm);
             return "prototype/prototypeEdit";
         }
+      }
+      
+      Integer userId = (currentUser != null) ? currentUser.getId() : null;
+      if (userId == null) {
+          model.addAttribute("errorMessage", "ログインユーザーが取得できませんでした。");
+          return "prototype/prototypeEdit";
+      }
 
-        Integer userId = (currentUser != null) ? currentUser.getId() : null;
-        if (userId == null) {
-            model.addAttribute("errorMessage", "ログインユーザーが取得できませんでした。");
-            return "prototype/prototypeEdit";
-        }
-        UserEntity userEntity = userNewRepository.findById(userId);
-        if (userEntity == null) {
-            model.addAttribute("errorMessage", "ユーザーがデータベースに存在しません。");
-            return "prototype/prototypeEdit";
-        }
+      UserEntity userEntity = userNewRepository.findById(userId);
+      System.out.println(userEntity);
 
-        PrototypeEntity prototype = new PrototypeEntity();
-        prototype.setId(prototypeId);
-        prototype.setPrototypeName(prototypeForm.getPrototypeName());
-        prototype.setCatchCopy(prototypeForm.getCatchCopy());
-        prototype.setConcept(prototypeForm.getConcept());
-        prototype.setImgPath("/uploads/" + fileName);
-        prototype.setUser(userEntity);
+      PrototypeEntity prototype = new PrototypeEntity();
+      prototype.setId(prototypeId);
+      prototype.setPrototypeName(prototypeForm.getPrototypeName());
+      prototype.setCatchCopy(prototypeForm.getCatchCopy());
+      prototype.setConcept(prototypeForm.getConcept());
+      prototype.setImgPath(newImgPath);
+      prototype.setUser(userEntity);
 
-        // 検索用のIDを渡さないといけない
-        prototypeEditRepository.update(prototype);
+      // 検索用のIDを渡さないといけない
+      prototypeEditRepository.update(prototype);
 
-        } catch (IOException e) {
-            model.addAttribute("errorMessage", "画像の保存に失敗しました。（" + e.getMessage() + "）");
-            model.addAttribute("prototypeForm", prototypeForm);
-            return "prototype/prototypeEdit";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", "登録に失敗しました。（" + e.getMessage() + "）");
-            model.addAttribute("prototypeForm", prototypeForm);
-            return "prototype/prototypeEdit";
-        }
+      } catch (IOException e) {
+          model.addAttribute("errorMessage", "画像の保存に失敗しました。（" + e.getMessage() + "）");
+          model.addAttribute("prototypeForm", prototypeForm);
+          return "prototype/prototypeEdit";
+      } catch (Exception e) {
+          model.addAttribute("errorMessage", "登録に失敗しました。（" + e.getMessage() + "）");
+          model.addAttribute("prototypeForm", prototypeForm);
+          return "prototype/prototypeEdit";
+      }
 
         // 遷移先変更
-    return "redirect:/";
+    return "/prototypes/{prototypeId}/edit(prototypeId = ${prototypeId})";
 }
 }
