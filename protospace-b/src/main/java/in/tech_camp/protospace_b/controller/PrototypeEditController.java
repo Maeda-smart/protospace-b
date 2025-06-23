@@ -41,14 +41,17 @@ public class PrototypeEditController {
     private final ImageUrl imageUrl;
 
     @GetMapping("/prototype/{prototypeId}/edit")
-    public String showPrototypeEdit(@PathVariable("prototypeId") Integer prototypeId, Model model){
+    public String showPrototypeEdit(@PathVariable("prototypeId") Integer prototypeId, Model model,@AuthenticationPrincipal CustomUserDetail currentUser){
 
       PrototypeEntity prototypeEntity = prototypeDetailRepository.findByPrototypeId(prototypeId);
 
-      System.out.println("prototypeEntity取得: " + prototypeEntity);
+      Integer ownerUserId = prototypeEntity.getUser().getId();
+
+      if (!ownerUserId.equals(currentUser.getId())) {
+          return "redirect:/";
+      }
 
       PrototypeForm prototypeForm = new PrototypeForm();
-
       prototypeForm.setPrototypeName(prototypeEntity.getPrototypeName());
       prototypeForm.setCatchCopy(prototypeEntity.getCatchCopy());
       prototypeForm.setConcept(prototypeEntity.getConcept());
