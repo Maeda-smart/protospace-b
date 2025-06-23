@@ -1,14 +1,36 @@
-.main {
-  margin: 0px 200px;
+* {
+  box-sizing: border-box;
 }
 
-.protoType_detail {
-    text-align: center;
-    display: block;
+.inner {
+  width: 90%;
+  margin: 0 auto;
 }
 
-.actions {
-  margin-top: 10px;
+.protoType_wrapper {
+  /* text-align: center;
+  display: block; */
+  min-height: calc(100vh = 161px);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.user_name {
+  display: block;
+  font-size: 16px;
+  color: #999;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.edit_delete {
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
 }
 
 .btn {
@@ -31,14 +53,34 @@
     
 }
 
-.comment_wrapper {
-  background-color: #f6f6f6;
-  margin: 30px 30px;
-  padding: 30px 20px;
+.protoType_detail {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 8px;
 }
 
-.form {
+.detail_title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.comment_wrapper {
+  background-color: #f6f6f6;
+  margin: 28px 0 40px 0;
+  padding:20px;
+}
+
+/* .form {
   margin-bottom: 7px;
+} */
+
+.field {
+  margin: 10px 0;
+}
+
+.actions {
+  margin-bottom: 40px;
 }
 
 .submit-btn {
@@ -55,7 +97,12 @@
     transition: 0.2s ease;
 }
 
+.comment_lists {
+  padding-left: 20px;
+}
+
 .user-name{
-  color: #007bff;
+  font-size: 16px;
+  color:#999;
   text-decoration: none;
 }
