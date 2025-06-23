@@ -47,6 +47,6 @@ public class PrototypeDetailController {
         model.addAttribute("comments", comments);
 
         // return "protoType/prototypeDetail";
-        return "/prototype/prototypeDetail";
+        return "prototype/prototypeDetail";
     }
 }
