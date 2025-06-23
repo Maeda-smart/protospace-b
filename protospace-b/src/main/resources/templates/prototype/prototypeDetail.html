@@ -19,10 +19,10 @@
       <p class="title" th:text="${prototype.prototypeName}"></p>
 
       <!-- ユーザー詳細ページ リンク -->
-      <a class="user_name" th:text="${prototype.user.nickname}" th:href="${'/users/'+user.id}"></a>
+      <a class="user_name" th:href="@{'/users/'+${prototype.user.id}}"> by <span th:text="${prototype.user.nickname}"></span></a>
 
       <div class="edit_delete">
-        <a class="btn" th:href="@{/prototype/{prototypeId}/edit}">
+        <a th:href="@{/prototype/{prototypeId}/edit(prototypeId=${prototype.id})}">
           <input type="submit" value="編集する" class="btn">
         </a>
         <form th:action="@{/prototypes/{prototypeId}/delete(prototypeId=${prototype.id})}" th:method="post">
@@ -63,7 +63,7 @@
         <ul class="comments_list">
           <li th:each="comment:${comments}">
             <span th:text="${comment.text}">コメント内容</span>
-            <a th:href="@{/users/{userId}(userId=${comment.user.id})}" th:text="${comment.user.nickname}" class="user-name">ユーザー名</a>
+            <a th:href="@{/users/{userId}(userId=${comment.user.id})}" class="user-name"> (<span th:text="${comment.user.nickname}"></span>) </a>
           </li> 
         </ul>
       </div>
