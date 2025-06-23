@@ -137,7 +137,6 @@ public class PrototypeEditController {
           return "prototype/prototypeEdit";
       }
 
-        // 遷移先変更
-    return "/prototypes/{prototypeId}/edit(prototypeId = ${prototypeId})";
+      return "redirect:/prototypes/" + prototypeId + "/detail";
 }
 }
