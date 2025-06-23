@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!-- フラグメント化予定 -->
+<head>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link th:href="@{/css/edit.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/style.css}" rel="stylesheet"  />
+</head>
+
+<body>
+  <div th:insert="~{header :: header}"></div>
+
+  <div class="main-content">
+    <h2>プロトタイプ投稿</h2>
+
+    <div th:if="${errorMessage}" class="error-message">
+      <span th:text="${errorMessage}">エラー</span>
+    </div>
+
+    <form th:action="@{/prototypes/{prototypeId}/edit/submit(prototypeId=${prototypeId})}" th:object="${prototypeForm}" method="post" enctype="multipart/form-data">
+      <h3>プロトタイプの名称</h3>
+      <label for="prototypeName"></label>
+      <input type="text" id="prototypeName" name="prototypeName"
+        th:field="*{prototypeName}" class="prototype">
+
+      <h3>キャッチコピー</h3>
+      <label for="catchCopy"></label>
+      <textarea id="catchCopy" name="catchCopy" th:field="*{catchCopy}" class="catchcopy"></textarea>
+
+      <h3>コンセプト</h3>
+      <label for="concept"></label>
+      <textarea id="concept" name="concept" th:field="*{concept}" class="concept"></textarea>
+
+      <h3>プロトタイプの画像</h3>
+      <label for="img"></label>
+      <input type="file" id="img" name="img" th:field="*{imgFile}">
+      <div class="notice">※ 画像を変更しない場合はそのまま保存してよ</div>
+
+      <input type="submit" value="保存する">
+
+      <!-- 画像未変更時用 -->
+      <input type="hidden" th:field="*{imgPath}" />
+    </form>
+  </div>
+  <div th:insert="~{footer :: footer}"></div>
+</body>
