@@ -21,6 +21,5 @@ public class PrototypeForm {
 
   @NotNull(message="Image can't be blank", groups=ValidationPriority1.class)
   private MultipartFile imgFile;
-  // 編集用
   private String imgPath;
 }

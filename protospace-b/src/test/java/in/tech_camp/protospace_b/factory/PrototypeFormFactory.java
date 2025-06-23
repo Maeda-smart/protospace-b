@@ -17,7 +17,6 @@ public class PrototypeFormFactory {
     prototypeForm.setConcept(randomTextInRange(1, 128));
     prototypeForm
         .setImgFile(new MockMultipartFile("image", "image.jpg", "image/jpg", faker.avatar().image().getBytes()));
-    // prototypeForm.setImgPath("");
     return prototypeForm;
   }
 }

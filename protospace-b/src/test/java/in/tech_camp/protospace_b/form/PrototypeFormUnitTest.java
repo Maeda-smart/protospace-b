@@ -3,6 +3,7 @@ package in.tech_camp.protospace_b.form;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,7 @@ public class PrototypeFormUnitTest {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
         prototypeForm = PrototypeFormFactory.createPrototype();
+        // prototypeForm = new PrototypeForm();
         bindingResult = Mockito.mock(BindingResult.class);
     }
 
@@ -40,6 +42,7 @@ public class PrototypeFormUnitTest {
 
         @Test
         public void SubmitWhenFilledAllInput() {
+            assertNotNull(prototypeForm);
             Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm, ValidationPriority1.class);
             assertEquals(0, violations.size());
         }
