@@ -6,6 +6,7 @@ body{
 }
 .main-content{
   margin: 0 100px;
+  height: 85vh;
 }
 input{
   display: block;
@@ -39,4 +40,23 @@ tbody th:nth-child(1){
 }
 tbody th:nth-child(2){
   width: 400px;
+}
+
+.error-message{
+  color: #942a2f;
+  border-radius: 3px;
+  padding: 10px 18px;
+  margin-bottom: 18px;
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notice {
+  color: #3e3e3e;
+  border-radius: 2px;
+  font-size: 0.80em;
+  line-height: 1.6;
+  padding-top: 10px;
 }
