@@ -1,14 +1,18 @@
 package in.tech_camp.protospace_b.repository;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.One;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
-// import in.tech_camp.protospace_b.entity.UserEntity;
-import org.apache.ibatis.annotations.*;
 
 // import java.util.List;
 
 @Mapper
 public interface PrototypeDetailRepository {
-  @Select("SELECT * FROM prototype WHERE id = #{Id}")
+  @Select("SELECT * FROM prototype WHERE id = #{id}")
   @Results(value = {
     @Result(property = "id", column = "id"),
     @Result(property = "prototypeName", column = "prototypename"),
