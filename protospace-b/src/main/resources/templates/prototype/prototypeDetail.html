@@ -49,6 +49,7 @@
         <!-- コメントフォーム -->
         <form class="form" th:action="@{/prototype/{prototypeId}/comment(prototypeId=${prototype.id})}" method="post" th:object="${commentForm}">
           <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">エラー</div>
+
           <div class="field">
             <label for="text">コメント</label>
             <br>
