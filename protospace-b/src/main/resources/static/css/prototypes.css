@@ -3,7 +3,16 @@
   flex-wrap: wrap;
   gap: 20px; /* カード間の余白 */
   justify-content: flex-start;
+  margin-bottom: 40px;
 }
+
+/* .card_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  min-height: calc(100vh - 161px);
+} */
 
 .card {
   flex: 0 1 calc(33.333% - 20px); /* 3列、gap考慮 */
