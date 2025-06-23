@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link href="/css/prototypeDetail.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
     <title>ProtoSpace</title>
 </head>
 
@@ -13,54 +14,61 @@
 <div th:insert="~{header :: header}"></div>
 
 <div class="main">
-    <div class = "protoType_detail">
-      <h2 class="title" th:text="${prototype.prototypeName}"></h2>
+  <div class="inner">
+    <div class = "protoType_wrapper">
+      <p class="title" th:text="${prototype.prototypeName}"></p>
 
       <!-- ユーザー詳細ページ リンク -->
-      <a class="user_name" th:text="${prototype.user.nickname}" href="#"></a>
+      <a class="user_name" th:href="@{'/users/'+${prototype.user.id}}"> by <span th:text="${prototype.user.nickname}"></span></a>
 
-      <form th:action="@{/prototypes/{prototypeId}/delete(prototypeId=${prototype.id})}" th:method="post">
-        <input type="submit" value="削除する" class="btn">
-      </form>
-
-        <input type="submit" value="編集する" class="btn">
-
-      <div class="protoType_img">
-        <img th:src="@{${prototype.imgPath}}" width="400px" height="300px" alt="プロトタイプ画像">
+      <div class="edit_delete">
+        <a th:href="@{/prototype/{prototypeId}/edit(prototypeId=${prototype.id})}">
+          <input type="submit" value="編集する" class="btn">
+        </a>
+        <form th:action="@{/prototypes/{prototypeId}/delete(prototypeId=${prototype.id})}" th:method="post">
+          <input type="submit" value="削除する" class="btn">
+        </form>
       </div>
 
-      <h2 class="title">
-        キャッチコピー
-      </h2>
-      <div class="text" th:text="${prototype.catchCopy}"></div>
+      <div class="protoType_img">
+        <!-- <img th:src="@{${prototype.imgPath}}" width="400px" height="300px" alt="プロトタイプ画像"> -->
+      </div>
 
-      <h2 class="title">
-        コンセプト
-      </h2>
-      <div class="text" th:text="${prototype.concept}"></div>
-    </div>
-
-      <div class="comment_wrapper">
-        <div>
-          コメント
+      <div class="prototype_body">
+        <div class="prototype_detail">
+          <p class="detail_title">キャッチコピー</p>
+          <p class="text" th:text="${prototype.catchCopy}"></p>
         </div>
+        <div class="prototype_detail">
+          <p class="detail_title">コンセプト</p>
+          <p class="text" th:text="${prototype.concept}"></p>
+        </div>
+      </div>
+        
+      <div class="comment_wrapper">
         <!-- コメントフォーム -->
         <form class="form" th:action="@{/prototype/{prototypeId}/comment(prototypeId=${prototype.id})}" method="post" th:object="${commentForm}">
           <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">エラー</div>
-          <input type="text" class="form-name" id="text" th:field="*{text}">
-          <div>
-          <input type="submit" value="送信する" class="submit-btn">
+
+          <div class="field">
+            <label for="text">コメント</label>
+            <br>
+            <input type="text" class="form-name" id="text" th:field="*{text}">
+          </div>
+          <div class="actions">
+            <input type="submit" value="送信する" class="submit-btn">
           </div>
         </form>
         
-
          <!-- コメント一覧表示 -->
-        <ul class="comments">
-         <li th:each="comment:${comments}">
-          <span th:text="${comment.text}">コメント内容</span>
-          <a th:href="@{/users/{userId}(userId=${comment.user.id})}" th:text="${comment.user.nickname}" class="user-name">ユーザー名</a>
-         </li> 
-      </ul>
+        <ul class="comments_list">
+          <li th:each="comment:${comments}">
+            <span th:text="${comment.text}">コメント内容</span>
+            <a th:href="@{/users/{userId}(userId=${comment.user.id})}" class="user-name"> (<span th:text="${comment.user.nickname}"></span>) </a>
+          </li> 
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 

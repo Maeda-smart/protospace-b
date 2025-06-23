@@ -16,11 +16,10 @@ public class PrototypeForm {
   @NotBlank(message="CatchCopy can't be blank", groups=ValidationPriority1.class)
   private String catchCopy;
 
-  @NotBlank(message="concept can't be blank", groups=ValidationPriority1.class)
+  @NotBlank(message="Concept can't be blank", groups=ValidationPriority1.class)
   private String concept;
 
   @NotNull(message="Image can't be blank", groups=ValidationPriority1.class)
   private MultipartFile imgFile;
-  // 編集用
   private String imgPath;
 }
