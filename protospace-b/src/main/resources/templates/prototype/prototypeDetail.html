@@ -48,7 +48,9 @@
         <form class="form" th:action="@{/prototype/{prototypeId}/comment(prototypeId=${prototype.id})}" method="post" th:object="${commentForm}">
           <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">エラー</div>
           <input type="text" class="form-name" id="text" th:field="*{text}">
+          <div>
           <input type="submit" value="送信する" class="submit-btn">
+          </div>
         </form>
         
 

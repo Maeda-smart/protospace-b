@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px; /* カード間の余白 */
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .card {
