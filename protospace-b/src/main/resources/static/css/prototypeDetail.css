@@ -102,6 +102,11 @@
     margin-top: 7px;
 }
 
+.attention {
+  text-align: center;
+  color: #999;
+}
+
 .comment_lists {
   padding-left: 20px;
 }
