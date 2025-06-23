@@ -51,78 +51,38 @@ public class PrototypeFormUnitTest {
     @Nested
     class CannotSubmitPrototype {
 
-        // @Test
-        // public void ValidationErrorWhenNicknameIsBlank() {
-        //     userForm.setNickname("");
-        //     Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm, ValidationPriority1.class);
-        //     assertEquals(1, violations.size());
-        //     assertEquals("Nickname can't be blank", violations.iterator().next().getMessage());
-        // }
+        @Test
+        public void ValidationErrorWhenPrototypeNameIsBlank() {
+            prototypeForm.setPrototypeName("");
+            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm, ValidationPriority1.class);
+            assertEquals(1, violations.size());
+            assertEquals("PrototypeName can't be blank", violations.iterator().next().getMessage());
+        }
 
-        // @Test
-        // public void ValidationErrorWhenEmailIsBlank() {
-        //     userForm.setEmail("");
-        //     Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm, ValidationPriority1.class);
-        //     assertEquals(1, violations.size());
-        //     assertEquals("Email can't be blank", violations.iterator().next().getMessage());
-        // }
+        @Test
+        public void ValidationErrorWhenCatchCopyIsBlank() {
+            prototypeForm.setCatchCopy("");
+            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm, ValidationPriority1.class);
+            assertEquals(1, violations.size());
+            assertEquals("CatchCopy can't be blank", violations.iterator().next().getMessage());
+        }
 
-        // @Test
-        // public void ValidationErrorWhenEmailIsNotIncludeAtMark() {
-        //     userForm.setEmail("this.is.not.email");
-        //     Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm, ValidationPriority2.class);
-        //     assertEquals(1, violations.size());
-        //     assertEquals("Email should be valid", violations.iterator().next().getMessage());
-        // }
+        @Test
+        public void ValidationErrorWhenConceptIsBlank() {
+            prototypeForm.setConcept("");
+            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm, ValidationPriority1.class);
+            assertEquals(1, violations.size());
+            assertEquals("Concept can't be blank", violations.iterator().next().getMessage());
+        }
 
-        // @Test
-        // public void ValidationErrorWhenPasswordIsBlank() {
-        //     userForm.setPassword("");
-        //     Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm, ValidationPriority1.class);
-        //     assertEquals(1, violations.size());
-        //     assertEquals("Password can't be blank", violations.iterator().next().getMessage());
-        // }
+        @Test
+        public void ValidationErrorWhenImageIsBlank() {
+            prototypeForm.setImgFile(null);
+            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm, ValidationPriority1.class);
+            assertEquals(1, violations.size());
+            assertEquals("Image can't be blank", violations.iterator().next().getMessage());
+        }
 
-        // @Test
-        // public void ValidationErrorWhenPasswordIsShorterThan6Chars() {
-        //     userForm.setPassword("5char");
-        //     userForm.setPasswordConfirmation(userForm.getPassword());
-        //     Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm, ValidationPriority2.class);
-        //     assertEquals(1, violations.size());
-        //     assertEquals("Password must be at least 6 characters long", violations.iterator().next().getMessage());
-        // }
-
-        // @Test
-        // public void ValidationErrorWhenPasswordAndConfirmationAreDifferent() {
-        //     userForm.setPasswordConfirmation("DifferentPassword");
-        //     userForm.validatePasswordConfirmation(bindingResult);
-        //     verify(bindingResult).rejectValue("passwordConfirmation", "error.user",
-        //             "Password confirmation doesn't match Password");
-        // }
-
-        // @Test
-        // public void ValidationErrorWhenProfileIsBlank() {
-        //     userForm.setProfile("");
-        //     Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm, ValidationPriority1.class);
-        //     assertEquals(1, violations.size());
-        //     assertEquals("Profile can't be blank", violations.iterator().next().getMessage());
-        // }
-
-        // @Test
-        // public void ValidationErrorWhenAffiliationIsBlank() {
-        //     userForm.setAffiliation("");
-        //     Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm, ValidationPriority1.class);
-        //     assertEquals(1, violations.size());
-        //     assertEquals("Affiliation can't be blank", violations.iterator().next().getMessage());
-        // }
-
-        // @Test
-        // public void ValidationErrorWhenPositionIsBlank() {
-        //     userForm.setPosition("");
-        //     Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm, ValidationPriority1.class);
-        //     assertEquals(1, violations.size());
-        //     assertEquals("Position can't be blank", violations.iterator().next().getMessage());
-        // }
     }
 
 }
