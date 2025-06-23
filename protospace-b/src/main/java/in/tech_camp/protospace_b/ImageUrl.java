@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Component
 @NoArgsConstructor
 public class ImageUrl {
-  @Value("${image.url}")
+  @Value("${upload.dir}")
   private String url;
 
   public String getImageUrl(){
