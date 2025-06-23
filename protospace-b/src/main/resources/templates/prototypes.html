@@ -6,13 +6,14 @@
 </head>
 
 <body>
-  <div class="card_wrapper" th:fragment="prototypes" th:each="prototype : ${prototypes}">
-    <div class="card">
-      <a href="#">
+  <div class="card_wrapper" th:fragment="prototypes" >
+    <!-- プロトタイプの繰り返し表示 -->
+    <div class="card" th:each="prototype : ${prototypes}">
+      <a th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}">
         <img class="card_img" th:src="@{${prototype.imgPath}}">
       </a>
       <div class="card_body">
-        <a class="card_title" th:href="@{'/users/'+${prototype.id}}" th:text="${prototype.prototypeName}"></a>
+        <a class="card_title" th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}" th:text="${prototype.prototypeName}"></a>
         <p class="card_summary" th:text="${prototype.catchCopy}"></p>
         <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
             th:text="${prototype.user.nickname}"></span></a>
