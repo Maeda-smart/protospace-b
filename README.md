@@ -15,6 +15,15 @@ export DATABASE_ROLE=
 
 ```mermaid
 erDiagram
+  users ||--o{ prototype: ""
+  users ||--o{ comments: ""
+  prototype ||--o{ comments: ""
+  prototype ||--o{ prototype_tags: ""
+  tags ||--o{ prototype_tags: ""
+  users ||--o{ nice: ""
+  prototype ||--o{ nice: ""
+  users ||--o| pin: ""
+  prototype ||--o| pin: ""
   users{
     SERIAL id PK
     VARCHAR(16) nickname
@@ -30,6 +39,28 @@ erDiagram
     VARCHAR(128) catchCopy
     VARCHAR(128) concept
     VARCHAR(512) image
-    INT createdBy FK
+    INT user_id FK "users.id"
+  }
+  comments{
+    SERIAL id PK
+    VARCHAR(512) text
+    INT user_id FK "users.id"
+    INT prototype_id FK "prototype.id"
+  }
+  tags{
+    SERIAL id PK
+    VARCHAR(128) tag_name
+  }
+  prototype_tags{
+    INT prototype_id FK "prototype.id"
+    INT tag_id FK "tags.id"
+  }
+  nice{
+    INT prototype_id FK "prototype.id"
+    INT user_id FK "user.id"
+  }
+  pin{
+    INT user_id FK "user.id"
+    INT prototype_id FK "prototype.id"
   }
 ```
