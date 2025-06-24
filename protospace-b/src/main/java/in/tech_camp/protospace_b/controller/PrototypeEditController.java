@@ -82,12 +82,9 @@ public class PrototypeEditController {
                     .collect(Collectors.toList());
             model.addAttribute("errorMessages", errorMessages);
             model.addAttribute("prototypeForm", prototypeForm);
-            System.out.println(errorMessages);
             return "prototype/prototypeEdit";
         }
     
-
-
     try {
       MultipartFile imageFile = prototypeForm.getImgFile();
       String newImgPath;
