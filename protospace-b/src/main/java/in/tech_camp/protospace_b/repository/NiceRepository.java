@@ -18,16 +18,16 @@ import in.tech_camp.protospace_b.entity.PrototypeEntity;
 public interface NiceRepository {
 
   // いいねの保存
-  @Insert("INSERT INTO nice (prototype_id, user_id)" + 
-          "VALUES (#{prototype.id}, #{user.id})")
+  @Insert("INSERT INTO bookmark (user_id, prototype_id)" + 
+          "VALUES (#{user.id}, #{prototype.id})")
   void insert(NiceEntity nice);
 
 
   // いいねした投稿の一覧表示
   @Select("""
     SELECT * FROM prototype p
-    INNER JOIN nice n ON p.id = n.prototype_id
-    WHERE n.user_id = #{userId}
+    INNER JOIN bookmark b ON p.id = b.prototype_id
+    WHERE b.user_id = #{userId}
     """)
     @Results(value = {
         @Result(property = "id", column = "id"),
@@ -42,12 +42,12 @@ public interface NiceRepository {
 
 
     // いいね済みを判定
-    @Select("SELECT COUNT(*) > 0 FROM nice WHERE prototype_id = #{prototypeId} AND user_id = #{userId}")
+    @Select("SELECT COUNT(*) > 0 FROM bookmark WHERE prototype_id = #{prototypeId} AND user_id = #{userId}")
     boolean existNice(@Param("prototypeId") Integer prototypeId,
                       @Param("userId") Integer userId);
 
     // いいね削除
-    @Delete("DELETE FROM nice WHERE prototype_id = #{prototypeId} AND user_id = #{userId}")
+    @Delete("DELETE FROM bookmark WHERE prototype_id = #{prototypeId} AND user_id = #{userId}")
     void deleteNice(@Param("prototypeId") Integer prototypeId,
                                       @Param("userId") Integer userId);
 }
