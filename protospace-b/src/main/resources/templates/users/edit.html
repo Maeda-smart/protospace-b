@@ -1,19 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
 <head>
-  <link href="edit.css" rel="stylesheet" type="text/css">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <link rel="stylesheet" th:href="@{/css/signUp.css}" type="text/css">
+  <title>ProtoSpace</title>
 </head>
-<header></header>
-<div class="main-content">
-  <h2>プロトタイプ編集</h2>
-  <form>
-    <h3>プロトタイプの名称</h3>
-    <input class="prototype">
-    <h3>キャッチコピー</h3>
-    <textarea class="catchcopy"></textarea>
-    <h3>コンセプト</h3>
-    <textarea class="concept"></textarea>
-    <h3>プロトタイプの画像</h3>
-    <input type="file">
-    <input type="submit" value="保存する">
+
+<body>
+
+  <div th:insert="~{header :: header}"></div>
+
+  <div class="inner">
+    <div class="signUp-wrapper">
+      <h2 class="page-heading">
+      アカウント編集
+      </h2>
+
+      <div th:if="${errorMessages}" th:each="error : ${errorMessages}">
+        <div th:text="${error}"></div>
+      </div>
+
+    <form th:action="@{/users/{id}(id=${user.id})}" th:method="post" th:object="${user}" class="signUp-wrapper">
+      
+
+      <div class="field">
+        <label for="email">メールアドレス</label>
+        <br>
+        <input type="text" th:field="*{email}" id="email" class="form-name">
+      </div>
+
+      <div class="field">
+        <label for="password">パスワード（6文字以上）</label>
+        <br>
+        <input type="text" th:field="*{password}" id="password" class="form-name">
+      </div>
+
+      <div class="field">
+        <label for="passwordConfirmation">パスワード再入力</label>
+        <br>
+        <input type="text" th:field="*{passwordConfirmation}" id="passwordConfirmation" class="form-name">
+      </div>
+
+      <div class="field">
+        <label for="nickname">ユーザー名</label>
+        <br>
+        <input type="text" th:field="*{nickname}" id="nickname" class="form-name">
+      </div>
+
+      <div class="field">
+        <label for="profile">プロフィール</label>
+        <br>
+        <textarea th:field="*{profile}" id="profile" class="textarea-name"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="affiliation">所属</label>
+        <br>
+        <textarea th:field="*{affiliation}" id="affiliation" class="textarea-name"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="position">役職</label>
+        <br>
+        <textarea th:field="*{position}" id="position" class="textarea-name"></textarea>
+      </div>
+
+      <div class="actions">
+        <input type="submit" value="変更する" class="form-btn">
+      </div>
   </form>
-</div>
-<footer></footer>
+  </div>
+  </div>
+  <div th:insert="~{footer :: footer}"></div>
+
+</body>
+
+</html>
