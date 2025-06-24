@@ -21,17 +21,19 @@
       <!-- ユーザー詳細ページ リンク -->
       <a class="user_name" th:href="@{'/users/'+${prototype.user.id}}"> by <span th:text="${prototype.user.nickname}"></span></a>
 
-      <div class="edit_delete">
-        <a th:href="@{/prototype/{prototypeId}/edit(prototypeId=${prototype.id})}">
-          <input type="submit" value="編集する" class="btn">
-        </a>
-        <form th:action="@{/prototypes/{prototypeId}/delete(prototypeId=${prototype.id})}" th:method="post">
-          <input type="submit" value="削除する" class="btn">
-        </form>
+      <div th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == prototype.user.id}">
+        <div class="edit_delete">
+          <a th:href="@{/prototype/{prototypeId}/edit(prototypeId=${prototype.id})}">
+            <input type="submit" value="編集する" class="btn">
+          </a>
+          <form th:action="@{/prototypes/{prototypeId}/delete(prototypeId=${prototype.id})}" th:method="post">
+            <input type="submit" value="削除する" class="btn">
+          </form>
+        </div>
       </div>
 
       <div class="protoType_img">
-        <img th:src="@{${prototype.imgPath}}" width="400px" height="300px" alt="プロトタイプ画像">
+        <img th:src="@{${prototype.imgPath}}" alt="プロトタイプ画像">
       </div>
 
       <div class="prototype_body">
@@ -45,19 +47,30 @@
         </div>
       </div>
         
+      <!-- コメントフォーム -->
       <div class="comment_wrapper">
-        <!-- コメントフォーム -->
-        <form class="form" th:action="@{/prototype/{prototypeId}/comment(prototypeId=${prototype.id})}" method="post" th:object="${commentForm}">
-          <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">エラー</div>
-          <div class="field">
-            <label for="text">コメント</label>
-            <br>
-            <input type="text" class="form-name" id="text" th:field="*{text}">
-          </div>
-          <div class="actions">
-            <input type="submit" value="送信する" class="submit-btn">
-          </div>
-        </form>
+
+        <div th:if="${#authorization.expression('isAuthenticated()')}">
+
+          <form class="form" th:action="@{/prototype/{prototypeId}/comment(prototypeId=${prototype.id})}" method="post" th:object="${commentForm}">
+            <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">エラー</div>
+
+            <div class="field">
+              <label for="text">コメント</label>
+              <br>
+              <input type="text" class="form-name" id="text" th:field="*{text}">
+            </div>
+            <div class="actions">
+              <input type="submit" value="送信する" class="submit-btn">
+            </div>
+          </form>
+        </div>
+
+        <div th:if="${#authorization.expression('!isAuthenticated()')}">
+          <strong>
+            <p class="attention">※※※ コメントの投稿には新規登録/ログインが必要です ※※※</p>
+          </strong>
+        </div>
         
          <!-- コメント一覧表示 -->
         <ul class="comments_list">
