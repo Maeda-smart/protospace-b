@@ -1,4 +1,4 @@
-CREATE TABLE like (
+CREATE TABLE nice (
     prototype_id INT NOT NULL,
     user_id INT NOT NULL,
 
