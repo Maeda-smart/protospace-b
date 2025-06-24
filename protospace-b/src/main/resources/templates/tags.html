@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+  <link th:href="@{/css/tags.css}" rel="stylesheet" type="text/css">
+</head>
+<div class="tags" th:fragment="prototype-tags">
+  <div class="tag">tag1</div>
+  <div class="tag">tag2</div>
+  <div class="tag">tag3</div>
+  <div class="tag">tag4</div>
+  <div class="tag">tag5</div>
+  <div class="tag">tag6</div>
+  <div class="tag">タグはありません</div>
+</div>
+<div class="tags" th:fragment="tag-edit">
+  <script th:src="@{/javascript/tag_editor.js}"></script>
+  <div class="tag">tag1<span class="delete-button">×</span></div>
+  <div class="tag">tag2<span class="delete-button">×</span></div>
+  <div class="tag">tag3<span class="delete-button">×</span></div>
+  <div class="tag">tag4<span class="delete-button">×</span></div>
+  <div class="tag">tag5<span class="delete-button">×</span></div>
+  <div class="tag">tag6<span class="delete-button">×</span></div>
+  <div class="tag">タグはありません</div>
+  <div class="tag edit-button">タグを編集する</div>
+  <div class="tag edit-input"><input type="text"><span class="add-button">✓</span></div>
+</div>
+
+</html>
