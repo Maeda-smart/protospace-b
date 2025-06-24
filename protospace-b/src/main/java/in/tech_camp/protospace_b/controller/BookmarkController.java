@@ -19,36 +19,36 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class BookmarkController {
   
-  private final BookmarkRepository niceRepository;
+  private final BookmarkRepository bookmarkRepository;
 
   private final UserNewRepository userNewRepository;
 
   private final PrototypeDetailRepository prototypeDetailRepository;
   
-  // いいね送信メソッド
-  @PostMapping("/prototypes/{prototypeId}/nice")
-  public String nicePrototype(@PathVariable("prototypeId") Integer prototypeId,
+  // ブックマーク送信メソッド
+  @PostMapping("/prototypes/{prototypeId}/bookmark")
+  public String bookmarkPrototype(@PathVariable("prototypeId") Integer prototypeId,
     @AuthenticationPrincipal CustomUserDetail currentUser) {
 
     Integer userId = currentUser.getId();
 
-    // いいね済みかを判別
-    boolean isNice = niceRepository.existNice(prototypeId, userId);
+    // ブックマーク済みかを判別
+    boolean isBookmark = bookmarkRepository.existBookmark(prototypeId, userId);
       
-    if(isNice) {
-      // いいね済みなら削除
-      niceRepository.deleteNice(prototypeId, userId);
+    if(isBookmark) {
+      // ブックマーク済みなら削除
+      bookmarkRepository.deleteBookmark(prototypeId, userId);
     } else {
     // プロトタイプとログインしているユーザー情報を取得
     PrototypeEntity prototype = prototypeDetailRepository.findByPrototypeId(prototypeId);
     UserEntity user = userNewRepository.findById(userId);
     
-    BookmarkEntity nice = new BookmarkEntity();
-    nice.setPrototype(prototype);
-    nice.setUser(user);
+    BookmarkEntity bookmark = new BookmarkEntity();
+    bookmark.setPrototype(prototype);
+    bookmark.setUser(user);
 
-    // いいねを追加
-    niceRepository.insert(nice);
+    // ブックマークを追加
+    bookmarkRepository.insert(bookmark);
     }
       
     return "redirect:/prototypes/" + prototypeId + "/detail";

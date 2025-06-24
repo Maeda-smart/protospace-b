@@ -23,7 +23,7 @@ public class UserDetailController {
 
   private final UserDetailRepository userDetailRepository;
   private final PrototypeShowRepository prototypeShowRepository;
-  private final BookmarkRepository niceRepository;
+  private final BookmarkRepository bookmarkRepository;
 
   // ユーザー詳細ページ遷移
   @GetMapping("/users/{userId}")
@@ -39,8 +39,8 @@ public class UserDetailController {
     model.addAttribute("prototypes", prototypes);
 
     // ログインユーザーのいいねした投稿取得
-    List<PrototypeEntity> nicePrototypes = niceRepository.findNiceByUserId(loginUser);
-    model.addAttribute("nicePrototypes", nicePrototypes);
+    List<PrototypeEntity> bookmarkPrototypes = bookmarkRepository.findBookmarkByUserId(loginUser);
+    model.addAttribute("bookmark", bookmarkPrototypes);
     return "users/detail";
   }
   
