@@ -15,6 +15,7 @@ export DATABASE_ROLE=
 
 ```mermaid
 erDiagram
+  users ||--o{ prototype: ""
   users{
     SERIAL id PK
     VARCHAR(16) nickname
