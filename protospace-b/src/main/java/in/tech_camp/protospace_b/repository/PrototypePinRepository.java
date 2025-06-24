@@ -7,6 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface PrototypePinRepository {
-  @Select("SELECT * FROM prototype_pin WHERE user_id = #{userId}")
+  @Select("SELECT * FROM pin WHERE user_id = #{userId}")
   List<PrototypePinEntity> findByUserId(Integer userId);
 }
