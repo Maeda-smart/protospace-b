@@ -42,8 +42,8 @@
     <h2><span th:text="${user.nickname}"></span>さんのプロトタイプ</h2>
     <div th:replace="~{prototypes :: prototypes}"></div>
 
-    <!-- いいねした投稿の一覧表示 -->
-    <h2>いいねしたプロトタイプ</h2>
+    <!-- ブックマークした投稿の一覧表示 -->
+    <h2>ブックマークしたプロトタイプ</h2>
     <div th:replace="~{prototype/nicePrototypes :: nicePrototypes}"></div>
   </div>
   <div th:insert="~{footer :: footer}"></div>
