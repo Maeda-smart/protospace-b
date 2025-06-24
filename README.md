@@ -56,8 +56,8 @@ erDiagram
     INT tag_id FK "tags.id"
   }
   nice{
-    INT user_id FK "user.id"
     INT prototype_id FK "prototype.id"
+    INT user_id FK "user.id"
   }
   pin{
     INT user_id FK "user.id"
