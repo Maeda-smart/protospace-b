@@ -116,3 +116,14 @@
   color:#999;
   text-decoration: underline;
 }
+
+/* ブックマークボタン */
+.nice-button {
+  font-weight: normal;
+  color: gray;
+}
+
+.defuse-button {
+  font-weight: bold;
+  color: blue;
+}
