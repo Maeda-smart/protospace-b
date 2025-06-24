@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
-import in.tech_camp.protospace_b.entity.NiceEntity;
+import in.tech_camp.protospace_b.entity.BookmarkEntity;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
-import in.tech_camp.protospace_b.repository.NiceRepository;
+import in.tech_camp.protospace_b.repository.BookmarkRepository;
 import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
 import in.tech_camp.protospace_b.repository.UserNewRepository;
 import lombok.AllArgsConstructor;
@@ -17,9 +17,9 @@ import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
-public class NiceController {
+public class BookmarkController {
   
-  private final NiceRepository niceRepository;
+  private final BookmarkRepository niceRepository;
 
   private final UserNewRepository userNewRepository;
 
@@ -43,7 +43,7 @@ public class NiceController {
     PrototypeEntity prototype = prototypeDetailRepository.findByPrototypeId(prototypeId);
     UserEntity user = userNewRepository.findById(userId);
     
-    NiceEntity nice = new NiceEntity();
+    BookmarkEntity nice = new BookmarkEntity();
     nice.setPrototype(prototype);
     nice.setUser(user);
 

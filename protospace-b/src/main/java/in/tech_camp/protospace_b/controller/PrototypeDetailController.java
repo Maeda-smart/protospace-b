@@ -12,8 +12,8 @@ import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.CommentEntity;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.form.CommentForm;
+import in.tech_camp.protospace_b.repository.BookmarkRepository;
 import in.tech_camp.protospace_b.repository.CommentRepository;
-import in.tech_camp.protospace_b.repository.NiceRepository;
 import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
 
 @Controller
@@ -23,10 +23,10 @@ public class PrototypeDetailController {
 
     private final CommentRepository commentRepository;
 
-    private final NiceRepository niceRepository;
+    private final BookmarkRepository niceRepository;
 
     // コンストラクタインジェクション（Spring Boot 4.x以降は@Autowried不要！）
-    public PrototypeDetailController(PrototypeDetailRepository prototypeDetailRepository,CommentRepository commentRepository, NiceRepository niceRepository) {
+    public PrototypeDetailController(PrototypeDetailRepository prototypeDetailRepository,CommentRepository commentRepository, BookmarkRepository niceRepository) {
         this.prototypeDetailRepository = prototypeDetailRepository;
         this.commentRepository = commentRepository;
         this.niceRepository = niceRepository;

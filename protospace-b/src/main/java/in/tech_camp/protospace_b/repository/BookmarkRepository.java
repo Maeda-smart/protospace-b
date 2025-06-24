@@ -11,16 +11,16 @@ import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
-import in.tech_camp.protospace_b.entity.NiceEntity;
+import in.tech_camp.protospace_b.entity.BookmarkEntity;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 
 @Mapper
-public interface NiceRepository {
+public interface BookmarkRepository {
 
   // いいねの保存
   @Insert("INSERT INTO bookmark (user_id, prototype_id)" + 
           "VALUES (#{user.id}, #{prototype.id})")
-  void insert(NiceEntity nice);
+  void insert(BookmarkEntity nice);
 
 
   // いいねした投稿の一覧表示

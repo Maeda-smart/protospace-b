@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
-import in.tech_camp.protospace_b.repository.NiceRepository;
+import in.tech_camp.protospace_b.repository.BookmarkRepository;
 import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserDetailRepository;
 import lombok.AllArgsConstructor;
@@ -23,7 +23,7 @@ public class UserDetailController {
 
   private final UserDetailRepository userDetailRepository;
   private final PrototypeShowRepository prototypeShowRepository;
-  private final NiceRepository niceRepository;
+  private final BookmarkRepository niceRepository;
 
   // ユーザー詳細ページ遷移
   @GetMapping("/users/{userId}")
