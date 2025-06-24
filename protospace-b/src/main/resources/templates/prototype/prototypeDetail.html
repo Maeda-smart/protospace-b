@@ -52,6 +52,9 @@
 
         <!-- いいねボタン -->
         <form th:action="@{/prototypes/{prototypeId}/nice(prototypeId=${prototype.id})}" method="post">
+          <!-- CSRFを追加 -->
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          
           <input type="hidden" name="prototypeId" th:value="${prototype.id}" />
           <button type="submit" th:class="${isNice} ? 'defuse-button' : 'nice-button'">
             <span th:text="${isNice} ? '♥ いいね' : '♡ いいね'"></span>
