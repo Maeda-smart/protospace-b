@@ -7,13 +7,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
+
 import lombok.AllArgsConstructor;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import in.tech_camp.protospace_b.repository.PinRepository;
 import in.tech_camp.protospace_b.entity.PinEntity;
 import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
+
+import org.springframework.web.bind.annotation.RequestBody;
+
+import jakarta.websocket.server.PathParam;
+
 
 @Controller
 @AllArgsConstructor
@@ -48,7 +55,22 @@ public class PinController {
     pinRepository.insert(pin);
 
 
-    return "redirect:/";
+    return "redirect:/users/" + ownerUser;
+  }
+  
+  @PostMapping("prototypes/{prototypeId}/pin/off")
+  public String deleteMethodName(@PathVariable("prototypeId") Integer prototypeId,
+                                @AuthenticationPrincipal CustomUserDetail currentUser) {
+
+    Integer ownerUser = currentUser.getId();
+
+    PinEntity pin = new PinEntity();
+    pin.setUserId(ownerUser);
+    pin.setPrototypeId(prototypeId);
+
+    pinRepository.delete(pin);
+
+    return "redirect:/users/" + ownerUser;
   }
   
   

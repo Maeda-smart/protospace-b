@@ -21,4 +21,10 @@ public interface PinRepository {
 
   @Insert("INSERT INTO pin (user_id,prototype_id) VALUES (#{userId}, #{prototypeId})")
   void insert(PinEntity pinEntity);
+  
+  @Select("SELECT COUNT(*) FROM pin WHERE user_id = #{userId} AND prototype_id = #{prototypeId}")
+  int count(@Param("userId") Integer userId, @Param("prototypeId") Integer prototypeId);
+
+  @Delete("DELETE FROM pin WHERE user_id = #{userId} AND prototype_id = #{prototypeId}")
+  void delete(PinEntity pinEntity);
 }

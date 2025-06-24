@@ -31,5 +31,4 @@ public class UserDetailController {
     model.addAttribute("prototypes", prototypes);
     return "users/detail";
   }
-  
 }
