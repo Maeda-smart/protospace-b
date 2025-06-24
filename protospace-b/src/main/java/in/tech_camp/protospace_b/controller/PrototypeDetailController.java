@@ -23,13 +23,13 @@ public class PrototypeDetailController {
 
     private final CommentRepository commentRepository;
 
-    private final BookmarkRepository niceRepository;
+    private final BookmarkRepository bookmarkRepository;
 
     // コンストラクタインジェクション（Spring Boot 4.x以降は@Autowried不要！）
-    public PrototypeDetailController(PrototypeDetailRepository prototypeDetailRepository,CommentRepository commentRepository, BookmarkRepository niceRepository) {
+    public PrototypeDetailController(PrototypeDetailRepository prototypeDetailRepository,CommentRepository commentRepository, BookmarkRepository bookmarkRepository) {
         this.prototypeDetailRepository = prototypeDetailRepository;
         this.commentRepository = commentRepository;
-        this.niceRepository = niceRepository;
+        this.bookmarkRepository = bookmarkRepository;
     }
 
     @GetMapping("/prototypes/{prototypeId}/detail")
@@ -49,9 +49,11 @@ public class PrototypeDetailController {
         model.addAttribute("comments", comments);
 
         // いいね済みの状態を表示
+        if (currentUser != null) {
         Integer userId = currentUser.getId();
-        boolean isNice = niceRepository.existNice(prototypeId, userId);
-        model.addAttribute("isNice", isNice);
+        boolean isBookmarked = bookmarkRepository.existBookmark(prototypeId, userId);
+        model.addAttribute("isBookmarked", isBookmarked);
+        }
 
         return "prototype/prototypeDetail";
     }

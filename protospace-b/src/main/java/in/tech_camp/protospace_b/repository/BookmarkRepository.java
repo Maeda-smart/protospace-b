@@ -20,7 +20,7 @@ public interface BookmarkRepository {
   // いいねの保存
   @Insert("INSERT INTO bookmark (user_id, prototype_id)" + 
           "VALUES (#{user.id}, #{prototype.id})")
-  void insert(BookmarkEntity nice);
+  void insert(BookmarkEntity bookmark);
 
 
   // いいねした投稿の一覧表示
@@ -38,16 +38,16 @@ public interface BookmarkRepository {
         @Result(property = "user", column = "user_id",
                 one = @One(select = "in.tech_camp.protospace_b.repository.UserNewRepository.findById"))
     })
-    List<PrototypeEntity> findNiceByUserId(Integer userId);
+    List<PrototypeEntity> findBookmarkByUserId(Integer userId);
 
 
     // いいね済みを判定
     @Select("SELECT COUNT(*) > 0 FROM bookmark WHERE prototype_id = #{prototypeId} AND user_id = #{userId}")
-    boolean existNice(@Param("prototypeId") Integer prototypeId,
+    boolean existBookmark(@Param("prototypeId") Integer prototypeId,
                       @Param("userId") Integer userId);
 
     // いいね削除
     @Delete("DELETE FROM bookmark WHERE prototype_id = #{prototypeId} AND user_id = #{userId}")
-    void deleteNice(@Param("prototypeId") Integer prototypeId,
+    void deleteBookmark(@Param("prototypeId") Integer prototypeId,
                                       @Param("userId") Integer userId);
 }
