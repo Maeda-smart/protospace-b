@@ -20,8 +20,8 @@ erDiagram
   prototype ||--o{ comments: ""
   prototype ||--o{ prototype_tags: ""
   tags ||--o{ prototype_tags: ""
-  users ||--o{ like: ""
-  prototype ||--o{ like: ""
+  users ||--o{ nice: ""
+  prototype ||--o{ nice: ""
   users ||--o| pin: ""
   prototype ||--o| pin: ""
   users{
@@ -55,7 +55,7 @@ erDiagram
     INT prototype_id FK "prototype.id"
     INT tag_id FK "tags.id"
   }
-  like{
+  nice{
     INT prototype_id FK "prototype.id"
     INT user_id FK "user.id"
   }
