@@ -2,13 +2,11 @@ package in.tech_camp.protospace_b.controller;
 
 import java.util.List;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.repository.BookmarkRepository;
@@ -27,21 +25,19 @@ public class UserDetailController {
 
   // ユーザー詳細ページ遷移
   @GetMapping("/users/{userId}")
-  public String showMyPage(@PathVariable("userId") Integer userId, @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
+  public String showMyPage(@PathVariable("userId") Integer userId,Model model) {
 
     UserEntity users = userDetailRepository.findById(userId);
     model.addAttribute("user", users);
 
-    Integer loginUser = currentUser.getId();
-
     // ログインユーザーの投稿取得
-    List<PrototypeEntity> prototypes = prototypeShowRepository.showByUserId(users.getId());
+    List<PrototypeEntity> prototypes = prototypeShowRepository.showByUserId(userId);
     model.addAttribute("prototypes", prototypes);
 
     // ログインユーザーのいいねした投稿取得
-    List<PrototypeEntity> bookmarkPrototypes = bookmarkRepository.findBookmarkByUserId(loginUser);
+    List<PrototypeEntity> bookmarkPrototypes = bookmarkRepository.findBookmarkByUserId(userId);
     model.addAttribute("bookmark", bookmarkPrototypes);
     return "users/detail";
-  }
+}
   
 }
