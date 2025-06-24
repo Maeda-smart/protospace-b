@@ -55,7 +55,7 @@ erDiagram
     INT prototype_id FK "prototype.id"
     INT tag_id FK "tags.id"
   }
-  nice{
+  like{
     INT prototype_id FK "prototype.id"
     INT user_id FK "user.id"
   }
