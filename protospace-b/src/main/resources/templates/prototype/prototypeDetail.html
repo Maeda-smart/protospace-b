@@ -53,6 +53,17 @@
           </div>
         </div>
 
+        <!-- いいねボタン -->
+        <form th:action="@{/prototypes/{prototypeId}/bookmark(prototypeId=${prototype.id})}" method="post">
+          <!-- CSRFを追加 -->
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          
+          <input type="hidden" name="prototypeId" th:value="${prototype.id}" />
+          <button type="submit" th:class="${isBookmarked} ? 'defuse-button' : 'bookmark-button'">
+            <span th:text="${isBookmarked} ? '★ブックマーク' : '☆ブックマーク'"></span>
+          </button>
+        </form>
+
         <!-- コメントフォーム -->
         <div class="comment_wrapper">
 
