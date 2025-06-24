@@ -16,7 +16,7 @@
   <div class="inner">
     <div class="signUp-wrapper">
       <h2 class="page-heading">
-      ユーザー新規登録
+        ユーザー新規登録
       </h2>
 
       <!-- バリデーションメッセージ -->
@@ -24,16 +24,16 @@
         <div th:text="${error}"></div>
       </div>
 
-    <form th:action="@{/user}" th:method="post" th:object="${userForm}" class="signUp-wrapper">
-      
-    <!-- フォーム -->
-    <div th:insert="~{userFields :: userFields}"></div>
+      <form th:action="@{/user}" th:method="post" th:object="${userForm}" class="signUp-wrapper">
 
-      <div class="actions">
-        <input type="submit" value="新規登録" class="form-btn">
-      </div>
-  </form>
-  </div>
+        <!-- フォーム -->
+        <div th:insert="~{userFields :: userFields}"></div>
+
+        <div class="actions">
+          <input type="submit" value="新規登録" class="form-btn">
+        </div>
+      </form>
+    </div>
   </div>
   <div th:insert="~{footer :: footer}"></div>
 
