@@ -16,6 +16,8 @@ export DATABASE_ROLE=
 ```mermaid
 erDiagram
   users ||--o{ prototype: ""
+  users ||--o{ comment: ""
+  prototype ||--o{ comment: ""
   users{
     SERIAL id PK
     VARCHAR(16) nickname
@@ -32,5 +34,11 @@ erDiagram
     VARCHAR(128) concept
     VARCHAR(512) image
     INT createdBy FK
+  }
+  comment{
+    SERIAL id PK
+    VARCHAR(512) text
+    INT userId UK
+    INT prototypeId UK
   }
 ```
