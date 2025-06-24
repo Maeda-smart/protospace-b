@@ -2,12 +2,12 @@ package in.tech_camp.protospace_b.controller;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,8 +24,8 @@ import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.form.PrototypeForm;
-import in.tech_camp.protospace_b.repository.PrototypeEditRepository;
 import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
+import in.tech_camp.protospace_b.repository.PrototypeEditRepository;
 import in.tech_camp.protospace_b.repository.UserNewRepository;
 import in.tech_camp.protospace_b.validation.ValidationOrder;
 import lombok.AllArgsConstructor;
@@ -75,7 +75,16 @@ public class PrototypeEditController {
         @AuthenticationPrincipal CustomUserDetail currentUser,
         Model model) {
 
-
+    // バリデーション
+    if (result.hasErrors()) {
+            List<String> errorMessages = result.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.toList());
+            model.addAttribute("errorMessages", errorMessages);
+            model.addAttribute("prototypeForm", prototypeForm);
+            return "prototype/prototypeEdit";
+        }
+    
     try {
       MultipartFile imageFile = prototypeForm.getImgFile();
       String newImgPath;

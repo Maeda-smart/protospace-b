@@ -31,7 +31,7 @@
         </tr>
       </tbody>
     </table>
-    <h2>名前さんのプロトタイプ</h2>
+    <h2><span th:text="${user.nickname}"></span>さんのプロトタイプ</h2>
     <div th:replace="~{prototypes :: prototypes}"></div>
   </div>
   <div th:insert="~{footer :: footer}"></div>

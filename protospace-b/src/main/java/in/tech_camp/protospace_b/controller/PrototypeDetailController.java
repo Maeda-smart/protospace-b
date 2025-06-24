@@ -27,13 +27,9 @@ public class PrototypeDetailController {
     }
 
     @GetMapping("/prototypes/{prototypeId}/detail")
-    public String editPrototype(@PathVariable("prototypeId") Integer prototypeId, Model model) {
+    public String showPrototypeDetail(@PathVariable("prototypeId") Integer prototypeId, Model model) {
         // リポジトリからエンティティ取得
         PrototypeEntity prototype = prototypeDetailRepository.findByPrototypeId(prototypeId);
-
-        // prototypeForm.setId(prototype.getId());
-
-        // System.out.println(prototype);
 
         model.addAttribute("prototype", prototype);
         model.addAttribute("prototypeId", prototypeId);
@@ -46,7 +42,6 @@ public class PrototypeDetailController {
         List<CommentEntity> comments = commentRepository.findByPrototypeId(prototypeId);
         model.addAttribute("comments", comments);
 
-        // return "protoType/prototypeDetail";
         return "prototype/prototypeDetail";
     }
 }
