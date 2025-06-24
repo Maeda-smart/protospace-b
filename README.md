@@ -20,8 +20,8 @@ erDiagram
   prototype ||--o{ comments: ""
   prototype ||--o{ prototype_tags: ""
   tags ||--o{ prototype_tags: ""
-  users ||--o{ nice: ""
-  prototype ||--o{ nice: ""
+  users ||--o{ like: ""
+  prototype ||--o{ like: ""
   users ||--o| pin: ""
   prototype ||--o| pin: ""
   users{
