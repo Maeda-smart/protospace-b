@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
-<div th:fragment="header">
-  <header class="header">
-    <div class="inner">
-      <div class="nav">
-        <div class="nav_left">
-          <a class="title" th:href="@{/}">
-            <img class="logo" th:src="@{/image/logo.png}" alt="logo">
-          </a>
-        </div>
-        <div class="nav_right" th:if="${#authorization.expression('isAuthenticated()')}">
-          <form th:action="@{/users/logout}" method="POST" class="nav_logout_form">
-            <button type="submit" class="nav_logout" rel="nofollow" data-method="delete">ログアウト</button>
-          </form>
-          <a class="nav_btn" th:href="@{/protoType/prototypeNew}">New Proto</a>
-        </div>
-        <div class="nav_right" th:if="${#authorization.expression('!isAuthenticated()')}">
-          <a class="nav_btn" th:href="@{/users/sign_up}">新規登録</a>
-          <a class="nav_btn" th:href="@{/users/login}">ログイン</a>
-        </div>
+<header class="header" th:fragment="header">
+  <div class="inner">
+    <div class="nav">
+      <div class="nav_left">
+        <a class="title" th:href="@{/}">
+          <img class="logo" th:src="@{/image/logo.png}" alt="logo">
+        </a>
+      </div>
+      <div class="nav_right" th:if="${#authorization.expression('isAuthenticated()')}">
+        <form th:action="@{/users/logout}" method="POST" class="nav_logout_form">
+          <button type="submit" class="nav_logout" rel="nofollow" data-method="delete">ログアウト</button>
+        </form>
+        <a class="nav_btn" th:href="@{/prototype/prototypeNew}">New Proto</a>
+      </div>
+      <div class="nav_right" th:if="${#authorization.expression('!isAuthenticated()')}">
+        <a class="nav_btn" th:href="@{/users/sign_up}">新規登録</a>
+        <a class="nav_btn" th:href="@{/users/login}">ログイン</a>
       </div>
     </div>
-  </header>
-</div>
+  </div>
+</header>
+
 </html>

@@ -1,9 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
 <head>
   <link th:href="@{/css/edit.css}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
-<header></header>
+<body>
+
+<div th:insert="~{header :: header}"></div>
+
 <div class="main-content">
-  <h2>プロトタイプ編集</h2>
+  <h2>新規プロトタイプ投稿</h2>
   <form th:action="@{/prototypes}" th:object="${prototypeForm}" method="post" enctype="multipart/form-data">
     <h3>プロトタイプの名称</h3>
     <label for="prototypeName"></label>
@@ -20,9 +26,13 @@
 
     <h3>プロトタイプの画像</h3>
     <label for="img"></label>
-    <input type="file" id="img" name="img" th:field="*{img}">
+    <input type="file" id="img" name="img" th:field="*{imgFile}">
 
     <input type="submit" value="保存する">
   </form>
 </div>
-<footer></footer>
+
+<div th:insert="~{footer :: footer}"></div>
+
+</body>
+</html>
