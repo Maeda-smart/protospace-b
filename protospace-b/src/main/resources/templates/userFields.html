@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="stylesheet" th:href="@{/css/signUp.css}" type="text/css">
+</head>
+
+<body>
+  <div class="fields" th:fragment="userFields" >
+    <div class="field">
+      <label for="email">メールアドレス</label>
+      <br>
+      <input type="text" th:field="*{email}" id="email" class="form-name">
+    </div>
+
+    <div class="field">
+      <label for="password">パスワード（6文字以上）</label>
+      <br>
+      <input type="text" th:field="*{password}" id="password" class="form-name">
+    </div>
+
+    <div class="field">
+      <label for="passwordConfirmation">パスワード再入力</label>
+      <br>
+      <input type="text" th:field="*{passwordConfirmation}" id="passwordConfirmation" class="form-name">
+    </div>
+
+    <div class="field">
+      <label for="nickname">ユーザー名</label>
+      <br>
+      <input type="text" th:field="*{nickname}" id="nickname" class="form-name">
+    </div>
+
+    <div class="field">
+      <label for="profile">プロフィール</label>
+      <br>
+      <textarea th:field="*{profile}" id="profile" class="textarea-name"></textarea>
+    </div>
+
+    <div class="field">
+      <label for="affiliation">所属</label>
+      <br>
+      <textarea th:field="*{affiliation}" id="affiliation" class="textarea-name"></textarea>
+    </div>
+
+    <div class="field">
+      <label for="position">役職</label>
+      <br>
+      <textarea th:field="*{position}" id="position" class="textarea-name"></textarea>
+    </div>
+  </div>
+</body>
+
+</html>
