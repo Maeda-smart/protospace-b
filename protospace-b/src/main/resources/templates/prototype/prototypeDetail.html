@@ -48,7 +48,6 @@
             <p class="detail_title">コンセプト</p>
             <p class="text" th:text="${prototype.concept}"></p>
           </div>
-          <div>いいね数：<span th:text="${countNice}"></span></div>
         </div>
 
         <!-- ブックマークボタン -->
@@ -69,7 +68,7 @@
           
           <input type="hidden" name="prototypeId" th:value="${prototype.id}" />
           <button type="submit" th:class="${isNice} ? 'defuse-nice-button' : 'nice-button'">
-            <span th:text="${isNice} ? '♥いいね' : '♡いいね'"></span>
+            <span th:text="${isNice} ? '♥' + ' ' + ${countNice}: '♡' + ' ' + ${countNice}"></span>
           </button>
         </form>
 
