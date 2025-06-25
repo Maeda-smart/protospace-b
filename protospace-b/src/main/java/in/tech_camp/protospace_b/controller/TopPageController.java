@@ -34,6 +34,7 @@ public class TopPageController {
     List<PrototypeEntity> prototypes = prototypeShowRepository.showAll();
     model.addAttribute("prototypes", prototypes);
 
+    
     // プロトタイプごとのいいね数表示
     Map<Integer, Integer> niceCountMap = new HashMap<>();
 

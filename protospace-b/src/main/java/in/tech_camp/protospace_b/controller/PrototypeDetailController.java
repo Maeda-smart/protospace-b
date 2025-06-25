@@ -29,9 +29,8 @@ public class PrototypeDetailController {
     private final NiceRepository niceRepository;
 
     // コンストラクタインジェクション（Spring Boot 4.x以降は@Autowried不要！）
-    public PrototypeDetailController(PrototypeDetailRepository prototypeDetailRepository,
-            CommentRepository commentRepository,
-            BookmarkRepository bookmarkRepository, NiceRepository niceRepository) {
+    public PrototypeDetailController(PrototypeDetailRepository prototypeDetailRepository,CommentRepository commentRepository,
+                                     BookmarkRepository bookmarkRepository, NiceRepository niceRepository) {
         this.prototypeDetailRepository = prototypeDetailRepository;
         this.commentRepository = commentRepository;
         this.bookmarkRepository = bookmarkRepository;
@@ -57,7 +56,6 @@ public class PrototypeDetailController {
 
         // プロトタイプごとのいいね数を取得してビューに渡す
         int countNice = niceRepository.countNiceByPrototypeId(prototypeId);
-        System.out.println(countNice);
         model.addAttribute("countNice", countNice);
 
         if (currentUser != null) {
