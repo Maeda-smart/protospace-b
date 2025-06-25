@@ -56,15 +56,21 @@
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
           
           <input type="hidden" name="prototypeId" th:value="${prototype.id}" />
-          <button type="submit" th:class="${isBookmarked} ? 'defuse-button' : 'bookmark-button'">
+          <button type="submit" th:class="${isBookmarked} ? 'defuse-bookmark-button' : 'bookmark-button'">
             <span th:text="${isBookmarked} ? '★ブックマーク' : '☆ブックマーク'"></span>
           </button>
         </form>
 
         <!-- いいねボタン -->
          <form th:action="@{/prototypes/{prototypeId}/nice(prototypeId=${prototype.id})}" method="post">
-         <input type="submit" value="♡いいね">
-         </form>
+          <!-- CSRFを追加 -->
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          
+          <input type="hidden" name="prototypeId" th:value="${prototype.id}" />
+          <button type="submit" th:class="${isNice} ? 'defuse-nice-button' : 'nice-button'">
+            <span th:text="${isNice} ? '♥いいね' : '♡いいね'"></span>
+          </button>
+        </form>
 
         <!-- コメントフォーム -->
         <div class="comment_wrapper">

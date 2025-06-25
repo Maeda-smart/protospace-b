@@ -29,23 +29,25 @@ public class NiceController {
   // いいねを送るメソッド
   @PostMapping("/prototypes/{prototypeId}/nice")
   public String sendNice(@PathVariable("prototypeId") Integer prototypeId,@AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
-    
+
     // プロトタイプとログインしているユーザー情報を取得
     Integer userId = currentUser.getId();
     PrototypeEntity prototype = prototypeDetailRepository.findByPrototypeId(prototypeId);
     UserEntity user = userNewRepository.findById(userId);
 
-    // NiceEntityにセット
-    NiceEntity nice = new NiceEntity();
-    nice.setPrototype(prototype);
-    nice.setUser(user);
+    // いいね済みかを判別
+    boolean isNice = niceRepository.existNice(prototypeId, userId);
 
-
-    try {
+    if(isNice){
+      // いいね済みなら削除
+      niceRepository.deleteNice(prototypeId, userId);
+    } else {
+      // NiceEntityにセット
+      NiceEntity nice = new NiceEntity();
+      nice.setPrototype(prototype);
+      nice.setUser(user);
       niceRepository.insert(nice);
-    } catch (Exception e) {
-      System.out.println("Error:" + e);
-    }
+    }  
       
     return "redirect:/prototypes/" + prototypeId + "/detail";
   }
