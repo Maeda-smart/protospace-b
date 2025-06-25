@@ -40,7 +40,7 @@
           <img th:src="@{${prototype.imgPath}}" alt="プロトタイプ画像">
         </div>
 
-        <div th:replace="tags :: prototype-tags"></div>
+        <div th:replace="tags :: prototype-tags(${prototype.tags})"></div>
 
         <div class="prototype_body">
           <div class="prototype_detail">
