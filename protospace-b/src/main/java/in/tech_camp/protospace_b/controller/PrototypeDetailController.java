@@ -16,9 +16,9 @@ import in.tech_camp.protospace_b.form.CommentForm;
 import in.tech_camp.protospace_b.repository.BookmarkRepository;
 import in.tech_camp.protospace_b.repository.CommentRepository;
 import in.tech_camp.protospace_b.repository.NiceRepository;
+import in.tech_camp.protospace_b.repository.PinRepository;
 import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
 import lombok.AllArgsConstructor;
-import in.tech_camp.protospace_b.repository.PinRepository;
 
 @Controller
 @AllArgsConstructor
@@ -28,18 +28,16 @@ public class PrototypeDetailController {
     private final CommentRepository commentRepository;
     private final BookmarkRepository bookmarkRepository;
     private final NiceRepository niceRepository;
-
-    // コンストラクタインジェクション（Spring Boot 4.x以降は@Autowried不要！）
-    public PrototypeDetailController(PrototypeDetailRepository prototypeDetailRepository,CommentRepository commentRepository,
-                                     BookmarkRepository bookmarkRepository, NiceRepository niceRepository) {
-        this.prototypeDetailRepository = prototypeDetailRepository;
-        this.commentRepository = commentRepository;
-        this.bookmarkRepository = bookmarkRepository;
-        this.niceRepository = niceRepository;
-    }
-
     private final PinRepository pinRepository;
 
+    // コンストラクタインジェクション（Spring Boot 4.x以降は@Autowried不要！）
+    // public PrototypeDetailController(PrototypeDetailRepository prototypeDetailRepository,CommentRepository commentRepository,
+    //                                  BookmarkRepository bookmarkRepository, NiceRepository niceRepository) {
+    //     this.prototypeDetailRepository = prototypeDetailRepository;
+    //     this.commentRepository = commentRepository;
+    //     this.bookmarkRepository = bookmarkRepository;
+    //     this.niceRepository = niceRepository;
+    // }
 
     @GetMapping("/prototypes/{prototypeId}/detail")
     public String showPrototypeDetail(@PathVariable("prototypeId") Integer prototypeId,
