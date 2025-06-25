@@ -13,6 +13,7 @@ import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.repository.NiceRepository;
+import in.tech_camp.protospace_b.form.PrototypeSearchForm;
 import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserDetailRepository;
 import lombok.AllArgsConstructor;
@@ -32,9 +33,9 @@ public class TopPageController {
       model.addAttribute("user", user);
     }
     List<PrototypeEntity> prototypes = prototypeShowRepository.showAll();
+    PrototypeSearchForm prototypeSearchForm = new PrototypeSearchForm();
     model.addAttribute("prototypes", prototypes);
 
-    
     // プロトタイプごとのいいね数表示
     Map<Integer, Integer> niceCountMap = new HashMap<>();
 
@@ -44,6 +45,7 @@ public class TopPageController {
     }
 
     model.addAttribute("niceCountMap", niceCountMap);
+    model.addAttribute("prototypeSearchForm", prototypeSearchForm);
 
     return "index";
   }
