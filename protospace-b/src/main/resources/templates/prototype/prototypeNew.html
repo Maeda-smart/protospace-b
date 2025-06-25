@@ -1,38 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
 <head>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css" />
   <link th:href="@{/css/edit.css}" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
+
 <body>
+  <div th:replace="~{header :: header}"></div>
 
-<div th:insert="~{header :: header}"></div>
+  <div class="main-content">
+    <h2>新規プロトタイプ投稿</h2>
+    <form th:action="@{/prototypes}" th:object="${prototypeForm}" method="post" enctype="multipart/form-data">
+      <div th:replace="~{prototypeEditor :: prototype-editor}"></div>
+      <input type="submit" value="保存する">
+    </form>
+  </div>
 
-<div class="main-content">
-  <h2>新規プロトタイプ投稿</h2>
-  <form th:action="@{/prototypes}" th:object="${prototypeForm}" method="post" enctype="multipart/form-data">
-    <h3>プロトタイプの名称</h3>
-    <label for="prototypeName"></label>
-    <input type="text" id="prototypeName" name="prototypeName"
-      th:field="*{prototypeName}" class="prototype">
-
-    <h3>キャッチコピー</h3>
-    <label for="catchCopy"></label>
-    <textarea id="catchCopy" name="catchCopy" th:field="*{catchCopy}" class="catchcopy"></textarea>
-
-    <h3>コンセプト</h3>
-    <label for="concept"></label>
-    <textarea id="concept" name="concept" th:field="*{concept}" class="concept"></textarea>
-
-    <h3>プロトタイプの画像</h3>
-    <label for="img"></label>
-    <input type="file" id="img" name="img" th:field="*{imgFile}">
-
-    <input type="submit" value="保存する">
-  </form>
-</div>
-
-<div th:insert="~{footer :: footer}"></div>
+  <div th:insert="~{footer :: footer}"></div>
 
 </body>
+
 </html>
