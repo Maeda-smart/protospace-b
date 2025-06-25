@@ -10,32 +10,38 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.CommentEntity;
+import in.tech_camp.protospace_b.entity.PinEntity;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.form.CommentForm;
 import in.tech_camp.protospace_b.repository.BookmarkRepository;
 import in.tech_camp.protospace_b.repository.CommentRepository;
 import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
+import lombok.AllArgsConstructor;
+import in.tech_camp.protospace_b.repository.PinRepository;
 
 @Controller
+@AllArgsConstructor
 public class PrototypeDetailController {
 
     private final PrototypeDetailRepository prototypeDetailRepository;
-
     private final CommentRepository commentRepository;
-
     private final BookmarkRepository bookmarkRepository;
-
-    // コンストラクタインジェクション（Spring Boot 4.x以降は@Autowried不要！）
-    public PrototypeDetailController(PrototypeDetailRepository prototypeDetailRepository,CommentRepository commentRepository, BookmarkRepository bookmarkRepository) {
-        this.prototypeDetailRepository = prototypeDetailRepository;
-        this.commentRepository = commentRepository;
-        this.bookmarkRepository = bookmarkRepository;
-    }
+    private final PinRepository pinRepository;
 
     @GetMapping("/prototypes/{prototypeId}/detail")
     public String showPrototypeDetail(@PathVariable("prototypeId") Integer prototypeId, @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
         // リポジトリからエンティティ取得
         PrototypeEntity prototype = prototypeDetailRepository.findByPrototypeId(prototypeId);
+
+        if (currentUser != null) {
+            Integer ownerUser = currentUser.getId();
+            List<PinEntity> pinEntity = pinRepository.findPinByUserId(ownerUser);
+            boolean isPinned = pinRepository.count(ownerUser, prototypeId) > 0;
+            model.addAttribute("isPinned", isPinned);
+            System.out.println(pinEntity);
+        } else {
+            model.addAttribute("isPinned", false);
+        }
 
         model.addAttribute("prototype", prototype);
         model.addAttribute("prototypeId", prototypeId);
