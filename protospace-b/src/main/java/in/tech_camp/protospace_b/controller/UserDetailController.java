@@ -41,15 +41,25 @@ public class UserDetailController {
     List<PrototypeEntity> bookmarkPrototypes = bookmarkRepository.findBookmarkByUserId(userId);
     model.addAttribute("bookmark", bookmarkPrototypes);
 
-    // プロトタイプごとのいいね数表示
+
+    // ユーザーのプロトタイプごとのいいね数表示
     Map<Integer, Integer> niceCountMap = new HashMap<>();
 
     for (PrototypeEntity prototype : prototypes) {
       int count = niceRepository.countNiceByPrototypeId(prototype.getId());
       niceCountMap.put(prototype.getId(), count);
     }
-
     model.addAttribute("niceCountMap", niceCountMap);
+
+
+    // ブックマークしたプロトタイプごとのいいね数表示
+    Map<Integer, Integer> niceBookmark = new HashMap<>();
+
+    for (PrototypeEntity bookmarkPrototype : bookmarkPrototypes) {
+      int bookmarkNiceCount = niceRepository.countNiceByPrototypeId(bookmarkPrototype.getId());
+      niceBookmark.put(bookmarkPrototype.getId(), bookmarkNiceCount);
+    }
+    model.addAttribute("niceBookmark", niceBookmark);
 
     return "users/detail";
   }
