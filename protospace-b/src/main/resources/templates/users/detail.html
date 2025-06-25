@@ -40,7 +40,7 @@
       </tbody>
     </table>
     <h2><span th:text="${user.nickname}"></span>さんのプロトタイプ</h2>
-    <div th:replace="~{prototypes :: prototypes}"></div>
+    <div th:replace="~{prototypes :: prototypes(${prototypes})}"></div>
 
     <!-- ブックマークした投稿の一覧表示 -->
     <h2>ブックマークしたプロトタイプ</h2>
