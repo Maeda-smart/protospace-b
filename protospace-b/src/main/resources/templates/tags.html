@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
-  <script th:src="@{/javascript/tag_editor.js}"></script>
 
 <head>
   <link th:href="@{/css/tags.css}" rel="stylesheet" type="text/css">
@@ -11,16 +10,18 @@
   </div>
   <div class="tag" th:if="${#lists.isEmpty(prototype.tags)}">タグはありません</div>
 </div>
+
 <div class="tags" th:fragment="tag-edit">
-  <div class="tag">tag1<span class="delete-button">×</span></div>
-  <div class="tag">tag2<span class="delete-button">×</span></div>
-  <div class="tag">tag3<span class="delete-button">×</span></div>
-  <div class="tag">tag4<span class="delete-button">×</span></div>
-  <div class="tag">tag5<span class="delete-button">×</span></div>
-  <div class="tag">tag6<span class="delete-button">×</span></div>
-  <div class="tag">タグはありません</div>
+  <script th:src="@{/javascript/tag_editor.js}"></script>
+  <div class="tag">tag1<span class="delete-button">×</span></div><input type="text" name="tag" class="hidden" value="tag1">
+  <div class="tag">tag2<span class="delete-button">×</span></div><input type="text" name="tag" class="hidden" value="tag2">
+  <div class="tag">tag3<span class="delete-button">×</span></div><input type="text" name="tag" class="hidden" value="tag3">
+  <div class="tag">tag4<span class="delete-button">×</span></div><input type="text" name="tag" class="hidden" value="tag4">
+  <div class="tag">tag5<span class="delete-button">×</span></div><input type="text" name="tag" class="hidden" value="tag5">
+  <div class="tag">tag6<span class="delete-button">×</span></div><input type="text" name="tag" class="hidden" value="tag6">
+  <div class="tag empty">タグはありません</div>
   <div class="tag edit-button">タグを編集する</div>
-  <div class="tag edit-input"><input type="text"><span class="add-button">✓</span></div>
+  <div class="tag edit-input hidden"><input type="text" name="create-tag"><span class="add-button">✓</span></div>
 </div>
 
 </html>
