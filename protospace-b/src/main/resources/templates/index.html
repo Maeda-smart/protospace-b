@@ -18,7 +18,8 @@
         こんにちは、
         <a class="greeting_link" th:href="${'/users/'+user.id}"><span th:text="${user.nickname}"></span>さん</a>
       </div>
-      <div th:replace="~{prototypes :: prototypes}"></div>
+      <!-- フラグメントの呼び出し方変更 -->
+      <div th:replace="~{prototypes :: prototypes(${prototypes})}"></div>
     </div>
   </main>
   <div th:replace="~{footer :: footer}"></div>

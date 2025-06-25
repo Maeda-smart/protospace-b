@@ -125,5 +125,15 @@
 
 .defuse-button {
   font-weight: bold;
-  color: blue;
+  color: rgb(48, 48, 218);
+}
+
+.pin-on {
+  color: gray;
+  font-weight: normal;
+}
+
+.pin-off {
+  color: #e53935;
+  font-weight: bold;
 }
