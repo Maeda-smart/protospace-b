@@ -123,10 +123,94 @@
   color: gray;
 }
 
-.defuse-button {
+.defuse-bookmark-button {
   font-weight: bold;
+  /* color: blue; */
   color: rgb(48, 48, 218);
 }
+
+/* いいねボタン */
+.nice-button {
+  font-weight: normal;
+  color: gray;
+}
+
+.defuse-nice-button {
+  font-weight: bold;
+  color: red;
+}
+
+
+/* 共通設定 */
+button.nice-button,
+button.defuse-nice-button,
+button.bookmark-button,
+button.defuse-bookmark-button {
+  font-size: 1rem;
+  padding: 8px 14px;
+  margin: 10px 8px 0 0;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* いいねボタン */
+.nice-button {
+  background-color: #f0f0f0;
+  color: #d6336c;
+  border: 1px solid #d6336c;
+}
+.nice-button:hover {
+  background-color: #ffe6ee;
+}
+
+.defuse-nice-button {
+  background-color: #d6336c;
+  color: white;
+}
+.defuse-nice-button:hover {
+  background-color: #b52a5b;
+}
+
+/* ブックマークボタン */
+.bookmark-button {
+  background-color: #f0f0f0;
+  color: #f59e0b;
+  border: 1px solid #f59e0b;
+}
+.bookmark-button:hover {
+  background-color: #fff7e6;
+}
+
+.defuse-bookmark-button {
+  background-color: #f59e0b;
+  color: white;
+}
+.defuse-bookmark-button:hover {
+  background-color: #d97706;
+}
+
+/* いいね数の表示 */
+.prototype_body > div:nth-last-child(2) {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.prototype_body > div:nth-last-child(2)::before {
+  color: #d6336c;
+  font-size: 1.2rem;
+  margin-right: 4px;
+}
+
+/* ボタンの配置整えたい場合（横並びに） */
+.prototype_body form {
+  display: inline-block;
+}
+
+  
 
 .pin-on {
   color: gray;

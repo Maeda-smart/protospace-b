@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.One;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -17,18 +16,13 @@ import in.tech_camp.protospace_b.entity.PrototypeEntity;
 @Mapper
 public interface BookmarkRepository {
 
-  // いいねの保存
-  @Insert("INSERT INTO bookmark (user_id, prototype_id)" + 
-          "VALUES (#{user.id}, #{prototype.id})")
+  // ブックマークの保存
+  @Insert("INSERT INTO bookmark (user_id, prototype_id) VALUES (#{user.id}, #{prototype.id})")
   void insert(BookmarkEntity bookmark);
 
 
-  // いいねした投稿の一覧表示
-  @Select("""
-    SELECT * FROM prototype p
-    INNER JOIN bookmark b ON p.id = b.prototype_id
-    WHERE b.user_id = #{userId}
-    """)
+  // ブックマークした投稿の一覧表示
+  @Select("SELECT * FROM prototype p INNER JOIN bookmark b ON p.id = b.prototype_id WHERE b.user_id = #{userId}")
     @Results(value = {
         @Result(property = "id", column = "id"),
         @Result(property = "prototypeName", column = "prototypename"),
@@ -41,13 +35,11 @@ public interface BookmarkRepository {
     List<PrototypeEntity> findBookmarkByUserId(Integer userId);
 
 
-    // いいね済みを判定
+    // ブックマーク済みを判定
     @Select("SELECT COUNT(*) > 0 FROM bookmark WHERE prototype_id = #{prototypeId} AND user_id = #{userId}")
-    boolean existBookmark(@Param("prototypeId") Integer prototypeId,
-                      @Param("userId") Integer userId);
+    boolean existBookmark(Integer prototypeId, Integer userId);
 
-    // いいね削除
+    // ブックマーク削除
     @Delete("DELETE FROM bookmark WHERE prototype_id = #{prototypeId} AND user_id = #{userId}")
-    void deleteBookmark(@Param("prototypeId") Integer prototypeId,
-                                      @Param("userId") Integer userId);
+    void deleteBookmark(Integer prototypeId, Integer userId);
 }
