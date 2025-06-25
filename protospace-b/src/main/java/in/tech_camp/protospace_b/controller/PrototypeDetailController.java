@@ -55,6 +55,11 @@ public class PrototypeDetailController {
         List<CommentEntity> comments = commentRepository.findByPrototypeId(prototypeId);
         model.addAttribute("comments", comments);
 
+        // プロトタイプごとのいいね数を取得してビューに渡す
+        int countNice = niceRepository.countNiceByPrototypeId(prototypeId);
+        System.out.println(countNice);
+        model.addAttribute("countNice", countNice);
+
         if (currentUser != null) {
             Integer userId = currentUser.getId();
             // ブックマーク済みの状態を表示

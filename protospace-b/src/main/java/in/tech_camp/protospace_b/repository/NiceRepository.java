@@ -21,4 +21,8 @@ public interface NiceRepository {
   // いいねの削除
   @Delete("DELETE FROM nice WHERE prototype_id = #{prototypeId} AND user_id = #{userId}")
   void deleteNice(Integer prototypeId, Integer userId);
+
+  // プロトタイプごとのいいね数を取得
+  @Select("SELECT COUNT(*) FROM nice WHERE prototype_id = #{prototype.id}")
+  int countNiceByPrototypeId(Integer prototypeId);
 }
