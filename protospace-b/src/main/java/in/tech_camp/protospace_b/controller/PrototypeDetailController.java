@@ -38,7 +38,6 @@ public class PrototypeDetailController {
         PrototypeEntity prototype = prototypeDetailRepository.findByPrototypeId(prototypeId);
 
         model.addAttribute("prototype", prototype);
-        model.addAttribute("prototypeId", prototypeId);
 
         // コメントフォームを初期化してビューに渡す
         CommentForm commentForm = new CommentForm();

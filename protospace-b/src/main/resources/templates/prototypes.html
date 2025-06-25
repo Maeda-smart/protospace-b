@@ -5,11 +5,11 @@
   <div class="card_wrapper" th:fragment="prototypes">
     <!-- プロトタイプの繰り返し表示 -->
     <div class="card" th:each="prototype : ${prototypes}">
-      <a th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}">
+      <a th:href="@{'/prototypes/' + ${prototype.id} + '/detail'}">
         <img class="card_img" th:src="@{${prototype.imgPath}}">
       </a>
       <div class="card_body">
-        <a class="card_title" th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}"
+        <a class="card_title" th:href="@{'/prototypes/' + ${prototype.id} + '/detail'}"
           th:text="${prototype.prototypeName}"></a>
         <div th:replace="tags :: prototype-tags"></div>
         <p class="card_summary" th:text="${prototype.catchCopy}"></p>
