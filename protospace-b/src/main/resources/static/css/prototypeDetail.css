@@ -125,7 +125,8 @@
 
 .defuse-bookmark-button {
   font-weight: bold;
-  color: blue;
+  /* color: blue; */
+  color: rgb(48, 48, 218);
 }
 
 /* いいねボタン */
@@ -209,3 +210,14 @@ button.defuse-bookmark-button {
   display: inline-block;
 }
 
+  
+
+.pin-on {
+  color: gray;
+  font-weight: normal;
+}
+
+.pin-off {
+  color: #e53935;
+  font-weight: bold;
+}
