@@ -50,7 +50,7 @@
           </div>
         </div>
 
-        <!-- いいねボタン -->
+        <!-- ブックマークボタン -->
         <form th:action="@{/prototypes/{prototypeId}/bookmark(prototypeId=${prototype.id})}" method="post">
           <!-- CSRFを追加 -->
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
@@ -60,6 +60,11 @@
             <span th:text="${isBookmarked} ? '★ブックマーク' : '☆ブックマーク'"></span>
           </button>
         </form>
+
+        <!-- いいねボタン -->
+         <form th:action="@{/prototypes/{prototypeId}/nice(prototypeId=${prototype.id})}" method="post">
+         <input type="submit" value="♡いいね">
+         </form>
 
         <!-- コメントフォーム -->
         <div class="comment_wrapper">
