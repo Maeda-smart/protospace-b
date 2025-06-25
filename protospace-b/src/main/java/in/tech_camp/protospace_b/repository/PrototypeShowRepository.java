@@ -13,16 +13,16 @@ import in.tech_camp.protospace_b.entity.PrototypeEntity;
 
 @Mapper
 public interface PrototypeShowRepository {
-  @Select("SELECT p.id, p.prototypeName, p.catchCopy, p.concept, p.img, p.user_id, t.id FROM prototype p LEFT JOIN prototype_tags pt ON p.id = pt.prototype_id LEFT JOIN tags t ON pt.tags_id = t.id")
+  @Select("SELECT p.id p_id, p.prototypeName, p.catchCopy, p.concept, p.img, p.user_id, t.id FROM prototype p LEFT JOIN prototype_tags pt ON p.id = pt.prototype_id LEFT JOIN tags t ON pt.tags_id = t.id")
   @Results(value = {
-      @Result(property = "id", column = "p.id"),
+      @Result(property = "id", column = "p_id"),
       @Result(property = "user", column = "user_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
       @Result(property = "imgPath", column = "img"),
       @Result(property="tags", column="t.id", many = @Many(select="in.tech_camp.protospace_b.repository.TagRepository."))
   })
   List<PrototypeEntity> showAll();
 
-  @Select("SELECT * FROM prototype WHERE user_id = #{userId}")
+  @Select("SELECT p.id p_id, p.prototypeName, p.catchCopy, p.concept, p.img, p.user_id, t.id FROM prototype p LEFT JOIN prototype_tags pt ON p.id = pt.prototype_id LEFT JOIN tags t ON pt.tags_id = t.id WHERE user_id = #{userId}")
   @Results(value = {
       @Result(property = "id", column = "p.id"),
       @Result(property = "user", column = "user_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
