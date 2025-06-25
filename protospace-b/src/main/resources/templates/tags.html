@@ -16,7 +16,6 @@
   <div th:each="tag : ${tags}">
     <div class="tag">tag1<span class="delete-button">×</span><input type="text" name="tag" class="hidden" value="tag1"></div>
   </div>
-  <div class="tag empty" th:classappend="${#lists.isEmpty(tags)} ? ' hidden' : ''">タグはありません</div>
   <div class="tag edit-button">タグを編集する</div>
   <div class="tag edit-input hidden"><input type="text" id="create-tag"><span class="add-button">✓</span></div>
 </div>
