@@ -1,10 +1,15 @@
 package in.tech_camp.protospace_b.repository;
 
-import org.apache.ibatis.annotations.*;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import in.tech_camp.protospace_b.entity.PinEntity;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
-import java.util.List;
 
 @Mapper
 public interface PinRepository {
