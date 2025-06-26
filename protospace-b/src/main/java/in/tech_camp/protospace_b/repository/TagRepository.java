@@ -2,6 +2,7 @@ package in.tech_camp.protospace_b.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.One;
@@ -17,10 +18,16 @@ import in.tech_camp.protospace_b.entity.TagEntity;
 public interface TagRepository {
   @Insert("INSERT INTO tags(tag_name) VALUES (#{tagName})")
   @Options(useGeneratedKeys = true, keyProperty = "id")
-  void insert(String tagName);
+  TagEntity insert(String tagName);
 
   @Select("SELECT * FROM tags WHERE tag_name = #{tagName}")
   TagEntity justSameTag(String tagName);
+
+  @Delete("DELETE FROM prototype_tags WHERE prototype_id = #{prototype.id}")
+  void purgeTagsFromPrototype(PrototypeEntity prototype);
+
+  @Insert("INSERT INTO prototype_tags(prototype_id, tags_id) VALUES (#{prototype.id}, #{tags.id})")
+  void setTagsToPrototype(PrototypeEntity prototype, List<TagEntity> tags);
 
   @Select("SELECT tags.id, tags.tag_name FROM tags INNER JOIN prototype_tags ON tags.id = prototype_tags.tags_id WHERE prototype_tags.prototype_id = #{prototypeId}")
   List<TagEntity> prototypeTags(Integer prototypeId);

@@ -18,7 +18,6 @@ window.addEventListener("load", () => {
   const add_button = document.querySelector(".add-button");
   const tag_input = document.getElementById("create-tag");
   document.querySelectorAll("span.delete-button").forEach(delete_button =>{delete_handler(delete_button)});
-  const empty = document.querySelector(".tag.empty");
   edit_button.addEventListener("click", () => {
     edit_button.classList.add("hidden");
     edit_input.classList.remove("hidden");
@@ -47,12 +46,12 @@ window.addEventListener("load", () => {
 
     const hidden_input = document.createElement("input");
     hidden_input.type = "text";
-    hidden_input.name = "tag";
+    hidden_input.name = "tags";
     hidden_input.className = "hidden";
     hidden_input.value = before_send_hook(value);
     newTag.appendChild(hidden_input);
 
-    tags.insertBefore(newTag, empty);
+    tags.insertBefore(newTag, edit_button);
 
     edit_button.classList.remove("hidden");
     edit_input.classList.add("hidden");

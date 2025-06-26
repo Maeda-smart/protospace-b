@@ -26,6 +26,7 @@ import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.form.PrototypeForm;
 import in.tech_camp.protospace_b.repository.PrototypeNewRepository;
+import in.tech_camp.protospace_b.repository.TagRepository;
 import in.tech_camp.protospace_b.repository.UserNewRepository;
 import in.tech_camp.protospace_b.validation.ValidationOrder;
 import lombok.AllArgsConstructor;
@@ -39,6 +40,9 @@ public class PrototypeNewController {
 
     @Autowired
     private final UserNewRepository userNewRepository;
+
+    @Autowired
+    private final TagRepository tagRepository;
 
     private final ImageUrl imageUrl;
 
@@ -60,6 +64,8 @@ public class PrototypeNewController {
             List<String> errorMessages = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
+            System.out.println("error");
+            errorMessages.forEach(item -> {System.out.println(item);});
             model.addAttribute("errorMessages", errorMessages);
             model.addAttribute("userForm", prototypeForm);
             return "prototype/prototypeNew";
@@ -119,6 +125,14 @@ public class PrototypeNewController {
             model.addAttribute("errorMessage", "登録に失敗しました。（" + e.getMessage() + "）");
             model.addAttribute("prototypeForm", prototypeForm);
             return "prototype/prototypeNew";
+        }
+
+        try {
+            // tagRepository
+            prototypeForm.getTag_names().forEach(item -> {
+                System.out.println(item);
+            });
+        } catch (Exception e) {
         }
 
         return "redirect:/";

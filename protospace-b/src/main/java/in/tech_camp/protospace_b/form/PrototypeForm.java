@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import in.tech_camp.protospace_b.entity.TagEntity;
 import in.tech_camp.protospace_b.validation.ValidationPriority1;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,5 +25,5 @@ public class PrototypeForm {
   private MultipartFile imgFile;
   private String imgPath;
 
-  private List<TagEntity> tags;
+  private List<String> tag_names;
 }

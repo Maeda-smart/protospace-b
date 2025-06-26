@@ -30,7 +30,7 @@
             <a th:href="@{'/prototype/' + ${prototype.id} + '/edit'}">
               <input type="submit" value="編集する" class="btn">
             </a>
-            <form th:action="@{'/prototype/' + ${prototype.id} + '/delete'}" th:method="post">
+            <form th:action="@{'/prototypes/' + ${prototype.id} + '/delete'}" th:method="post">
               <input type="submit" value="削除する" class="btn">
             </form>
           </div>
@@ -40,7 +40,7 @@
           <img th:src="@{${prototype.imgPath}}" alt="プロトタイプ画像">
         </div>
 
-        <div th:replace="tags :: prototype-tags(${prototype.tags})"></div>
+        <div th:replace="~{tags :: prototype-tags(${prototype.tags})}"></div>
 
         <div class="prototype_body">
           <div class="prototype_detail">
