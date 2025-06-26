@@ -15,9 +15,12 @@ import in.tech_camp.protospace_b.form.CommentForm;
 import in.tech_camp.protospace_b.repository.BookmarkRepository;
 import in.tech_camp.protospace_b.repository.CommentRepository;
 import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
+import in.tech_camp.protospace_b.service.ReadStatusService;
 
 @Controller
 public class PrototypeDetailController {
+
+    private final ReadStatusService readStatusService;
 
     private final PrototypeDetailRepository prototypeDetailRepository;
 
@@ -26,10 +29,11 @@ public class PrototypeDetailController {
     private final BookmarkRepository bookmarkRepository;
 
     // コンストラクタインジェクション（Spring Boot 4.x以降は@Autowried不要！）
-    public PrototypeDetailController(PrototypeDetailRepository prototypeDetailRepository,CommentRepository commentRepository, BookmarkRepository bookmarkRepository) {
+    public PrototypeDetailController(PrototypeDetailRepository prototypeDetailRepository,CommentRepository commentRepository, BookmarkRepository bookmarkRepository, ReadStatusService readStatusService) {
         this.prototypeDetailRepository = prototypeDetailRepository;
         this.commentRepository = commentRepository;
         this.bookmarkRepository = bookmarkRepository;
+        this.readStatusService = readStatusService;
     }
 
     @GetMapping("/prototypes/{prototypeId}/detail")
@@ -53,6 +57,11 @@ public class PrototypeDetailController {
         Integer userId = currentUser.getId();
         boolean isBookmarked = bookmarkRepository.existBookmark(prototypeId, userId);
         model.addAttribute("isBookmarked", isBookmarked);
+
+        // 既読
+        System.out.println("Calling readStatusService.markAsRead...");
+        readStatusService.markAsRead(prototypeId, userId);
+        System.out.println("Called readStatusService.markAsRead");
         }
 
         return "prototype/prototypeDetail";
