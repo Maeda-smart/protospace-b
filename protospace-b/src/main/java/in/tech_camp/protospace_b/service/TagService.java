@@ -57,13 +57,11 @@ public class TagService {
   @Transactional
   public void updatePrototypeTags(PrototypeEntity prototype, List<String> tag_names){
     List<String> postTagNames = tagNamePostHook(tag_names);
-    System.out.println("prototype" + prototype);
     try{
       tagRepository.purgeTagsFromPrototype(prototype);
     } catch (Exception e){
       throw new Error("Cannot reset tags:" + e);
     }
-    System.out.println("Tag names:" + tag_names);
     postTagNames.forEach(tagName ->{
       TagEntity tag;
       try{
@@ -76,7 +74,6 @@ public class TagService {
         try{
           tag = new TagEntity();
           tag.setTagName(tagName);
-          System.out.println("tag: " + tag);
           tagRepository.insert(tag);
         } catch (Exception e) {
           System.out.println("e.toString() = " + e.toString());

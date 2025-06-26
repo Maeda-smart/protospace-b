@@ -46,7 +46,6 @@ public class TopPageController {
       model.addAttribute("readStatusMap", readStatusMap);
     }
     List<PrototypeEntity> prototypes = prototypeShowRepository.showAll();
-    System.out.println(prototypes);
     PrototypeSearchForm prototypeSearchForm = new PrototypeSearchForm();
     model.addAttribute("prototypes", prototypes);
 
