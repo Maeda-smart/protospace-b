@@ -6,9 +6,13 @@
 </head>
 
 <body>
-  <div class="card_wrapper" th:fragment="prototypes(list)" >
+  <div class="card_wrapper" th:fragment="prototypes(list, readStatusMap)" >
     <!-- プロトタイプの繰り返し表示 -->
     <div class="card" th:each="prototype : ${list}">
+
+      <!-- NEWアイコン -->
+      <span class="new-icon" th:if="${readStatusMap != null and !readStatusMap.containsKey(prototype.id)}">NEW</span>
+      
       <a th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}">
         <img class="card_img" th:src="@{${prototype.imgPath}}">
       </a>
