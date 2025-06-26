@@ -14,24 +14,24 @@ import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.ReadStatusEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
-import in.tech_camp.protospace_b.form.PrototypeSearchForm;
 import in.tech_camp.protospace_b.repository.NiceRepository;
-import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserDetailRepository;
 import in.tech_camp.protospace_b.service.ReadStatusService;
 import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
-public class TopPageController {
-  private final UserDetailRepository userDetailRepository;
-  private final PrototypeShowRepository prototypeShowRepository;
-  private final ReadStatusService readStatusService;
+public class RankingController {
 
   private final NiceRepository niceRepository;
+  private final UserDetailRepository userDetailRepository;
+  private final ReadStatusService readStatusService;
+  
+  // ランキングページに遷移
+  @GetMapping("/prototypes/ranking")
+  public String showRanking(@AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
 
-  @GetMapping("")
-  public String topPage(@AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
+    // 既読・未読を管理
     if (currentUser != null) {
       Integer userId = currentUser.getId();
       UserEntity user = userDetailRepository.findById(userId);
@@ -45,17 +45,17 @@ public class TopPageController {
         ));
       model.addAttribute("readStatusMap", readStatusMap);
     }
-    List<PrototypeEntity> prototypes = prototypeShowRepository.showAll();
-    PrototypeSearchForm prototypeSearchForm = new PrototypeSearchForm();
-    model.addAttribute("prototypes", prototypes);
 
-    
-    // プロトタイプごとのいいね数表示
+    // いいね数順に並び替えたプロトタイプを取得
+    List<PrototypeEntity> rankingPrototypes = niceRepository.findPrototypesOrderByCountDesc();
+    model.addAttribute("rankingPrototypes", rankingPrototypes);
+
+     // プロトタイプごとのいいね数表示
     Map<Integer, Integer> niceCountMap = new HashMap<>();
 
-    for (PrototypeEntity prototype : prototypes) {
-      int count = niceRepository.countNiceByPrototypeId(prototype.getId());
-      niceCountMap.put(prototype.getId(), count);
+    for (PrototypeEntity rankingPrototype : rankingPrototypes) {
+      int count = niceRepository.countNiceByPrototypeId(rankingPrototype.getId());
+      niceCountMap.put(rankingPrototype.getId(), count);
     }
     model.addAttribute("niceCountMap", niceCountMap);
 
@@ -64,21 +64,18 @@ public class TopPageController {
     if(currentUser != null) {
     Integer userId = currentUser.getId();
     
-      for (PrototypeEntity prototype : prototypes) {
-        boolean isNice = niceRepository.existNice(prototype.getId(), userId);
-        isNiceMap.put(prototype.getId(), isNice);
+      for (PrototypeEntity rankingPrototype : rankingPrototypes) {
+        boolean isNice = niceRepository.existNice(rankingPrototype.getId(), userId);
+        isNiceMap.put(rankingPrototype.getId(), isNice);
       }
     } else {
     // ログインしていない場合はすべてfalseに設定
-    for (PrototypeEntity prototype : prototypes) {
-        isNiceMap.put(prototype.getId(), false);
+    for (PrototypeEntity rankingPrototype : rankingPrototypes) {
+        isNiceMap.put(rankingPrototype.getId(), false);
     }
     }
     model.addAttribute("isNiceMap", isNiceMap);
 
-    model.addAttribute("prototypeSearchForm", prototypeSearchForm);
-
-    return "index";
-
+    return "prototype/ranking";
   }
 }

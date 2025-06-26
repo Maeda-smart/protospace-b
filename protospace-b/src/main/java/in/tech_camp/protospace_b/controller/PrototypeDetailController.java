@@ -18,26 +18,20 @@ import in.tech_camp.protospace_b.repository.CommentRepository;
 import in.tech_camp.protospace_b.repository.NiceRepository;
 import in.tech_camp.protospace_b.repository.PinRepository;
 import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
+import in.tech_camp.protospace_b.service.ReadStatusService;
 import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
 public class PrototypeDetailController {
 
+    private final ReadStatusService readStatusService;
+
     private final PrototypeDetailRepository prototypeDetailRepository;
     private final CommentRepository commentRepository;
     private final BookmarkRepository bookmarkRepository;
     private final NiceRepository niceRepository;
     private final PinRepository pinRepository;
-
-    // コンストラクタインジェクション（Spring Boot 4.x以降は@Autowried不要！）
-    // public PrototypeDetailController(PrototypeDetailRepository prototypeDetailRepository,CommentRepository commentRepository,
-    //                                  BookmarkRepository bookmarkRepository, NiceRepository niceRepository) {
-    //     this.prototypeDetailRepository = prototypeDetailRepository;
-    //     this.commentRepository = commentRepository;
-    //     this.bookmarkRepository = bookmarkRepository;
-    //     this.niceRepository = niceRepository;
-    // }
 
     @GetMapping("/prototypes/{prototypeId}/detail")
     public String showPrototypeDetail(@PathVariable("prototypeId") Integer prototypeId,
@@ -56,7 +50,6 @@ public class PrototypeDetailController {
         }
 
         model.addAttribute("prototype", prototype);
-        model.addAttribute("prototypeId", prototypeId);
 
         // コメントフォームを初期化してビューに渡す
         CommentForm commentForm = new CommentForm();
@@ -71,13 +64,16 @@ public class PrototypeDetailController {
         model.addAttribute("countNice", countNice);
 
         if (currentUser != null) {
-            Integer userId = currentUser.getId();
-            // ブックマーク済みの状態を表示
-            boolean isBookmarked = bookmarkRepository.existBookmark(prototypeId, userId);
-            model.addAttribute("isBookmarked", isBookmarked);
-            // いいね済みの状態を表示
-            boolean isNice = niceRepository.existNice(prototypeId, userId);
-            model.addAttribute("isNice", isNice);
+        Integer userId = currentUser.getId();
+        boolean isBookmarked = bookmarkRepository.existBookmark(prototypeId, userId);
+        model.addAttribute("isBookmarked", isBookmarked);
+
+        // いいね済みの状態を表示
+        boolean isNice = niceRepository.existNice(prototypeId, userId);
+        model.addAttribute("isNice", isNice);
+
+        // 既読
+        readStatusService.markAsRead(prototypeId, userId);
         }
 
         return "prototype/prototypeDetail";

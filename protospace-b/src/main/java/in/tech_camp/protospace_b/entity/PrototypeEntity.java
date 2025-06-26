@@ -1,6 +1,7 @@
 package in.tech_camp.protospace_b.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.Data;
 
@@ -14,4 +15,5 @@ public class PrototypeEntity {
   private UserEntity user;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt; 
+  private List<TagEntity> tags;
 }

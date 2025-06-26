@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.One;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -37,9 +38,9 @@ public interface BookmarkRepository {
 
     // ブックマーク済みを判定
     @Select("SELECT COUNT(*) > 0 FROM bookmark WHERE prototype_id = #{prototypeId} AND user_id = #{userId}")
-    boolean existBookmark(Integer prototypeId, Integer userId);
+    boolean existBookmark(@Param("prototypeId") Integer prototypeId,@Param("userId") Integer userId);
 
     // ブックマーク削除
     @Delete("DELETE FROM bookmark WHERE prototype_id = #{prototypeId} AND user_id = #{userId}")
-    void deleteBookmark(Integer prototypeId, Integer userId);
+    void deleteBookmark(@Param("prototypeId") Integer prototypeId,@Param("userId") Integer userId);
 }

@@ -5,6 +5,7 @@
   <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/edit.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/prototypes.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/tags.css}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -42,10 +43,10 @@
     <h2><span th:text="${user.nickname}"></span>さんのプロトタイプ</h2>
 
     <h3>ピン止プロトタイプ</h3>
-    <div th:replace="~{prototypes :: prototypes(${pinnedPrototypes})}"></div>
+    <div th:replace="~{prototypes :: prototypes(${pinnedPrototypes}, ${readStatusMap})}"></div>
 
     <h3>その他プロトタイプ</h3>
-    <div th:replace="~{prototypes :: prototypes(${unpinnedPrototypes})}"></div>
+    <div th:replace="~{prototypes :: prototypes(${unpinnedPrototypes}, ${readStatusMap})}"></div>
 
     <!-- ブックマークした投稿の一覧表示 -->
     <h2>ブックマークしたプロトタイプ</h2>

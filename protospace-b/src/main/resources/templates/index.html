@@ -9,6 +9,7 @@
   <link rel="stylesheet" th:href="@{/css/style.css}" />
   <link rel="stylesheet" th:href="@{/css/search.css}" />
   <link th:href="@{/css/prototypes.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/tags.css}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -25,7 +26,11 @@
         <button type="submit" class="search-button">Search</button>
       </form>
 
-      <div th:replace="~{prototypes :: prototypes(${prototypes})}"></div>
+      <!-- ランキング表示ボタン -->
+       <a class="ranking-title" th:href="@{/prototypes/ranking}">♔ランキングページ</a>
+
+       <!-- プロトタイプの一覧表示 -->
+      <div th:replace="~{prototypes :: prototypes(${prototypes}, ${readStatusMap})}"></div>
     </div>
   </main>
   <div th:replace="~{footer :: footer}"></div>

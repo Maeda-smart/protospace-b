@@ -49,25 +49,7 @@ public class BookmarkController {
 
     // ブックマークを追加
     bookmarkRepository.insert(bookmark);
-    }
-
-    // // ログインユーザーが各プロトタイプに対し、いいねしたかを判定
-    // Map<Integer, Boolean> isNiceMap = new HashMap<>();
-    // if (currentUser != null) {
-    //   Integer loginUserId = currentUser.getId();
-
-    //   for (PrototypeEntity prototype : prototypes) {
-    //     boolean isNice = niceRepository.existNice(prototype.getId(), loginUserId);
-    //     isNiceMap.put(prototype.getId(), isNice);
-    //   }
-    // } else {
-    //   // ログインしていない場合はすべてfalseに設定
-    //   for (PrototypeEntity prototype : prototypes) {
-    //     isNiceMap.put(prototype.getId(), false);
-    //   }
-    // }
-    // model.addAttribute("isNiceMap", isNiceMap);
-      
+    }      
     return "redirect:/prototypes/" + prototypeId + "/detail";
   }
   
