@@ -18,7 +18,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         //ここに記述されたGETリクエストは許可されます（ログイン不要です)
-                        .requestMatchers(HttpMethod.GET, "/css/**", "/favicon.ico", "/image/**", "/", "/uploads/**", "/users/sign_up", "/users/login", "/prototypes/search", "/users/{userId:[0-9]+}", "/prototypes/{prototypeId:[0-9]+}/detail").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/css/**", "/javascript/**", "/favicon.ico", "/image/**", "/", "/uploads/**", "/users/sign_up", "/users/login", "/prototypes/search", "/users/{userId:[0-9]+}", "/prototypes/{prototypeId:[0-9]+}/detail").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user").permitAll()
                         .anyRequest().authenticated())
                         //上記以外のリクエストは認証されたユーザーのみ許可されます(要ログイン)

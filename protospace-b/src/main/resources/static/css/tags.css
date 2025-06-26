@@ -1,0 +1,22 @@
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.tag {
+  border: 1px solid #4488ff;
+  border-radius: 10px;
+  padding: 1px;
+  font-size: small;
+  background-color: #88ccff;
+}
+.tag.edit-input input{
+  display: inline;
+}
+.delete-button{
+  color: red;
+}
+.add-button{
+  color: green;
+  background-color: #fff;
+}
