@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -26,7 +27,6 @@ import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.form.PrototypeForm;
 import in.tech_camp.protospace_b.repository.PrototypeNewRepository;
-import in.tech_camp.protospace_b.repository.TagRepository;
 import in.tech_camp.protospace_b.repository.UserNewRepository;
 import in.tech_camp.protospace_b.service.TagService;
 import in.tech_camp.protospace_b.validation.ValidationOrder;
@@ -42,9 +42,6 @@ public class PrototypeNewController {
     @Autowired
     private final UserNewRepository userNewRepository;
 
-    @Autowired
-    private final TagRepository tagRepository;
-
     private final TagService tagService;
 
     private final ImageUrl imageUrl;
@@ -56,7 +53,7 @@ public class PrototypeNewController {
         return "prototype/prototypeNew";
     }
 
-    // @Transactional
+    @Transactional
     @PostMapping("/prototypes")
     public String createPrototype(
             @ModelAttribute("prototypeForm") @Validated(ValidationOrder.class) PrototypeForm prototypeForm,
@@ -119,9 +116,7 @@ public class PrototypeNewController {
 
             prototypeNewRepository.insert(prototype);
             List<String> tagNames = prototypeForm.getTags();
-            System.out.println("Get Tag names: " + tagNames);
             tagService.updatePrototypeTags(prototype, tagNames);
-            System.out.println("Send tags");
 
         } catch (IOException e) {
             System.out.println("error:" + e.getMessage());

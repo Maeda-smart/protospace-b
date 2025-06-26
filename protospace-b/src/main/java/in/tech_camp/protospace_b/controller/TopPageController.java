@@ -29,6 +29,7 @@ public class TopPageController {
       model.addAttribute("user", user);
     }
     List<PrototypeEntity> prototypes = prototypeShowRepository.showAll();
+    System.out.println(prototypes);
     PrototypeSearchForm prototypeSearchForm = new PrototypeSearchForm();
     model.addAttribute("prototypes", prototypes);
     model.addAttribute("prototypeSearchForm", prototypeSearchForm);

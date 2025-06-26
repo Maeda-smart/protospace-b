@@ -30,7 +30,7 @@ public interface TagRepository {
   @Insert("INSERT INTO prototype_tags(prototype_id, tags_id) VALUES (#{prototype.id}, #{tag.id})")
   void setTagToPrototype(@Param("prototype") PrototypeEntity prototype, @Param("tag") TagEntity tag);
 
-  @Select("SELECT tags.id, tags.tag_name FROM tags INNER JOIN prototype_tags ON tags.id = prototype_tags.tags_id WHERE prototype_tags.prototype_id = #{prototypeId}")
+  @Select("SELECT tags.id, tags.tag_name tagName FROM tags INNER JOIN prototype_tags ON tags.id = prototype_tags.tags_id WHERE prototype_tags.prototype_id = #{prototypeId}")
   List<TagEntity> prototypeTags(Integer prototypeId);
 
   @Select("SELECT p.id, p.prototypeName, p.catchCopy, p.concept, p.imgPath FROM prototype p INNER JOIN prototype_tags ON prototype.id = prototype_tags.prototype_id INNER JOIN tags ON tags.id = prototype_tags.tags_id WHERE prototype_tags.tags_id = #{tagId}")
