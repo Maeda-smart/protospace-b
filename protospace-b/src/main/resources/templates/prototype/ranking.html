@@ -17,11 +17,26 @@
 
       <div class="card_wrapper" th:fragment="prototypes(list, readStatusMap)">
         <!-- プロトタイプの繰り返し表示 -->
-        <div class="card" th:each="prototype : ${rankingPrototypes}">
+        <div class="card" th:each="prototype, iterStat : ${rankingPrototypes}">
 
           <!-- NEWアイコン -->
           <span class="new-icon"
             th:if="${readStatusMap != null and !readStatusMap.containsKey(prototype.id)}">NEW</span>
+
+          <!-- ランクバッジ（1位） -->
+          <div th:if="${iterStat.index == 0}" class="rank-badge rank-1" th:text="'#1'"></div>
+
+          <!-- ランクバッジ（2位） -->
+          <div th:if="${iterStat.index == 1}" class="rank-badge rank-2" th:text="'#2'"></div>
+
+          <!-- ランクバッジ（3位） -->
+          <div th:if="${iterStat.index == 2}" class="rank-badge rank-3" th:text="'#3'"></div>
+
+          <!-- ランクバッジ（4〜10位） -->
+          <div th:if="${iterStat.index >= 3 and iterStat.index < 10}"
+              class="rank-badge rank-other"
+              th:text="'#' + (${iterStat.index + 1})">
+          </div>
 
           <a th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}">
             <img class="card_img" th:src="@{${prototype.imgPath}}">
