@@ -15,35 +15,34 @@
     <div class="inner">
       <h2>人気のプロトタイプランキング</h2>
 
-      <!--  -->
-      <div th:each="proto : ${rankingPrototypes}">
-        <div>
-          <h3 th:text="${proto.title}"></h3>
-          <p th:text="'いいね数: ' + ${proto.niceCount}"></p>
-          <form th:action="@{'/prototypes/' + ${proto.id} + '/nice'}" method="post">
-            <button type="submit" th:text="${isNiceMap[proto.id]} ? 'いいね解除' : 'いいね'"></button>
-          </form>
+
+
+
+      <div class="card_wrapper" th:fragment="prototypes(list, readStatusMap)">
+        <!-- プロトタイプの繰り返し表示 -->
+        <div class="card" th:each="prototype : ${rankingPrototypes}">
+
+          <!-- NEWアイコン -->
+          <span class="new-icon"
+            th:if="${readStatusMap != null and !readStatusMap.containsKey(prototype.id)}">NEW</span>
+
+          <a th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}">
+            <img class="card_img" th:src="@{${prototype.imgPath}}">
+          </a>
+          <div class="card_body">
+            <a class="card_title" th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}"
+              th:text="${prototype.prototypeName}"></a>
+            <p class="card_summary" th:text="${prototype.catchCopy}"></p>
+            <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
+                th:text="${prototype.user.nickname}"></span></a>
+            <span class="nice"
+              th:text="${isNiceMap[prototype.id]} ? '♥' + ' ' + ${niceCountMap[prototype.id]}: '♡' + ' ' + ${niceCountMap[prototype.id]}"></span>
+
+          </div>
         </div>
       </div>
 
 
-
-    <div class="card_wrapper" th:fragment="prototypes(list)" >
-    <!-- プロトタイプの繰り返し表示 -->
-    <div class="card" th:each="prototype : ${list}">
-      <a th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}">
-        <img class="card_img" th:src="@{${prototype.imgPath}}">
-      </a>
-      <div class="card_body">
-        <a class="card_title" th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}" th:text="${prototype.prototypeName}"></a>
-        <p class="card_summary" th:text="${prototype.catchCopy}"></p>
-        <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
-            th:text="${prototype.user.nickname}"></span></a>
-        <span class="nice" th:text="${isNiceMap[prototype.id]} ? '♥' + ' ' + ${niceCountMap[prototype.id]}: '♡' + ' ' + ${niceCountMap[prototype.id]}"></span>
-          
-      </div>
-    </div>
-  </div>
     </div>
   </main>
   <div th:replace="~{footer :: footer}"></div>
