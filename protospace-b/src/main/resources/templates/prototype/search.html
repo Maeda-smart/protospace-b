@@ -6,7 +6,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
   <link rel="stylesheet" th:href="@{/css/search.css}" />
   <link rel="stylesheet" th:href="@{/css/style.css}" />
-  <link rel="stylesheet" th:href="@{/css/prototypes}" />
+  <link rel="stylesheet" th:href="@{/css/prototypes.css}" />
 </head>
 <body>
 
@@ -22,7 +22,7 @@
       </div>
 
         <div th:if="${prototypes != null and !prototypes.isEmpty()}">
-          <div th:replace="~{prototypes :: prototypes(${prototypes})}" class="card"></div>
+          <div th:replace="~{prototypes :: prototypes(${prototypes}, ${readStatusMap})}" class="card"></div>
         </div>
 
         <div class="no-results" th:if="${prototypes != null and prototypes.isEmpty()}">

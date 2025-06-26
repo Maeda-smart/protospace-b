@@ -69,9 +69,13 @@
   margin: 0%;
 }
 
+label{
+  margin-bottom: 5px;
+}
+
 .comment_wrapper {
   background-color: #f6f6f6;
-  margin: 28px 0 40px 0;
+  margin: 15px 0;
   padding:20px;
 }
 
@@ -123,7 +127,114 @@
   color: gray;
 }
 
-.defuse-button {
+.defuse-bookmark-button {
   font-weight: bold;
-  color: blue;
+  /* color: blue; */
+  color: rgb(48, 48, 218);
+}
+
+/* いいねボタン */
+.nice-button {
+  font-weight: normal;
+  color: gray;
+}
+
+.defuse-nice-button {
+  font-weight: bold;
+  color: red;
+}
+
+
+/* 共通設定 */
+button.nice-button,
+button.defuse-nice-button,
+button.bookmark-button,
+button.defuse-bookmark-button,
+button.pin-on,
+button.pin-off {
+  font-size: 1rem;
+  padding: 8px 14px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button-wrapper{
+  display: flex;
+}
+
+/* ピンボタン */
+.pin-on {
+  color: rgb(255, 100, 100);
+  font-weight: normal;
+}
+.pin-off {
+  color: white;
+  background-color: #e53935;
+  font-weight: bold;
+}
+
+.pin-on:hover{
+  background-color: #ffe6ee;
+}
+
+.pin-off:hover {
+  background-color: #ffe6ee;
+}
+
+/* いいねボタン */
+.nice-button {
+  background-color: #f0f0f0;
+  color: #d6336c;
+  border: 1px solid #d6336c;
+}
+.nice-button:hover {
+  background-color: #ffe6ee;
+}
+
+.defuse-nice-button {
+  background-color: #d6336c;
+  color: white;
+}
+.defuse-nice-button:hover {
+  background-color: #b52a5b;
+}
+
+/* ブックマークボタン */
+.bookmark-button {
+  background-color: #f0f0f0;
+  color: #f59e0b;
+  border: 1px solid #f59e0b;
+}
+.bookmark-button:hover {
+  background-color: #fff7e6;
+}
+
+.defuse-bookmark-button {
+  background-color: #f59e0b;
+  color: white;
+}
+.defuse-bookmark-button:hover {
+  background-color: #d97706;
+}
+
+/* いいね数の表示 */
+.prototype_body > div:nth-last-child(2) {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.prototype_body > div:nth-last-child(2)::before {
+  color: #d6336c;
+  font-size: 1.2rem;
+  margin-right: 4px;
+}
+
+/* ボタンの配置整えたい場合（横並びに） */
+.prototype_body form {
+  display: inline-block;
 }
