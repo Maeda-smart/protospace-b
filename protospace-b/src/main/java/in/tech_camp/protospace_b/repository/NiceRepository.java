@@ -8,8 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import in.tech_camp.protospace_b.entity.CountNiceEntity;
 import in.tech_camp.protospace_b.entity.NiceEntity;
+import in.tech_camp.protospace_b.entity.PrototypeEntity;
 
 @Mapper
 public interface NiceRepository {
@@ -30,8 +30,9 @@ public interface NiceRepository {
   @Select("SELECT COUNT(*) FROM nice WHERE prototype_id = #{prototype.id}")
   int countNiceByPrototypeId(Integer prototypeId);
 
-  // プロトタイプごとのいいね数を取得し、多い順に並び替える
-  @Select("SELECT prototype_id, COUNT(*) as nice_count FROM nice" +
-          "GROUP BY prototype_id ORDER BY nice_count DESC")
-  List<CountNiceEntity> getPrototypeNiceRanking();
+  // プロトタイプごとのいいね数を取得し、多い順に並び替えたうえで全プロトタイプ取得
+  @Select("SELECT p.*, COUNT(n.id) as nice_count FROM prototype p" +
+          "LEFT JOIN nice n ON p.id = n.prototype_id" +
+          "GROUP BY p.id ORDER BY nice_count DESC")
+  List<PrototypeEntity> findPrototypesOrderByCountDesc();
 }
