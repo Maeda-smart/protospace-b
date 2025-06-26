@@ -38,9 +38,9 @@ public interface BookmarkRepository {
 
     // ブックマーク済みを判定
     @Select("SELECT COUNT(*) > 0 FROM bookmark WHERE prototype_id = #{prototypeId} AND user_id = #{userId}")
-    boolean existBookmark(@Param("prototypeId") Integer prototypeId, @Param("userId")Integer userId);
+    boolean existBookmark(@Param("prototypeId") Integer prototypeId,@Param("userId") Integer userId);
 
     // ブックマーク削除
     @Delete("DELETE FROM bookmark WHERE prototype_id = #{prototypeId} AND user_id = #{userId}")
-    void deleteBookmark(@Param("prototypeId") Integer prototypeId, @Param("userId")Integer userId);
+    void deleteBookmark(@Param("prototypeId") Integer prototypeId,@Param("userId") Integer userId);
 }

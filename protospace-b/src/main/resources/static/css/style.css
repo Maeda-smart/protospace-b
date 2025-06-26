@@ -27,7 +27,6 @@
 .logo {
   width: 200px;
 }
-
 img {
   max-width: 100%;
   vertical-align: bottom;
@@ -41,12 +40,20 @@ img {
   display: inline;
 }
 
+.nav_right{
+  display: flex;
+  align-items: center;
+}
+
 .nav_btn,
 .nav_logout {
-  display: inline-block;
+  height: 80%;
+  display: flex;
+  align-items: center;
   padding: 0.4em 1.6em;
+  margin-left: 10px;
   font-size: 0.8em;
-  color: #87CEFA;
+  color: #30a3eb;
   text-decoration: none;
   user-select: none;
   border: 1px #87CEFA solid;
@@ -65,42 +72,6 @@ img {
 a {
   color: #3b4043;
   text-decoration: none;
-}
-
-.card_wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  /* min-height: calc(100vh - 161px); */
-}
-
-.card {
-  width: 48%;
-  margin-bottom: 40px;
-}
-
-.card_img {
-  margin-bottom: 16px;
-}
-
-.card_title {
-  display: block;
-  font-size: 20px;
-  margin-bottom: 8px;
-  font-weight: bold;
-}
-
-.card_summary {
-  font-size: 16px;
-}
-
-.card_user {
-  display: block;
-  font-size: 12px;
-  color: #999;
-  text-align: right;
-  text-decoration: underline;
 }
 
 .footer {
