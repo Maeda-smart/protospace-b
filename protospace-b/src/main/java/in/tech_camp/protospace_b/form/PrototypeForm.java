@@ -25,5 +25,5 @@ public class PrototypeForm {
   private MultipartFile imgFile;
   private String imgPath;
 
-  private List<String> tag_names;
+  private List<String> tags;
 }

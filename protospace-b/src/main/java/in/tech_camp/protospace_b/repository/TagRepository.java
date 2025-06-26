@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -18,16 +19,16 @@ import in.tech_camp.protospace_b.entity.TagEntity;
 public interface TagRepository {
   @Insert("INSERT INTO tags(tag_name) VALUES (#{tagName})")
   @Options(useGeneratedKeys = true, keyProperty = "id")
-  TagEntity insert(String tagName);
+  void insert(TagEntity tag);
 
   @Select("SELECT * FROM tags WHERE tag_name = #{tagName}")
   TagEntity justSameTag(String tagName);
 
-  @Delete("DELETE FROM prototype_tags WHERE prototype_id = #{prototype.id}")
+  @Delete("DELETE FROM prototype_tags WHERE prototype_id = #{id}")
   void purgeTagsFromPrototype(PrototypeEntity prototype);
 
-  @Insert("INSERT INTO prototype_tags(prototype_id, tags_id) VALUES (#{prototype.id}, #{tags.id})")
-  void setTagsToPrototype(PrototypeEntity prototype, List<TagEntity> tags);
+  @Insert("INSERT INTO prototype_tags(prototype_id, tags_id) VALUES (#{prototype.id}, #{tag.id})")
+  void setTagToPrototype(@Param("prototype") PrototypeEntity prototype, @Param("tag") TagEntity tag);
 
   @Select("SELECT tags.id, tags.tag_name FROM tags INNER JOIN prototype_tags ON tags.id = prototype_tags.tags_id WHERE prototype_tags.prototype_id = #{prototypeId}")
   List<TagEntity> prototypeTags(Integer prototypeId);
