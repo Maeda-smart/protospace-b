@@ -26,8 +26,11 @@
         <button type="submit" class="search-button">Search</button>
       </form>
 
-      <div th:replace="~{prototypes :: prototypes(${prototypes}, ${readStatusMap})}">
-      </div>
+      <!-- ランキング表示ボタン -->
+       <a class="ranking-title" th:href="@{/prototypes/ranking}">♔ランキングページ</a>
+
+       <!-- プロトタイプの一覧表示 -->
+      <div th:replace="~{prototypes :: prototypes(${prototypes}, ${readStatusMap})}"></div>
     </div>
   </main>
   <div th:replace="~{footer :: footer}"></div>
