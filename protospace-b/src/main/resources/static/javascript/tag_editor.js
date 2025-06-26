@@ -36,7 +36,10 @@ window.addEventListener("load", () => {
 
     const newTag = document.createElement("div");
     newTag.className = "tag";
-    newTag.appendChild(document.createTextNode(value));
+
+    const tag_name_span = document.createElement("span");
+    tag_name_span.textContent = value;
+    newTag.appendChild(tag_name_span);
 
     const delete_span = document.createElement("span");
     delete_span.className = "delete-button";

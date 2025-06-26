@@ -6,7 +6,7 @@
 </head>
 <div class="tags" th:fragment="prototype-tags(tags)">
   <div th:each="tag : ${tags}">
-    <div class="tag" th:text="${tag.tagName}">tag1</div>
+    <div class="tag"><span th:text="${tag.tagName}"></span></div>
   </div>
   <div class="tag" th:if="${#lists.isEmpty(tags)}">タグはありません</div>
 </div>
@@ -14,7 +14,7 @@
 <div class="tags" th:fragment="tag-edit(tags)">
   <script th:src="@{/javascript/tag_editor.js}"></script>
   <div th:each="tag : ${tags}">
-    <div class="tag" th:text="${tag.tagName}">tag1<span class="delete-button">×</span><input type="text" name="tags" class="hidden" value="tag1" th:field="*{tags}"></div>
+    <div class="tag"><span th:text="${tag.tagName}"></span><span class="delete-button">×</span><input type="text" name="tags" class="hidden" th:value="${tag.tagName}"></div>
   </div>
   <div class="tag edit-button">タグを編集する</div>
   <div class="tag edit-input hidden"><input type="text" id="create-tag"><span class="add-button">✓</span></div>

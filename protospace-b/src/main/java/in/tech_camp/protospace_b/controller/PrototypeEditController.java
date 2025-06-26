@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -65,11 +64,11 @@ public class PrototypeEditController {
         model.addAttribute("prototypeId", prototypeId);
         // formに型を追加して渡してもOK
         model.addAttribute("imgPath", prototypeEntity.getImgPath());
+        model.addAttribute("tags", prototypeEntity.getTags());
 
         return "prototype/prototypeEdit";
     }
 
-    @Transactional
     @PostMapping("/prototypes/{prototypeId}/edit/submit")
     public String editPrototype(
             @PathVariable("prototypeId") Integer prototypeId,
@@ -133,7 +132,7 @@ public class PrototypeEditController {
             UserEntity userEntity = userNewRepository.findById(userId);
             if (userEntity == null) {
                 model.addAttribute("errorMessage", "ユーザーがデータベースに存在しません。");
-                return "prototype/prototypeNew";
+                return "prototype/prototypeEdit";
             }
 
             PrototypeEntity prototype = new PrototypeEntity();
