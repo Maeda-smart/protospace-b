@@ -50,42 +50,44 @@
           </div>
         </div>
 
-        
+        <div class="button-wrapper">
         <!-- ピン止めボタン -->
-        <th:block th:unless="${isPinned}">
-          <form th:action="@{'/prototypes/' + ${prototype.id} + '/pin/on'}" method="post">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <button type="submit" class="pin-btn pin-on">▶ピン</button>
-          </form>
-        </th:block>
-        <th:block th:if="${isPinned}">
-          <form th:action="@{'/prototypes/' + ${prototype.id} + '/pin/off'}" method="post">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <button type="submit" class="pin-btn pin-off">▶ピン</button>
-          </form>
-        </th:block>
-        
-       <!-- ブックマークボタン -->
-        <form th:action="@{/prototypes/{prototypeId}/bookmark(prototypeId=${prototype.id})}" method="post">
-          <!-- CSRFを追加 -->
-          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <th:block th:unless="${isPinned}">
+            <form th:action="@{'/prototypes/' + ${prototype.id} + '/pin/on'}" method="post">
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+              <button type="submit" class="pin-btn pin-on">▷ピン</button>
+            </form>
+          </th:block>
+          <th:block th:if="${isPinned}">
+            <form th:action="@{'/prototypes/' + ${prototype.id} + '/pin/off'}" method="post">
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+              <button type="submit" class="pin-btn pin-off">▶ピン</button>
+            </form>
+          </th:block>
           
-          <input type="hidden" name="prototypeId" th:value="${prototype.id}" />
-          <button type="submit" th:class="${isBookmarked} ? 'defuse-bookmark-button' : 'bookmark-button'">
-            <span th:text="${isBookmarked} ? '★ブックマーク' : '☆ブックマーク'"></span>
-          </button>
-        </form>
+          <!-- ブックマークボタン -->
+          <form th:action="@{/prototypes/{prototypeId}/bookmark(prototypeId=${prototype.id})}" method="post">
+            <!-- CSRFを追加 -->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            
+            <input type="hidden" name="prototypeId" th:value="${prototype.id}" />
+            <button type="submit" th:class="${isBookmarked} ? 'defuse-bookmark-button' : 'bookmark-button'">
+              <span th:text="${isBookmarked} ? '★ブックマーク' : '☆ブックマーク'"></span>
+            </button>
+          </form>
 
-        <!-- いいねボタン -->
-         <form th:action="@{/prototypes/{prototypeId}/nice(prototypeId=${prototype.id})}" method="post">
-          <!-- CSRFを追加 -->
-          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-          
-          <input type="hidden" name="prototypeId" th:value="${prototype.id}" />
-          <button type="submit" th:class="${isNice} ? 'defuse-nice-button' : 'nice-button'">
-            <span th:text="${isNice} ? '♥' + ' ' + ${countNice}: '♡' + ' ' + ${countNice}"></span>
-          </button>
-        </form>
+          <!-- いいねボタン -->
+          <form th:action="@{/prototypes/{prototypeId}/nice(prototypeId=${prototype.id})}" method="post">
+            <!-- CSRFを追加 -->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            
+            <input type="hidden" name="prototypeId" th:value="${prototype.id}" />
+            <button type="submit" th:class="${isNice} ? 'defuse-nice-button' : 'nice-button'">
+              <span th:text="${isNice} ? '♥' + ' ' + ${countNice}: '♡' + ' ' + ${countNice}"></span>
+            </button>
+          </form>
+        </div>
+        
 
         <!-- コメントフォーム -->
         <div class="comment_wrapper">

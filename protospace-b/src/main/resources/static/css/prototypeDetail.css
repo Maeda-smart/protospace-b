@@ -69,9 +69,13 @@
   margin: 0%;
 }
 
+label{
+  margin-bottom: 5px;
+}
+
 .comment_wrapper {
   background-color: #f6f6f6;
-  margin: 28px 0 40px 0;
+  margin: 15px 0;
   padding:20px;
 }
 
@@ -145,14 +149,39 @@
 button.nice-button,
 button.defuse-nice-button,
 button.bookmark-button,
-button.defuse-bookmark-button {
+button.defuse-bookmark-button,
+button.pin-on,
+button.pin-off {
   font-size: 1rem;
   padding: 8px 14px;
-  margin: 10px 8px 0 0;
+  margin-right: 10px;
   border: none;
-  border-radius: 20px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.button-wrapper{
+  display: flex;
+}
+
+/* ピンボタン */
+.pin-on {
+  color: rgb(255, 100, 100);
+  font-weight: normal;
+}
+.pin-off {
+  color: white;
+  background-color: #e53935;
+  font-weight: bold;
+}
+
+.pin-on:hover{
+  background-color: #ffe6ee;
+}
+
+.pin-off:hover {
+  background-color: #ffe6ee;
 }
 
 /* いいねボタン */
@@ -208,16 +237,4 @@ button.defuse-bookmark-button {
 /* ボタンの配置整えたい場合（横並びに） */
 .prototype_body form {
   display: inline-block;
-}
-
-  
-
-.pin-on {
-  color: gray;
-  font-weight: normal;
-}
-
-.pin-off {
-  color: #e53935;
-  font-weight: bold;
 }
