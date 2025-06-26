@@ -36,6 +36,7 @@ public class PrototypeDetailController {
     public String showPrototypeDetail(@PathVariable("prototypeId") Integer prototypeId, @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
         // リポジトリからエンティティ取得
         PrototypeEntity prototype = prototypeDetailRepository.findByPrototypeId(prototypeId);
+        System.out.println(prototype);
 
         model.addAttribute("prototype", prototype);
 
