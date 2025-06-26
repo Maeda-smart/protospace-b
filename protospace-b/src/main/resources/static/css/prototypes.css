@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   gap: 20px; /* カード間の余白 */
   justify-content: flex-start;
-  margin: 40px 0 10px;
+  margin: 100px 0 10px;
 }
 
 /* .card_wrapper {
@@ -70,4 +70,8 @@
   font-size: 12px;
   color: #777;
   text-decoration: none;
+}
+
+.nice {
+  color: red;
 }

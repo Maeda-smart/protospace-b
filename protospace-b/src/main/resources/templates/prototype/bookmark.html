@@ -17,6 +17,8 @@
         <p class="card_summary" th:text="${prototype.catchCopy}"></p>
         <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
             th:text="${prototype.user.nickname}"></span></a>
+        <!-- <div class="nice">❤ <span th:text="${niceBookmark[prototype.id]}"></span></div> -->
+        <span class="nice" th:text="${isNiceBookmarks[prototype.id]} ? '♥' + ' ' + ${niceBookmark[prototype.id]}: '♡' + ' ' + ${niceBookmark[prototype.id]}"></span>
       </div>
     </div>
   </div>

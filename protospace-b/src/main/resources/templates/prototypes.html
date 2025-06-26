@@ -21,6 +21,8 @@
         <p class="card_summary" th:text="${prototype.catchCopy}"></p>
         <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
             th:text="${prototype.user.nickname}"></span></a>
+        <span class="nice" th:text="${isNiceMap[prototype.id]} ? '♥' + ' ' + ${niceCountMap[prototype.id]}: '♡' + ' ' + ${niceCountMap[prototype.id]}"></span>
+          
       </div>
     </div>
   </div>
