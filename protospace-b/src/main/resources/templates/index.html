@@ -25,6 +25,9 @@
         <button type="submit" class="search-button">Search</button>
       </form>
 
+      <!-- ランキング表示ボタン -->
+       <a th:href="@{/prototypes/ranking}">ランキングページ</a>
+
       <div th:replace="~{prototypes :: prototypes(${prototypes})}"></div>
     </div>
   </main>

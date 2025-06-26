@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>ProtoSpace</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <link th:href="@{/css/prototypes.css}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div th:replace="~{header :: header}"></div>
+  <main class="main">
+    <div class="inner">
+      ランキング発表
+    </div>
+      <!-- <div th:replace="~{prototypes :: prototypes(${prototypes})}"></div> -->
+  </main>
+  <div th:replace="~{footer :: footer}"></div>
+</body>
+
+</html>

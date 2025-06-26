@@ -1,7 +1,5 @@
 package in.tech_camp.protospace_b.entity;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.Data;
 
 @Data
@@ -12,4 +10,7 @@ public class PrototypeEntity {
   private String concept;
   private String imgPath;
   private UserEntity user;
+
+  // いいね数集計
+  private int niceCount;
 }
