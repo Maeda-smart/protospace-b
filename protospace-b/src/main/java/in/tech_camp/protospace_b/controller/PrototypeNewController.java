@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +28,7 @@ import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.form.PrototypeForm;
 import in.tech_camp.protospace_b.repository.PrototypeNewRepository;
 import in.tech_camp.protospace_b.repository.UserNewRepository;
+import in.tech_camp.protospace_b.service.TagService;
 import in.tech_camp.protospace_b.validation.ValidationOrder;
 import lombok.AllArgsConstructor;
 
@@ -39,14 +42,18 @@ public class PrototypeNewController {
     @Autowired
     private final UserNewRepository userNewRepository;
 
+    private final TagService tagService;
+
     private final ImageUrl imageUrl;
 
     @GetMapping("/prototype/prototypeNew")
     public String showPrototypeNew(Model model) {
         model.addAttribute("prototypeForm", new PrototypeForm());
+        model.addAttribute("tags", new ArrayList<>());
         return "prototype/prototypeNew";
     }
 
+    @Transactional
     @PostMapping("/prototypes")
     public String createPrototype(
             @ModelAttribute("prototypeForm") @Validated(ValidationOrder.class) PrototypeForm prototypeForm,
@@ -58,12 +65,13 @@ public class PrototypeNewController {
             List<String> errorMessages = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
+            System.out.println("error");
+            errorMessages.forEach(item -> {System.out.println(item);});
             model.addAttribute("errorMessages", errorMessages);
             model.addAttribute("userForm", prototypeForm);
             return "prototype/prototypeNew";
         }
         MultipartFile imageFile = prototypeForm.getImgFile();
-        System.out.println("imageFile: " + imageFile);
 
         if (imageFile != null) {
             System.out.println("imageFileName: " + imageFile.getOriginalFilename());
@@ -94,7 +102,6 @@ public class PrototypeNewController {
                 return "prototype/prototypeNew";
             }
             UserEntity userEntity = userNewRepository.findById(userId);
-            System.out.println("userEntity: " + userEntity);
             if (userEntity == null) {
                 model.addAttribute("errorMessage", "ユーザーがデータベースに存在しません。");
                 return "prototype/prototypeNew";
@@ -108,12 +115,16 @@ public class PrototypeNewController {
             prototype.setUser(userEntity);
 
             prototypeNewRepository.insert(prototype);
+            List<String> tagNames = prototypeForm.getTags();
+            tagService.updatePrototypeTags(prototype, tagNames);
 
         } catch (IOException e) {
+            System.out.println("error:" + e.getMessage());
             model.addAttribute("errorMessage", "画像の保存に失敗しました。（" + e.getMessage() + "）");
             model.addAttribute("prototypeForm", prototypeForm);
             return "prototype/prototypeNew";
         } catch (Exception e) {
+            System.out.println("error:" + e.getMessage());
             model.addAttribute("errorMessage", "登録に失敗しました。（" + e.getMessage() + "）");
             model.addAttribute("prototypeForm", prototypeForm);
             return "prototype/prototypeNew";

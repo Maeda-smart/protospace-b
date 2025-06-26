@@ -33,16 +33,6 @@ public class PrototypeDetailController {
     private final NiceRepository niceRepository;
     private final PinRepository pinRepository;
 
-    // コンストラクタインジェクション（Spring Boot 4.x以降は@Autowried不要！）
-    // public PrototypeDetailController(PrototypeDetailRepository prototypeDetailRepository,CommentRepository commentRepository,PinRepository pinRepository ,BookmarkRepository bookmarkRepository, NiceRepository niceRepository, ReadStatusService readStatusService) {
-    //     this.prototypeDetailRepository = prototypeDetailRepository;
-    //     this.commentRepository = commentRepository;
-    //     this.bookmarkRepository = bookmarkRepository;
-    //     this.readStatusService = readStatusService;
-    //     this.niceRepository = niceRepository;
-    //     this.pinRepository = pinRepository;
-    // }
-
     @GetMapping("/prototypes/{prototypeId}/detail")
     public String showPrototypeDetail(@PathVariable("prototypeId") Integer prototypeId,
             @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
@@ -60,7 +50,6 @@ public class PrototypeDetailController {
         }
 
         model.addAttribute("prototype", prototype);
-        model.addAttribute("prototypeId", prototypeId);
 
         // コメントフォームを初期化してビューに渡す
         CommentForm commentForm = new CommentForm();
@@ -84,9 +73,7 @@ public class PrototypeDetailController {
         model.addAttribute("isNice", isNice);
 
         // 既読
-        System.out.println("Calling readStatusService.markAsRead...");
         readStatusService.markAsRead(prototypeId, userId);
-        System.out.println("Called readStatusService.markAsRead");
         }
 
         return "prototype/prototypeDetail";

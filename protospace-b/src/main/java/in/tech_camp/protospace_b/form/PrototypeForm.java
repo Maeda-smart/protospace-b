@@ -1,5 +1,7 @@
 package in.tech_camp.protospace_b.form;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import in.tech_camp.protospace_b.validation.ValidationPriority1;
@@ -22,4 +24,6 @@ public class PrototypeForm {
   @NotNull(message="Image can't be blank", groups=ValidationPriority1.class)
   private MultipartFile imgFile;
   private String imgPath;
+
+  private List<String> tags;
 }

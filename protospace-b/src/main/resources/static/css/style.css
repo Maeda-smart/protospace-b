@@ -6,6 +6,10 @@ body {
   margin: 0;
 }
 
+.hidden{
+  display: none;
+}
+
 .header {
   background-color: #f1f8fe;
   margin-bottom: 48px;

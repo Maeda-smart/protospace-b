@@ -8,6 +8,9 @@
   <label for="prototypeName"></label>
   <input type="text" id="prototypeName" name="prototypeName" th:field="*{prototypeName}" class="prototype">
 
+  <h3>プロトタイプのタグ</h3>
+  <div th:replace="~{tags :: tag-edit(${tags})}"></div>
+
   <div th:if="${#fields.hasErrors('catchCopy')}" class="field-error">
     <p th:each="err : ${#fields.errors('catchCopy')}" th:text="${err}">エラーメッセージ</p>
   </div>
