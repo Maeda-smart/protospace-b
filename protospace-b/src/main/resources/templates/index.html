@@ -28,7 +28,8 @@
       <!-- ランキング表示ボタン -->
        <a th:href="@{/prototypes/ranking}">ランキングページ</a>
 
-      <div th:replace="~{prototypes :: prototypes(${prototypes})}"></div>
+       <!-- プロトタイプの一覧表示 -->
+      <div th:replace="~{prototypes :: prototypes(${prototypes}, ${readStatusMap})}"></div>
     </div>
   </main>
   <div th:replace="~{footer :: footer}"></div>

@@ -50,6 +50,15 @@ public class RankingController {
     List<PrototypeEntity> rankingPrototypes = niceRepository.findPrototypesOrderByCountDesc();
     model.addAttribute("rankingPrototypes", rankingPrototypes);
 
+     // プロトタイプごとのいいね数表示
+    Map<Integer, Integer> niceCountMap = new HashMap<>();
+
+    for (PrototypeEntity rankingPrototype : rankingPrototypes) {
+      int count = niceRepository.countNiceByPrototypeId(rankingPrototype.getId());
+      niceCountMap.put(rankingPrototype.getId(), count);
+    }
+    model.addAttribute("niceCountMap", niceCountMap);
+
     // ログインユーザーが各プロトタイプに対し、いいねしたかを判定
     Map<Integer, Boolean> isNiceMap = new HashMap<>();
     if(currentUser != null) {

@@ -10,7 +10,4 @@ public class PrototypeEntity {
   private String concept;
   private String imgPath;
   private UserEntity user;
-
-  // いいね数集計
-  private int niceCount;
 }
