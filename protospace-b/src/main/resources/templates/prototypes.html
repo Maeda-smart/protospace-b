@@ -22,6 +22,7 @@
         <span class="nice" th:text="${isNicePrototype[prototype.id]} ? '♥' + ' ' + ${nicePrototype[prototype.id]}: '♡' + ' ' + ${nicePrototype[prototype.id]}"></span>
           
       </div>
+      <div th:replace="~{card :: card(${prototype})}"></div>
     </div>
   </div>
 </body>

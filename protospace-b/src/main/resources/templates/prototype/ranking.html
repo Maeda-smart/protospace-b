@@ -7,6 +7,7 @@
   <title>ProtoSpace</title>
   <link rel="stylesheet" th:href="@{/css/style.css}" />
   <link th:href="@{/css/prototypes.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/tags.css}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -33,9 +34,8 @@
           <div th:if="${iterStat.index == 2}" class="rank-badge rank-3" th:text="'#3'"></div>
 
           <!-- ランクバッジ（4〜10位） -->
-          <div th:if="${iterStat.index >= 3 and iterStat.index < 10}"
-              class="rank-badge rank-other"
-              th:text="'#' + (${iterStat.index + 1})">
+          <div th:if="${iterStat.index >= 3 and iterStat.index < 10}" class="rank-badge rank-other"
+            th:text="'#' + (${iterStat.index + 1})">
           </div>
 
           <a th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}">
@@ -51,6 +51,7 @@
               th:text="${isNicePrototype[prototype.id]} ? '♥' + ' ' + ${nicePrototype[prototype.id]}: '♡' + ' ' + ${nicePrototype[prototype.id]}"></span>
 
           </div>
+          <div th:replace="~{card :: card(${prototype})}"></div>
         </div>
       </div>
 
