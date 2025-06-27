@@ -12,7 +12,6 @@ import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.repository.NiceRepository;
 import in.tech_camp.protospace_b.service.PrototypeStatusService;
-import in.tech_camp.protospace_b.service.ReadStatusService;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -20,7 +19,6 @@ import lombok.AllArgsConstructor;
 public class RankingController {
 
   private final NiceRepository niceRepository;
-  private final ReadStatusService readStatusService;
   private final PrototypeStatusService prototypeStatusService;
   
   // ランキングページに遷移
