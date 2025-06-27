@@ -27,9 +27,9 @@ import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.form.PrototypeForm;
-import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
 import in.tech_camp.protospace_b.repository.PrototypeEditRepository;
 import in.tech_camp.protospace_b.repository.PrototypeNewRepository;
+import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserNewRepository;
 import in.tech_camp.protospace_b.service.TagService;
 import in.tech_camp.protospace_b.validation.ValidationOrder;
@@ -48,7 +48,7 @@ public class PrototypeController {
     private final UserNewRepository userNewRepository;
 
     private final TagService tagService;
-    private final PrototypeDetailRepository prototypeDetailRepository;
+    private final PrototypeShowRepository prototypeShowRepository;
     private final ImageUrl imageUrl;
 
     @GetMapping("/prototype/prototypeNew")
@@ -62,7 +62,7 @@ public class PrototypeController {
     public String showPrototypeEdit(@PathVariable("prototypeId") Integer prototypeId, Model model,
             @AuthenticationPrincipal CustomUserDetail currentUser) {
 
-        PrototypeEntity prototypeEntity = prototypeDetailRepository.findByPrototypeId(prototypeId);
+        PrototypeEntity prototypeEntity = prototypeShowRepository.findByPrototypeId(prototypeId);
 
         Integer ownerUserId = prototypeEntity.getUser().getId();
 
