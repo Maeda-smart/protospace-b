@@ -109,12 +109,12 @@ public class PrototypeController {
 
         try {
             String fileName;
+            String newImgPath;
 
             if (imageFile != null && imageFile.getOriginalFilename() != null
                     && !imageFile.getOriginalFilename().isEmpty()) {
-                System.out.println("saving image");
                 fileName = saveImage(imageFile);
-                System.out.println("image saved:"+fileName);
+                newImgPath = "/uploads/" + fileName;
             } else {
                 model.addAttribute("errorMessage", "画像ファイルが選択されていません。");
                 model.addAttribute("prototypeForm", prototypeForm);
@@ -136,7 +136,7 @@ public class PrototypeController {
             prototype.setPrototypeName(prototypeForm.getPrototypeName());
             prototype.setCatchCopy(prototypeForm.getCatchCopy());
             prototype.setConcept(prototypeForm.getConcept());
-            prototype.setImgPath("/uploads/" + fileName);
+            prototype.setImgPath(newImgPath);
             prototype.setUser(userEntity);
 
             prototypeNewRepository.insert(prototype);
@@ -146,16 +146,10 @@ public class PrototypeController {
             tagService.updatePrototypeTags(prototype, tagNames);
 
         } catch (IOException e) {
-            System.out.println("IOException");
-            System.out.println("error:" + e.getMessage());
-            System.out.println("error:" + e);
             model.addAttribute("errorMessage", "画像の保存に失敗しました。（" + e.getMessage() + "）");
             model.addAttribute("prototypeForm", prototypeForm);
             return "prototype/prototypeNew";
         } catch (Exception e) {
-            System.out.println("Exception");
-            System.out.println("error:" + e.getMessage());
-            System.out.println("error:" + e);
             model.addAttribute("errorMessage", "登録に失敗しました。（" + e.getMessage() + "）");
             model.addAttribute("prototypeForm", prototypeForm);
             return "prototype/prototypeNew";
@@ -247,19 +241,14 @@ public class PrototypeController {
         String fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
                 + "_" + imageFile.getOriginalFilename();
 
-        System.out.println("saving image:"+fileName);
         // ターミナルライクな操作をするためのオブジェクト
-        System.out.println("save to:"+UPLOAD_DIR);
         java.io.File dir = new java.io.File(UPLOAD_DIR);
-        System.out.println("save to:"+UPLOAD_DIR);
 
         if (!dir.exists())
             dir.mkdirs();
         // 相対パスの指定
-        System.out.println("setting path");
         java.nio.file.Path imagePath = java.nio.file.Paths.get(UPLOAD_DIR, fileName);
         // 保存
-        System.out.println("saving");
         Files.copy(imageFile.getInputStream(), imagePath);
         return fileName;
     }
