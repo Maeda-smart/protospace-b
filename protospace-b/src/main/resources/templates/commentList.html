@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<link th:href="@{/css/prototypeDetail.css}" rel="stylesheet" type="text/css">
+
+<body>
+  <ul class="comments_list" th:fragment="commentList">
+    <li th:each="comment:${comments}">
+      <span th:text="${comment.text}">コメント内容</span>
+      <a th:href="@{/users/{userId}(userId=${comment.user.id})}" class="user-name"> (<span
+          th:text="${comment.user.nickname}"></span>) </a>
+    </li>
+  </ul>
+</body>

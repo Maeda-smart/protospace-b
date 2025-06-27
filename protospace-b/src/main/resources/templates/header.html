@@ -11,6 +11,7 @@
         </a>
       </div>
       <div class="nav_right" th:if="${#authorization.expression('isAuthenticated()')}">
+        <button id="notificationButton" class="notification-btn">🔔</button>
         <a th:href="@{/users/{userId}(userId=${user.id})}" class="nav_btn">My Page</a>
         
         <a class="nav_btn" th:href="@{/prototype/prototypeNew}">New Proto</a>

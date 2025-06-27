@@ -3,9 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>通知一覧</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
   <link rel="stylesheet" th:href="@{/css/notification.css}" />
 </head>
 <body>
+
+  <div th:replace="~{header :: header}"></div>
+
   <div class="container">
     <!-- サイドバー -->
     <aside class="sidebar">
@@ -20,8 +24,13 @@
 
     <!-- メインエリア（iframeを使って詳細を表示） -->
     <main class="main-content">
-      <iframe name="detail-frame" class="detail-frame"></iframe>
+      <div class="comments_list">
+        <div th:replace="~{commentList :: commentList}"></div>
+      </div>
     </main>
   </div>
+
+  <div th:replace="~{footer :: footer}"></div>
+
 </body>
 </html>
