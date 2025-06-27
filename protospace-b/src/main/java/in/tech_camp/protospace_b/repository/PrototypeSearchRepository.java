@@ -2,6 +2,7 @@ package in.tech_camp.protospace_b.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
@@ -11,7 +12,7 @@ import in.tech_camp.protospace_b.entity.PrototypeEntity;
 
 @Mapper
 public interface PrototypeSearchRepository {
-  // FIXME: show tags
+  // OPTIMIZE: N+1
   @Select("""
       SELECT
         p.id p_id,
@@ -32,6 +33,7 @@ public interface PrototypeSearchRepository {
       @Result(property = "imgPath", column = "img"),
       @Result(property = "user.id", column = "u_id"),
       @Result(property = "user.nickname", column = "nickname"),
+      @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags"))
   })
   List<PrototypeEntity> findByPrototypeName(String prototypeName);
 }
