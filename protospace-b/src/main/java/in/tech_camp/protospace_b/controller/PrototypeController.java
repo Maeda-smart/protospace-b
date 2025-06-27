@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -27,6 +29,7 @@ import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.form.PrototypeForm;
 import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
 import in.tech_camp.protospace_b.repository.PrototypeEditRepository;
+import in.tech_camp.protospace_b.repository.PrototypeNewRepository;
 import in.tech_camp.protospace_b.repository.UserNewRepository;
 import in.tech_camp.protospace_b.service.TagService;
 import in.tech_camp.protospace_b.validation.ValidationOrder;
@@ -34,14 +37,26 @@ import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
-public class PrototypeEditController {
-
+public class PrototypeController {
+    @Autowired
+    private final PrototypeNewRepository prototypeNewRepository;
+    @Autowired
     private final PrototypeEditRepository prototypeEditRepository;
+
+    @Autowired
     private final UserNewRepository userNewRepository;
-    private final PrototypeDetailRepository prototypeDetailRepository;
+
     private final TagService tagService;
 
     private final ImageUrl imageUrl;
+    private final PrototypeDetailRepository prototypeDetailRepository;
+
+    @GetMapping("/prototype/prototypeNew")
+    public String showPrototypeNew(Model model) {
+        model.addAttribute("prototypeForm", new PrototypeForm());
+        model.addAttribute("tags", new ArrayList<>());
+        return "prototype/prototypeNew";
+    }
 
     @GetMapping("/prototype/{prototypeId}/edit")
     public String showPrototypeEdit(@PathVariable("prototypeId") Integer prototypeId, Model model,
@@ -70,6 +85,91 @@ public class PrototypeEditController {
         return "prototype/prototypeEdit";
     }
 
+    @Transactional
+    @PostMapping("/prototypes")
+    public String createPrototype(
+            @ModelAttribute("prototypeForm") @Validated(ValidationOrder.class) PrototypeForm prototypeForm,
+            BindingResult result,
+            @AuthenticationPrincipal CustomUserDetail currentUser,
+            Model model) {
+
+        if (result.hasErrors()) {
+            List<String> errorMessages = result.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.toList());
+            System.out.println("error");
+            errorMessages.forEach(item -> {
+                System.out.println(item);
+            });
+            model.addAttribute("errorMessages", errorMessages);
+            model.addAttribute("userForm", prototypeForm);
+            return "prototype/prototypeNew";
+        }
+        MultipartFile imageFile = prototypeForm.getImgFile();
+
+        if (imageFile != null) {
+            System.out.println("imageFileName: " + imageFile.getOriginalFilename());
+        }
+
+        try {
+            String uploadDir = imageUrl.getImageUrl();
+            String fileName;
+            if (imageFile != null && imageFile.getOriginalFilename() != null
+                    && !imageFile.getOriginalFilename().isEmpty()) {
+                fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
+                        + "_" + imageFile.getOriginalFilename();
+                java.io.File dir = new java.io.File(uploadDir);
+
+                if (!dir.exists())
+                    dir.mkdirs();
+                java.nio.file.Path imagePath = java.nio.file.Paths.get(uploadDir, fileName);
+                Files.copy(imageFile.getInputStream(), imagePath);
+            } else {
+                model.addAttribute("errorMessage", "画像ファイルが選択されていません。");
+                model.addAttribute("prototypeForm", prototypeForm);
+                return "prototype/prototypeNew";
+            }
+
+            Integer userId = (currentUser != null) ? currentUser.getId() : null;
+            if (userId == null) {
+                model.addAttribute("errorMessage", "ログインユーザーが取得できませんでした。");
+                return "prototype/prototypeNew";
+            }
+            UserEntity userEntity = userNewRepository.findById(userId);
+            if (userEntity == null) {
+                model.addAttribute("errorMessage", "ユーザーがデータベースに存在しません。");
+                return "prototype/prototypeNew";
+            }
+
+            PrototypeEntity prototype = new PrototypeEntity();
+            prototype.setPrototypeName(prototypeForm.getPrototypeName());
+            prototype.setCatchCopy(prototypeForm.getCatchCopy());
+            prototype.setConcept(prototypeForm.getConcept());
+            prototype.setImgPath("/uploads/" + fileName);
+            prototype.setUser(userEntity);
+
+            prototypeNewRepository.insert(prototype);
+            List<String> tagNames = prototypeForm.getTags();
+            if (tagNames == null)
+                tagNames = new ArrayList<>();
+            tagService.updatePrototypeTags(prototype, tagNames);
+
+        } catch (IOException e) {
+            System.out.println("error:" + e.getMessage());
+            model.addAttribute("errorMessage", "画像の保存に失敗しました。（" + e.getMessage() + "）");
+            model.addAttribute("prototypeForm", prototypeForm);
+            return "prototype/prototypeNew";
+        } catch (Exception e) {
+            System.out.println("error:" + e.getMessage());
+            model.addAttribute("errorMessage", "登録に失敗しました。（" + e.getMessage() + "）");
+            model.addAttribute("prototypeForm", prototypeForm);
+            return "prototype/prototypeNew";
+        }
+
+        return "redirect:/";
+    }
+
+    @Transactional
     @PostMapping("/prototypes/{prototypeId}/edit/submit")
     public String editPrototype(
             @PathVariable("prototypeId") Integer prototypeId,
