@@ -17,6 +17,9 @@
         <a th:href="@{/users/{userId}/edit(userId=${user.id})}">
           <input type="submit" value="編集する" class="btn">
         </a>
+        <form th:action="@{/users/logout}" method="POST" class="nav_logout_form">
+          <button type="submit" class="nav_logout" rel="nofollow" data-method="delete">ログアウト</button>
+        </form>
       </div>
     </div>
     
