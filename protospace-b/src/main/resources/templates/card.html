@@ -1,0 +1,16 @@
+<div th:fragment="card(prototype)">
+  <a th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}">
+    <img class="card_img" th:src="@{${prototype.imgPath}}">
+  </a>
+  <div class="card_body">
+    <a class="card_title" th:href="@{'/prototypes/' + ${prototype.id} + '/detail'}"
+      th:text="${prototype.prototypeName}"></a>
+    <div th:replace="~{tags :: prototype-tags(${prototype.tags})}"></div>
+    <p class="card_summary" th:text="${prototype.catchCopy}"></p>
+    <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
+        th:text="${prototype.user.nickname}"></span></a>
+    <span class="nice"
+      th:text="${isNiceMap[prototype.id]} ? '♥' + ' ' + ${niceCountMap[prototype.id]}: '♡' + ' ' + ${niceCountMap[prototype.id]}"></span>
+
+  </div>
+</div>

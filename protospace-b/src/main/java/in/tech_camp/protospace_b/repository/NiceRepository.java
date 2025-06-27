@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
@@ -37,20 +37,34 @@ public interface NiceRepository {
   // OPTIMIZE: N+1
   @Select("""
       SELECT
-        p.*,
+        p.id p_id,
+        p.prototypeName,
+        p.catchCopy,
+        p.concept,
+        p.img,
+        u.id u_id,
+        u.nickname nickname,
         COUNT(n.user_id) AS nice_count
       FROM
         prototype p
+      LEFT JOIN users u ON u.id = p.user_id
       LEFT JOIN nice n ON p.id = n.prototype_id
-      GROUP BY p.id ORDER BY nice_count DESC
+      GROUP BY
+        p.id,
+        p.prototypeName,
+        p.catchCopy,
+        p.concept,
+        p.img,
+        u.id,
+        u.nickname
+      ORDER BY nice_count DESC
       """)
   @Results(value = {
-      @Result(property = "id", column = "id"),
-      @Result(property = "prototypeName", column = "prototypename"),
-      @Result(property = "catchCopy", column = "catchcopy"),
-      @Result(property = "concept", column = "concept"),
+      @Result(property = "id", column = "p_id"),
+      @Result(property = "user.id", column = "u_id"),
+      @Result(property = "user.nickname", column = "nickname"),
       @Result(property = "imgPath", column = "img"),
-      @Result(property = "user", column = "user_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserNewRepository.findById"))
+      @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags"))
   })
   List<PrototypeEntity> findPrototypesOrderByCountDesc();
 }
