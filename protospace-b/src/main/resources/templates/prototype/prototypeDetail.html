@@ -3,9 +3,10 @@
 
 <head>
   <meta charset="UTF-8">
-  <link href="/css/prototypeDetail.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" th:href="@{/css/style.css}" />
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <link th:href="@{/css/prototypeDetail.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/tags.css}" rel="stylesheet" type="text/css">
   <title>ProtoSpace</title>
 </head>
 
@@ -26,10 +27,10 @@
         <div
           th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == prototype.user.id}">
           <div class="edit_delete">
-            <a th:href="@{/prototype/{prototypeId}/edit(prototypeId=${prototype.id})}">
+            <a th:href="@{'/prototype/' + ${prototype.id} + '/edit'}">
               <input type="submit" value="編集する" class="btn">
             </a>
-            <form th:action="@{/prototypes/{prototypeId}/delete(prototypeId=${prototype.id})}" th:method="post">
+            <form th:action="@{'/prototypes/' + ${prototype.id} + '/delete'}" th:method="post">
               <input type="submit" value="削除する" class="btn">
             </form>
           </div>
@@ -38,6 +39,8 @@
         <div class="protoType_img">
           <img th:src="@{${prototype.imgPath}}" alt="プロトタイプ画像">
         </div>
+
+        <div th:replace="~{tags :: prototype-tags(${prototype.tags})}"></div>
 
         <div class="prototype_body">
           <div class="prototype_detail">
