@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -146,6 +147,7 @@ public class PrototypeEditController {
             // 検索用のIDを渡さないといけない
             prototypeEditRepository.update(prototype);
             List<String> tagNames = prototypeForm.getTags();
+            if (tagNames == null) tagNames = new ArrayList<>();
             tagService.updatePrototypeTags(prototype, tagNames);
 
         } catch (IOException e) {
