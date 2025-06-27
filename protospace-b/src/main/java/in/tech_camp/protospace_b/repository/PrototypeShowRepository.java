@@ -41,4 +41,13 @@ public interface PrototypeShowRepository {
       @Result(property="tags", column="p_id", many = @Many(select="in.tech_camp.protospace_b.repository.TagRepository.prototypeTags"))
   })
   List<PrototypeEntity> showByUserId(Integer userId);
+
+  @Select(SELECTOR + " WHERE p.id = #{id}")
+  @Results(value = {
+      @Result(property = "id", column = "p_id"),
+      @Result(property = "user", column = "user_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
+      @Result(property = "imgPath", column = "img"),
+      @Result(property="tags", column="p_id", many = @Many(select="in.tech_camp.protospace_b.repository.TagRepository.prototypeTags"))
+  })
+  PrototypeEntity findByPrototypeId(Integer id);
 }
