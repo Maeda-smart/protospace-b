@@ -24,7 +24,7 @@
         <div th:text="${error}"></div>
       </div>
 
-    <form th:action="@{/users/{id}(id=${user.id})}" th:method="post" th:object="${user}" class="signUp-wrapper">
+    <form th:action="@{/users/{id}(id=${user.id})}" th:method="post" th:object="${userForm}" class="signUp-wrapper">
       
       <!-- フォーム -->
       <div th:insert="~{userFields :: userFields}"></div>

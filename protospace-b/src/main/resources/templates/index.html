@@ -21,13 +21,13 @@
         <a class="greeting_link" th:href="${'/users/'+user.id}"><span th:text="${user.nickname}"></span>さん</a>
       </div>
 
+      <!-- ランキング表示ボタン -->
+       <a class="ranking-title" th:href="@{/prototypes/ranking}">♔ランキングページ</a>
+
       <form th:action="@{/prototypes/search}" th:object="${prototypeSearchForm}" method="get">
         <input type="text" th:field="*{prototypeName}" placeholder="Search by prototype name" class="search-box" />
         <button type="submit" class="search-button">Search</button>
       </form>
-
-      <!-- ランキング表示ボタン -->
-       <a class="ranking-title" th:href="@{/prototypes/ranking}">♔ランキングページ</a>
 
        <!-- プロトタイプの一覧表示 -->
       <div th:replace="~{prototypes :: prototypes(${prototypes}, ${readStatusMap})}"></div>

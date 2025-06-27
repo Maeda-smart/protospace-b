@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.ReadStatusEntity;
-import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.repository.NiceRepository;
-import in.tech_camp.protospace_b.repository.UserDetailRepository;
 import in.tech_camp.protospace_b.service.ReadStatusService;
 import lombok.AllArgsConstructor;
 
@@ -24,7 +22,6 @@ import lombok.AllArgsConstructor;
 public class RankingController {
 
   private final NiceRepository niceRepository;
-  private final UserDetailRepository userDetailRepository;
   private final ReadStatusService readStatusService;
   
   // ランキングページに遷移
@@ -34,9 +31,6 @@ public class RankingController {
     // 既読・未読を管理
     if (currentUser != null) {
       Integer userId = currentUser.getId();
-      UserEntity user = userDetailRepository.findById(userId);
-      model.addAttribute("user", user);
-
       List<ReadStatusEntity> readList = readStatusService.findAllByUserId(userId);
       Map<Integer, Boolean> readStatusMap = readList.stream()
         .collect(Collectors.toMap(
