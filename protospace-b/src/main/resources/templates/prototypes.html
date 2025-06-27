@@ -7,7 +7,7 @@
     <div class="card" th:each="prototype : ${list}">
 
       <!-- NEWアイコン -->
-      <span class="new-icon" th:if="${readStatusMap != null and !readStatusMap.containsKey(prototype.id)}">NEW</span>
+      <span class="new-icon" th:if="${prototypeRead != null and !prototypeRead.containsKey(prototype.id)}">NEW</span>
       
       <a th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}">
         <img class="card_img" th:src="@{${prototype.imgPath}}">
@@ -19,7 +19,7 @@
         <p class="card_summary" th:text="${prototype.catchCopy}"></p>
         <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
             th:text="${prototype.user.nickname}"></span></a>
-        <span class="nice" th:text="${isNiceMap[prototype.id]} ? '♥' + ' ' + ${niceCountMap[prototype.id]}: '♡' + ' ' + ${niceCountMap[prototype.id]}"></span>
+        <span class="nice" th:text="${isNicePrototype[prototype.id]} ? '♥' + ' ' + ${nicePrototype[prototype.id]}: '♡' + ' ' + ${nicePrototype[prototype.id]}"></span>
           
       </div>
     </div>

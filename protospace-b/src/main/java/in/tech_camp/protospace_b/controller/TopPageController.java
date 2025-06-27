@@ -38,11 +38,11 @@ public class TopPageController {
 
 
     // プロトタイプのステータス
-    Map<String, Map<Integer, ?>> status = prototypeStatusService.generatePrototypeStatus(prototypes, userId);
+    Map<String, Map<Integer, ?>> prototypeStatus = prototypeStatusService.generatePrototypeStatus(prototypes, userId);
 
-    model.addAttribute("niceCountMap", status.get("niceCountMap"));
-    model.addAttribute("isNiceMap", status.get("isNiceMap"));
-    model.addAttribute("readStatusMap", status.get("readStatusMap"));
+    model.addAttribute("nicePrototype", prototypeStatus.get("niceCountMap"));
+    model.addAttribute("isNicePrototype", prototypeStatus.get("isNiceMap"));
+    model.addAttribute("prototypeRead", prototypeStatus.get("readStatusMap"));
 
     return "index";
 
