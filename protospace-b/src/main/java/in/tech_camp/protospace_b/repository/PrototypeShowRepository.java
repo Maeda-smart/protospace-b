@@ -22,14 +22,20 @@ public interface PrototypeShowRepository {
         p.img,
         p.user_id,
         p.created_at,
-        p.updated_at
+        p.updated_at,
+        u.id u_id,
+        u.nickname nickname
       FROM
         prototype p
+      LEFT JOIN users u ON p.user_id = u.id
       """;
+
+  // OPTIMIZE: N+1
   @Select(SELECTOR)
   @Results(value = {
       @Result(property = "id", column = "p_id"),
-      @Result(property = "user", column = "user_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
+      @Result(property = "user.id", column = "u_id"),
+      @Result(property = "user.nickname", column = "nickname"),
       @Result(property = "imgPath", column = "img"),
       @Result(property="tags", column="p_id", many = @Many(select="in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
       @Result(property="createdAt", column="created_at"),
@@ -37,10 +43,12 @@ public interface PrototypeShowRepository {
   })
   List<PrototypeEntity> showAll();
 
+  // OPTIMIZE: N+1
   @Select(SELECTOR + " WHERE user_id = #{userId}")
   @Results(value = {
       @Result(property = "id", column = "p_id"),
-      @Result(property = "user", column = "user_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
+      @Result(property = "user.id", column = "u_id"),
+      @Result(property = "user.nickname", column = "nickname"),
       @Result(property = "imgPath", column = "img"),
       @Result(property="tags", column="p_id", many = @Many(select="in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
       @Result(property="createdAt", column="created_at"),
@@ -51,7 +59,7 @@ public interface PrototypeShowRepository {
   @Select(SELECTOR + " WHERE p.id = #{id}")
   @Results(value = {
       @Result(property = "id", column = "p_id"),
-      @Result(property = "user", column = "user_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
+      @Result(property = "user", column = "u_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
       @Result(property = "imgPath", column = "img"),
       @Result(property="tags", column="p_id", many = @Many(select="in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
       @Result(property="createdAt", column="created_at"),
