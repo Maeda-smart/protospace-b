@@ -21,12 +21,9 @@ public interface PinRepository {
   @Select("SELECT * FROM prototype WHERE user_id = #{userId}")
   List<PrototypeEntity> findByUserId(Integer userId);
 
-  // @Select("SELECT user_id FROM prototype WHERE prototype_id = #{prototypeId}")
-  // Integer findUserIdByPrototypeId(Integer prototypeId);
-
   @Insert("INSERT INTO pin (user_id,prototype_id) VALUES (#{userId}, #{prototypeId})")
   void insert(PinEntity pinEntity);
-  
+
   @Select("SELECT COUNT(*) FROM pin WHERE user_id = #{userId} AND prototype_id = #{prototypeId}")
   int count(@Param("userId") Integer userId, @Param("prototypeId") Integer prototypeId);
 
