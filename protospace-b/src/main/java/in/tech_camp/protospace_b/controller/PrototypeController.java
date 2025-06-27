@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -25,8 +27,9 @@ import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.form.PrototypeForm;
-import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
 import in.tech_camp.protospace_b.repository.PrototypeEditRepository;
+import in.tech_camp.protospace_b.repository.PrototypeNewRepository;
+import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserNewRepository;
 import in.tech_camp.protospace_b.service.TagService;
 import in.tech_camp.protospace_b.validation.ValidationOrder;
@@ -34,20 +37,32 @@ import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
-public class PrototypeEditController {
+public class PrototypeController {
 
+    @Autowired
+    private final PrototypeNewRepository prototypeNewRepository;
+    @Autowired
     private final PrototypeEditRepository prototypeEditRepository;
-    private final UserNewRepository userNewRepository;
-    private final PrototypeDetailRepository prototypeDetailRepository;
-    private final TagService tagService;
 
+    @Autowired
+    private final UserNewRepository userNewRepository;
+
+    private final TagService tagService;
+    private final PrototypeShowRepository prototypeShowRepository;
     private final ImageUrl imageUrl;
+
+    @GetMapping("/prototype/prototypeNew")
+    public String showPrototypeNew(Model model) {
+        model.addAttribute("prototypeForm", new PrototypeForm());
+        model.addAttribute("tags", new ArrayList<>());
+        return "prototype/prototypeNew";
+    }
 
     @GetMapping("/prototype/{prototypeId}/edit")
     public String showPrototypeEdit(@PathVariable("prototypeId") Integer prototypeId, Model model,
             @AuthenticationPrincipal CustomUserDetail currentUser) {
 
-        PrototypeEntity prototypeEntity = prototypeDetailRepository.findByPrototypeId(prototypeId);
+        PrototypeEntity prototypeEntity = prototypeShowRepository.findByPrototypeId(prototypeId);
 
         Integer ownerUserId = prototypeEntity.getUser().getId();
 
@@ -70,6 +85,80 @@ public class PrototypeEditController {
         return "prototype/prototypeEdit";
     }
 
+    @Transactional
+    @PostMapping("/prototypes")
+    public String createPrototype(
+            @ModelAttribute("prototypeForm") @Validated(ValidationOrder.class) PrototypeForm prototypeForm,
+            BindingResult result,
+            @AuthenticationPrincipal CustomUserDetail currentUser,
+            Model model) {
+
+        if (result.hasErrors()) {
+            List<String> errorMessages = result.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.toList());
+            model.addAttribute("errorMessages", errorMessages);
+            model.addAttribute("userForm", prototypeForm);
+            return "prototype/prototypeNew";
+        }
+        MultipartFile imageFile = prototypeForm.getImgFile();
+
+        if (imageFile != null) {
+            System.out.println("imageFileName: " + imageFile.getOriginalFilename());
+        }
+
+        try {
+            String fileName;
+            String newImgPath;
+
+            if (imageFile != null && imageFile.getOriginalFilename() != null
+                    && !imageFile.getOriginalFilename().isEmpty()) {
+                fileName = saveImage(imageFile);
+                newImgPath = "/uploads/" + fileName;
+            } else {
+                model.addAttribute("errorMessage", "画像ファイルが選択されていません。");
+                model.addAttribute("prototypeForm", prototypeForm);
+                return "prototype/prototypeNew";
+            }
+
+            Integer userId = (currentUser != null) ? currentUser.getId() : null;
+            if (userId == null) {
+                model.addAttribute("errorMessage", "ログインユーザーが取得できませんでした。");
+                return "prototype/prototypeNew";
+            }
+            UserEntity userEntity = userNewRepository.findById(userId);
+            if (userEntity == null) {
+                model.addAttribute("errorMessage", "ユーザーがデータベースに存在しません。");
+                return "prototype/prototypeNew";
+            }
+
+            PrototypeEntity prototype = new PrototypeEntity();
+            prototype.setPrototypeName(prototypeForm.getPrototypeName());
+            prototype.setCatchCopy(prototypeForm.getCatchCopy());
+            prototype.setConcept(prototypeForm.getConcept());
+            prototype.setImgPath(newImgPath);
+            prototype.setUser(userEntity);
+
+            prototypeNewRepository.insert(prototype);
+            List<String> tagNames = prototypeForm.getTags();
+            if (tagNames == null)
+                tagNames = new ArrayList<>();
+            tagService.updatePrototypeTags(prototype, tagNames);
+
+        } catch (IOException e) {
+            model.addAttribute("errorMessage", "画像の保存に失敗しました。（" + e.getMessage() + "）");
+            model.addAttribute("prototypeForm", prototypeForm);
+            return "prototype/prototypeNew";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "登録に失敗しました。（" + e.getMessage() + "）");
+            model.addAttribute("prototypeForm", prototypeForm);
+            return "prototype/prototypeNew";
+        }
+
+        return "redirect:/";
+    }
+
+    @Transactional
     @PostMapping("/prototypes/{prototypeId}/edit/submit")
     public String editPrototype(
             @PathVariable("prototypeId") Integer prototypeId,
@@ -78,7 +167,6 @@ public class PrototypeEditController {
             @AuthenticationPrincipal CustomUserDetail currentUser,
             Model model) {
 
-        // バリデーション
         if (result.hasErrors()) {
             List<String> errorMessages = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -92,33 +180,17 @@ public class PrototypeEditController {
             MultipartFile imageFile = prototypeForm.getImgFile();
             String newImgPath;
 
-            System.out.println("imageFile: " + imageFile);
-
             if (imageFile == null || imageFile.getOriginalFilename() == null
                     || imageFile.getOriginalFilename().isEmpty()) {
                 newImgPath = prototypeForm.getImgPath();
 
             } else {
-                String uploadDir = imageUrl.getImageUrl();
                 String fileName;
 
                 if (imageFile != null && imageFile.getOriginalFilename() != null
                         && !imageFile.getOriginalFilename().isEmpty()) {
-                    fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
-                            + "_" + imageFile.getOriginalFilename();
-
-                    // ターミナルライクな操作をするためのオブジェクト
-                    java.io.File dir = new java.io.File(uploadDir);
-
-                    if (!dir.exists())
-                        dir.mkdirs();
-                    // 相対パスの指定
-                    java.nio.file.Path imagePath = java.nio.file.Paths.get(uploadDir, fileName);
-                    // 保存
-                    Files.copy(imageFile.getInputStream(), imagePath);
-
+                    fileName = saveImage(imageFile);
                     newImgPath = "/uploads/" + fileName;
-
                 } else {
                     model.addAttribute("prototypeForm", prototypeForm);
                     return "prototype/prototypeEdit";
@@ -147,7 +219,8 @@ public class PrototypeEditController {
             // 検索用のIDを渡さないといけない
             prototypeEditRepository.update(prototype);
             List<String> tagNames = prototypeForm.getTags();
-            if (tagNames == null) tagNames = new ArrayList<>();
+            if (tagNames == null)
+                tagNames = new ArrayList<>();
             tagService.updatePrototypeTags(prototype, tagNames);
 
         } catch (IOException e) {
@@ -161,5 +234,22 @@ public class PrototypeEditController {
         }
 
         return "redirect:/prototypes/" + prototypeId + "/detail";
+    }
+
+    private String saveImage(MultipartFile imageFile) throws IOException {
+        String UPLOAD_DIR = imageUrl.getImageUrl();
+        String fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
+                + "_" + imageFile.getOriginalFilename();
+
+        // ターミナルライクな操作をするためのオブジェクト
+        java.io.File dir = new java.io.File(UPLOAD_DIR);
+
+        if (!dir.exists())
+            dir.mkdirs();
+        // 相対パスの指定
+        java.nio.file.Path imagePath = java.nio.file.Paths.get(UPLOAD_DIR, fileName);
+        // 保存
+        Files.copy(imageFile.getInputStream(), imagePath);
+        return fileName;
     }
 }

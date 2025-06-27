@@ -10,7 +10,7 @@ import in.tech_camp.protospace_b.entity.BookmarkEntity;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.repository.BookmarkRepository;
-import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
+import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserNewRepository;
 import lombok.AllArgsConstructor;
 
@@ -23,7 +23,7 @@ public class BookmarkController {
 
   private final UserNewRepository userNewRepository;
 
-  private final PrototypeDetailRepository prototypeDetailRepository;
+  private final PrototypeShowRepository prototypeShowRepository;
   
   // ブックマーク送信メソッド
   @PostMapping("/prototypes/{prototypeId}/bookmark")
@@ -40,7 +40,7 @@ public class BookmarkController {
       bookmarkRepository.deleteBookmark(prototypeId, userId);
     } else {
     // プロトタイプとログインしているユーザー情報を取得
-    PrototypeEntity prototype = prototypeDetailRepository.findByPrototypeId(prototypeId);
+    PrototypeEntity prototype = prototypeShowRepository.findByPrototypeId(prototypeId);
     UserEntity user = userNewRepository.findById(userId);
     
     BookmarkEntity bookmark = new BookmarkEntity();
