@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
@@ -33,7 +34,7 @@ public interface NiceRepository {
   int countNiceByPrototypeId(Integer prototypeId);
 
   // プロトタイプごとのいいね数を取得し、多い順に並び替えたうえで全プロトタイプ取得
-  // TODO: set tags
+  // OPTIMIZE: N+1
   @Select("""
       SELECT
         p.id p_id,
@@ -63,6 +64,7 @@ public interface NiceRepository {
       @Result(property = "user.id", column = "u_id"),
       @Result(property = "user.nickname", column = "nickname"),
       @Result(property = "imgPath", column = "img"),
+      @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags"))
   })
   List<PrototypeEntity> findPrototypesOrderByCountDesc();
 }
