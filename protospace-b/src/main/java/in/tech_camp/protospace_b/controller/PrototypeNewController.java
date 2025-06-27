@@ -116,6 +116,7 @@ public class PrototypeNewController {
 
             prototypeNewRepository.insert(prototype);
             List<String> tagNames = prototypeForm.getTags();
+            if (tagNames == null) tagNames = new ArrayList<>();
             tagService.updatePrototypeTags(prototype, tagNames);
 
         } catch (IOException e) {
