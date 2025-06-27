@@ -9,17 +9,7 @@
   <div class="card_wrapper" th:fragment="bookmark" >
     <!-- プロトタイプの繰り返し表示 -->
     <div class="card" th:each="prototype : ${bookmarkPrototypes}">
-      <a th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}">
-        <img class="card_img" th:src="@{${prototype.imgPath}}">
-      </a>
-      <div class="card_body">
-        <a class="card_title" th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}" th:text="${prototype.prototypeName}"></a>
-        <p class="card_summary" th:text="${prototype.catchCopy}"></p>
-        <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
-            th:text="${prototype.user.nickname}"></span></a>
-        <!-- <div class="nice">❤ <span th:text="${niceBookmark[prototype.id]}"></span></div> -->
-        <span class="nice" th:text="${isBookmarkMap[prototype.id]} ? '♥' + ' ' + ${niceBookmark[prototype.id]}: '♡' + ' ' + ${niceBookmark[prototype.id]}"></span>
-      </div>
+      <div th:replace="~{card :: card(${prototype})}"></div>
     </div>
   </div>
 </body>
