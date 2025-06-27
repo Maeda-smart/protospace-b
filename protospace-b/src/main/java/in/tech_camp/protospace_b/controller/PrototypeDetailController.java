@@ -44,7 +44,6 @@ public class PrototypeDetailController {
             List<PinEntity> pinEntity = pinRepository.findPinByUserId(ownerUser);
             boolean isPinned = pinRepository.count(ownerUser, prototypeId) > 0;
             model.addAttribute("isPinned", isPinned);
-            System.out.println(pinEntity);
         } else {
             model.addAttribute("isPinned", false);
         }
