@@ -17,7 +17,7 @@ import in.tech_camp.protospace_b.repository.BookmarkRepository;
 import in.tech_camp.protospace_b.repository.CommentRepository;
 import in.tech_camp.protospace_b.repository.NiceRepository;
 import in.tech_camp.protospace_b.repository.PinRepository;
-import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
+import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.service.ReadStatusService;
 import lombok.AllArgsConstructor;
 
@@ -27,7 +27,7 @@ public class PrototypeDetailController {
 
     private final ReadStatusService readStatusService;
 
-    private final PrototypeDetailRepository prototypeDetailRepository;
+    private final PrototypeShowRepository prototypeShowRepository;
     private final CommentRepository commentRepository;
     private final BookmarkRepository bookmarkRepository;
     private final NiceRepository niceRepository;
@@ -37,7 +37,7 @@ public class PrototypeDetailController {
     public String showPrototypeDetail(@PathVariable("prototypeId") Integer prototypeId,
             @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
         // リポジトリからエンティティ取得
-        PrototypeEntity prototype = prototypeDetailRepository.findByPrototypeId(prototypeId);
+        PrototypeEntity prototype = prototypeShowRepository.findByPrototypeId(prototypeId);
 
         if (currentUser != null) {
             Integer ownerUser = currentUser.getId();

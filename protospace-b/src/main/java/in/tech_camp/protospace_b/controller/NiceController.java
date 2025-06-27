@@ -11,7 +11,7 @@ import in.tech_camp.protospace_b.entity.NiceEntity;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.repository.NiceRepository;
-import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
+import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserNewRepository;
 import lombok.AllArgsConstructor;
 
@@ -22,7 +22,7 @@ public class NiceController {
   
   private final NiceRepository niceRepository;
 
-  private final PrototypeDetailRepository prototypeDetailRepository;
+  private final PrototypeShowRepository prototypeShowRepository;
 
   private final UserNewRepository userNewRepository;
 
@@ -32,7 +32,7 @@ public class NiceController {
 
     // プロトタイプとログインしているユーザー情報を取得
     Integer userId = currentUser.getId();
-    PrototypeEntity prototype = prototypeDetailRepository.findByPrototypeId(prototypeId);
+    PrototypeEntity prototype = prototypeShowRepository.findByPrototypeId(prototypeId);
     UserEntity user = userNewRepository.findById(userId);
 
     // いいね済みかを判別
