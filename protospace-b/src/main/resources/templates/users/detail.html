@@ -51,10 +51,10 @@
     <h2 class="bracket-title"><span th:text="${user.nickname}"></span>さんのプロトタイプ</h2>
 
     <h3>ピン止プロトタイプ</h3>
-    <div th:replace="~{prototypes :: prototypes(${pinnedPrototypes}, ${readStatusMap})}"></div>
+    <div th:replace="~{prototypes :: prototypes(${pinnedPrototypes})}"></div>
 
     <h3>その他プロトタイプ</h3>
-    <div th:replace="~{prototypes :: prototypes(${unpinnedPrototypes}, ${readStatusMap})}"></div>
+    <div th:replace="~{prototypes :: prototypes(${unpinnedPrototypes})}"></div>
 
     <!-- ブックマークした投稿の一覧表示 -->
     <h3>ブックマークしたプロトタイプ</h3>
