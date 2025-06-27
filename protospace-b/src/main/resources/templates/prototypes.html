@@ -20,6 +20,10 @@
         <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
             th:text="${prototype.user.nickname}"></span></a>
         <span class="nice" th:text="${isNiceMap[prototype.id]} ? '♥' + ' ' + ${niceCountMap[prototype.id]}: '♡' + ' ' + ${niceCountMap[prototype.id]}"></span>
+        <p class="timestamp_wrapper">
+          <span class="timestamp" th:text=${prototype.createdAt}></span>
+          <span class="timestamp_edited" th:if="${prototype.createdAt} != ${prototype.updateAt}">✏️</span>
+        </p>
           
       </div>
     </div>

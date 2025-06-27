@@ -27,9 +27,9 @@
       </form>
 
       <!-- ランキング表示ボタン -->
-       <a class="ranking-title" th:href="@{/prototypes/ranking}">♔ランキングページ</a>
+      <a class="ranking-title" th:href="@{/prototypes/ranking}">♔ランキングページ</a>
 
-       <!-- プロトタイプの一覧表示 -->
+      <!-- プロトタイプの一覧表示 -->
       <div th:replace="~{prototypes :: prototypes(${prototypes}, ${readStatusMap})}"></div>
     </div>
   </main>

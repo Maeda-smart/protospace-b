@@ -103,16 +103,16 @@ public class UserDetailController {
     }
     model.addAttribute("isNiceBookmarks", isNiceBookmarks);
 
+
     // ピン止め処理
     List<PrototypeEntity> pinnedPrototypes = new ArrayList<>(); 
     List<PrototypeEntity> unpinnedPrototypes = new ArrayList<>();
-
     // ユーザーが持つピン済みprotoIdの配列を取得
     List<Integer> pinnedIds = pinRepository.findPinByUserId(users.getId()) 
                               .stream() 
                               .map(PinEntity::getPrototypeId) 
                               .collect(Collectors.toList());
-
+    // ピンの有無でリストに分岐格納
     for (PrototypeEntity proto : prototypes) { 
       if (pinnedIds.contains(proto.getId())) { 
         pinnedPrototypes.add(proto); 

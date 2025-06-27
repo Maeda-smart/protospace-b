@@ -49,6 +49,10 @@ public class TopPageController {
     PrototypeSearchForm prototypeSearchForm = new PrototypeSearchForm();
     model.addAttribute("prototypes", prototypes);
 
+    System.out.println(prototypes);
+    System.out.println("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+  
+
     
     // プロトタイプごとのいいね数表示
     Map<Integer, Integer> niceCountMap = new HashMap<>();
@@ -75,8 +79,6 @@ public class TopPageController {
     }
     }
     model.addAttribute("isNiceMap", isNiceMap);
-
-    model.addAttribute("prototypeSearchForm", prototypeSearchForm);
 
     return "index";
 

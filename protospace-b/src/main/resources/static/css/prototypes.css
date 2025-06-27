@@ -68,3 +68,8 @@
 .nice {
   color: red;
 }
+
+.timestamp_edited{
+  color: #333;
+  margin-left: 5px;
+}
