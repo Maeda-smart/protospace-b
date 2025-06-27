@@ -11,9 +11,7 @@
         </a>
       </div>
       <div class="nav_right" th:if="${#authorization.expression('isAuthenticated()')}">
-        <form th:action="@{/users/{userId}(userId=${user.id})}" method="GET" class="nav_logout_form">
-          <button type="submit" class="nav_logout" rel="nofollow">My Page</button>
-        </form>
+        <a th:href="@{/users/{userId}(userId=${user.id})}" class="nav_btn">My Page</a>
         
         <a class="nav_btn" th:href="@{/prototype/prototypeNew}">New Proto</a>
         <a class="nav_btn" th:href="@{/users/search}">User Search</a>
