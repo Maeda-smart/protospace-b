@@ -16,9 +16,9 @@ public interface PrototypeNewRepository {
             "VALUES (#{prototypeName}, #{catchCopy}, #{concept}, #{imgPath}, #{user.id})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     @Results(value = {
-        @Result(property = "id", column = "id"),
-        @Result(property = "user", column = "user_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
-        @Result(property = "imgPath", column = "img"),
+            @Result(property = "id", column = "id"),
+            @Result(property = "user", column = "user_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
+            @Result(property = "imgPath", column = "img"),
     })
     void insert(PrototypeEntity prototype);
 }
