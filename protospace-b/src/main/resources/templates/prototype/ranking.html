@@ -15,13 +15,13 @@
     <div class="inner">
       <h2>プロトタイプランキング</h2>
 
-      <div class="card_wrapper" th:fragment="prototypes(list, readStatusMap)">
+      <div class="card_wrapper" th:fragment="prototypes">
         <!-- プロトタイプの繰り返し表示 -->
         <div class="card" th:each="prototype, iterStat : ${rankingPrototypes}">
 
           <!-- NEWアイコン -->
           <span class="new-icon"
-            th:if="${readStatusMap != null and !readStatusMap.containsKey(prototype.id)}">NEW</span>
+            th:if="${prototypeRead != null and !prototypeRead.containsKey(prototype.id)}">NEW</span>
 
           <!-- ランクバッジ（1位） -->
           <div th:if="${iterStat.index == 0}" class="rank-badge rank-1" th:text="'#1'"></div>
@@ -48,7 +48,7 @@
             <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
                 th:text="${prototype.user.nickname}"></span></a>
             <span class="nice"
-              th:text="${isNiceMap[prototype.id]} ? '♥' + ' ' + ${niceCountMap[prototype.id]}: '♡' + ' ' + ${niceCountMap[prototype.id]}"></span>
+              th:text="${isNicePrototype[prototype.id]} ? '♥' + ' ' + ${nicePrototype[prototype.id]}: '♡' + ' ' + ${nicePrototype[prototype.id]}"></span>
 
           </div>
         </div>
