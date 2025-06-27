@@ -48,10 +48,7 @@ public class TopPageController {
     List<PrototypeEntity> prototypes = prototypeShowRepository.showAll();
     PrototypeSearchForm prototypeSearchForm = new PrototypeSearchForm();
     model.addAttribute("prototypes", prototypes);
-
-    System.out.println(prototypes);
-    System.out.println("ooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
-  
+    model.addAttribute("prototypeSearchForm", prototypeSearchForm);
 
     
     // プロトタイプごとのいいね数表示

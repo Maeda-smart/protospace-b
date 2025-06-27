@@ -15,6 +15,8 @@ public interface PrototypeSearchRepository {
   @Select("SELECT * FROM prototype WHERE prototypeName LIKE CONCAT('%', #{prototypeName}, '%')")
   @Results(value = {
     @Result(property = "imgPath", column = "img"),
+    @Result(property="createdAt", column="created_at"),
+    @Result(property="updatedAt", column="updated_at"),
     @Result(property = "user", column = "user_id",
             one = @One(select = "in.tech_camp.protospace_b.repository.UserNewRepository.findById"))
   })

@@ -20,7 +20,9 @@ public interface PrototypeShowRepository {
         p.catchCopy,
         p.concept,
         p.img,
-        p.user_id
+        p.user_id,
+        p.created_at,
+        p.updated_at
       FROM
         prototype p
       """;
@@ -29,7 +31,9 @@ public interface PrototypeShowRepository {
       @Result(property = "id", column = "p_id"),
       @Result(property = "user", column = "user_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
       @Result(property = "imgPath", column = "img"),
-      @Result(property="tags", column="p_id", many = @Many(select="in.tech_camp.protospace_b.repository.TagRepository.prototypeTags"))
+      @Result(property="tags", column="p_id", many = @Many(select="in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
+      @Result(property="createdAt", column="created_at"),
+      @Result(property="updatedAt", column="updated_at")
   })
   List<PrototypeEntity> showAll();
 
@@ -38,7 +42,9 @@ public interface PrototypeShowRepository {
       @Result(property = "id", column = "p_id"),
       @Result(property = "user", column = "user_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
       @Result(property = "imgPath", column = "img"),
-      @Result(property="tags", column="p_id", many = @Many(select="in.tech_camp.protospace_b.repository.TagRepository.prototypeTags"))
+      @Result(property="tags", column="p_id", many = @Many(select="in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
+      @Result(property="createdAt", column="created_at"),
+      @Result(property="updatedAt", column="updated_at")
   })
   List<PrototypeEntity> showByUserId(Integer userId);
 
@@ -47,7 +53,9 @@ public interface PrototypeShowRepository {
       @Result(property = "id", column = "p_id"),
       @Result(property = "user", column = "user_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
       @Result(property = "imgPath", column = "img"),
-      @Result(property="tags", column="p_id", many = @Many(select="in.tech_camp.protospace_b.repository.TagRepository.prototypeTags"))
+      @Result(property="tags", column="p_id", many = @Many(select="in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
+      @Result(property="createdAt", column="created_at"),
+      @Result(property="updatedAt", column="updated_at")
   })
   PrototypeEntity findByPrototypeId(Integer id);
 }

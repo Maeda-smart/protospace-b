@@ -43,6 +43,8 @@ public interface NiceRepository {
         @Result(property = "catchCopy", column = "catchcopy"),
         @Result(property = "concept", column = "concept"),
         @Result(property = "imgPath", column = "img"),
+        @Result(property="createdAt", column="created_at"),
+        @Result(property="updatedAt", column="updated_at"),
         @Result(property = "user", column = "user_id",
                 one = @One(select = "in.tech_camp.protospace_b.repository.UserNewRepository.findById"))
   })
