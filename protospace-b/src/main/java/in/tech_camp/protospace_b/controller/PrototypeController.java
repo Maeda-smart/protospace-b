@@ -38,6 +38,7 @@ import lombok.AllArgsConstructor;
 @Controller
 @AllArgsConstructor
 public class PrototypeController {
+
     @Autowired
     private final PrototypeNewRepository prototypeNewRepository;
     @Autowired
@@ -47,9 +48,8 @@ public class PrototypeController {
     private final UserNewRepository userNewRepository;
 
     private final TagService tagService;
-
-    private final ImageUrl imageUrl;
     private final PrototypeDetailRepository prototypeDetailRepository;
+    private final ImageUrl imageUrl;
 
     @GetMapping("/prototype/prototypeNew")
     public String showPrototypeNew(Model model) {
@@ -97,10 +97,6 @@ public class PrototypeController {
             List<String> errorMessages = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                     .collect(Collectors.toList());
-            System.out.println("error");
-            errorMessages.forEach(item -> {
-                System.out.println(item);
-            });
             model.addAttribute("errorMessages", errorMessages);
             model.addAttribute("userForm", prototypeForm);
             return "prototype/prototypeNew";
@@ -112,18 +108,13 @@ public class PrototypeController {
         }
 
         try {
-            String uploadDir = imageUrl.getImageUrl();
             String fileName;
+
             if (imageFile != null && imageFile.getOriginalFilename() != null
                     && !imageFile.getOriginalFilename().isEmpty()) {
-                fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
-                        + "_" + imageFile.getOriginalFilename();
-                java.io.File dir = new java.io.File(uploadDir);
-
-                if (!dir.exists())
-                    dir.mkdirs();
-                java.nio.file.Path imagePath = java.nio.file.Paths.get(uploadDir, fileName);
-                Files.copy(imageFile.getInputStream(), imagePath);
+                System.out.println("saving image");
+                fileName = saveImage(imageFile);
+                System.out.println("image saved:"+fileName);
             } else {
                 model.addAttribute("errorMessage", "画像ファイルが選択されていません。");
                 model.addAttribute("prototypeForm", prototypeForm);
@@ -155,12 +146,16 @@ public class PrototypeController {
             tagService.updatePrototypeTags(prototype, tagNames);
 
         } catch (IOException e) {
+            System.out.println("IOException");
             System.out.println("error:" + e.getMessage());
+            System.out.println("error:" + e);
             model.addAttribute("errorMessage", "画像の保存に失敗しました。（" + e.getMessage() + "）");
             model.addAttribute("prototypeForm", prototypeForm);
             return "prototype/prototypeNew";
         } catch (Exception e) {
+            System.out.println("Exception");
             System.out.println("error:" + e.getMessage());
+            System.out.println("error:" + e);
             model.addAttribute("errorMessage", "登録に失敗しました。（" + e.getMessage() + "）");
             model.addAttribute("prototypeForm", prototypeForm);
             return "prototype/prototypeNew";
@@ -178,7 +173,6 @@ public class PrototypeController {
             @AuthenticationPrincipal CustomUserDetail currentUser,
             Model model) {
 
-        // バリデーション
         if (result.hasErrors()) {
             List<String> errorMessages = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -192,33 +186,17 @@ public class PrototypeController {
             MultipartFile imageFile = prototypeForm.getImgFile();
             String newImgPath;
 
-            System.out.println("imageFile: " + imageFile);
-
             if (imageFile == null || imageFile.getOriginalFilename() == null
                     || imageFile.getOriginalFilename().isEmpty()) {
                 newImgPath = prototypeForm.getImgPath();
 
             } else {
-                String uploadDir = imageUrl.getImageUrl();
                 String fileName;
 
                 if (imageFile != null && imageFile.getOriginalFilename() != null
                         && !imageFile.getOriginalFilename().isEmpty()) {
-                    fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
-                            + "_" + imageFile.getOriginalFilename();
-
-                    // ターミナルライクな操作をするためのオブジェクト
-                    java.io.File dir = new java.io.File(uploadDir);
-
-                    if (!dir.exists())
-                        dir.mkdirs();
-                    // 相対パスの指定
-                    java.nio.file.Path imagePath = java.nio.file.Paths.get(uploadDir, fileName);
-                    // 保存
-                    Files.copy(imageFile.getInputStream(), imagePath);
-
+                    fileName = saveImage(imageFile);
                     newImgPath = "/uploads/" + fileName;
-
                 } else {
                     model.addAttribute("prototypeForm", prototypeForm);
                     return "prototype/prototypeEdit";
@@ -247,7 +225,8 @@ public class PrototypeController {
             // 検索用のIDを渡さないといけない
             prototypeEditRepository.update(prototype);
             List<String> tagNames = prototypeForm.getTags();
-            if (tagNames == null) tagNames = new ArrayList<>();
+            if (tagNames == null)
+                tagNames = new ArrayList<>();
             tagService.updatePrototypeTags(prototype, tagNames);
 
         } catch (IOException e) {
@@ -261,5 +240,27 @@ public class PrototypeController {
         }
 
         return "redirect:/prototypes/" + prototypeId + "/detail";
+    }
+
+    private String saveImage(MultipartFile imageFile) throws IOException {
+        String UPLOAD_DIR = imageUrl.getImageUrl();
+        String fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"))
+                + "_" + imageFile.getOriginalFilename();
+
+        System.out.println("saving image:"+fileName);
+        // ターミナルライクな操作をするためのオブジェクト
+        System.out.println("save to:"+UPLOAD_DIR);
+        java.io.File dir = new java.io.File(UPLOAD_DIR);
+        System.out.println("save to:"+UPLOAD_DIR);
+
+        if (!dir.exists())
+            dir.mkdirs();
+        // 相対パスの指定
+        System.out.println("setting path");
+        java.nio.file.Path imagePath = java.nio.file.Paths.get(UPLOAD_DIR, fileName);
+        // 保存
+        System.out.println("saving");
+        Files.copy(imageFile.getInputStream(), imagePath);
+        return fileName;
     }
 }
