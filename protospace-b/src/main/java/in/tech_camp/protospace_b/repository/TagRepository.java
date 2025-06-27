@@ -33,9 +33,11 @@ public interface TagRepository {
   @Select("SELECT tags.id, tags.tag_name tagName FROM tags INNER JOIN prototype_tags ON tags.id = prototype_tags.tags_id WHERE prototype_tags.prototype_id = #{prototypeId}")
   List<TagEntity> prototypeTags(Integer prototypeId);
 
+  // BUG
+  // OPTIMIZE: N+1
   @Select("SELECT p.id, p.prototypeName, p.catchCopy, p.concept, p.imgPath FROM prototype p INNER JOIN prototype_tags ON prototype.id = prototype_tags.prototype_id INNER JOIN tags ON tags.id = prototype_tags.tags_id WHERE prototype_tags.tags_id = #{tagId}")
-  @Results(value={
-    @Result(property="user", column="prototype.user_id", one=@One(select = "in.tech_camp.protospace_b.repository.UserNewRepository.findById"))
+  @Results(value = {
+      @Result(property = "user", column = "prototype.user_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserNewRepository.findById"))
   })
   List<PrototypeEntity> tagPrototypes(Integer tagId);
 }

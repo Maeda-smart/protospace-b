@@ -16,7 +16,7 @@ import in.tech_camp.protospace_b.entity.CommentEntity;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.form.CommentForm;
 import in.tech_camp.protospace_b.repository.CommentRepository;
-import in.tech_camp.protospace_b.repository.PrototypeDetailRepository;
+import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserDetailRepository;
 import in.tech_camp.protospace_b.validation.ValidationOrder;
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ public class CommentController {
 
   private final CommentRepository commentRepository;
 
-  private final PrototypeDetailRepository prototypeDetailRepository;
+  private final PrototypeShowRepository prototypeShowRepository;
 
   private final UserDetailRepository userDetailRepository;
 
@@ -39,7 +39,7 @@ public class CommentController {
                             @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
 
     // プロトタイプ取得
-    PrototypeEntity prototype = prototypeDetailRepository.findByPrototypeId(prototypeId);
+    PrototypeEntity prototype = prototypeShowRepository.findByPrototypeId(prototypeId);
     // コメント取得
     List<CommentEntity> comments = commentRepository.findByPrototypeId(prototypeId);
 
