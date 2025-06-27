@@ -40,12 +40,12 @@ public class UserEditController {
     userForm.setAffiliation(user.getAffiliation());
     userForm.setPosition(user.getPosition());
 
-    model.addAttribute("user", userForm);
+    model.addAttribute("userForm", userForm);
     return "users/edit";
   }
 
   @PostMapping("/users/{userId}")
-  public String updateUser(@PathVariable("userId") Integer userId, @ModelAttribute("user") @Validated(ValidationOrder.class) UserEditForm userEditForm, BindingResult result, Model model) {
+  public String updateUser(@PathVariable("userId") Integer userId, @ModelAttribute("userForm") @Validated(ValidationOrder.class) UserEditForm userEditForm, BindingResult result, Model model) {
     String newEmail = userEditForm.getEmail();
     if (userEditRepository.existsByEmailExcludingCurrent(newEmail, userId)) {
       result.rejectValue("email", "error.user", "Email already exists");
@@ -55,7 +55,7 @@ public class UserEditController {
                                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
                                     .collect(Collectors.toList());
       model.addAttribute("errorMessages", errorMessages);
-      model.addAttribute("user", userEditForm);
+      model.addAttribute("userForm", userEditForm);
       return "users/edit";
     }
 
@@ -81,7 +81,7 @@ public class UserEditController {
       userEditRepository.update(user);
     } catch (Exception e) {
       System.out.println("エラー：" + e);
-      model.addAttribute("user", userEditForm);
+      model.addAttribute("userForm", userEditForm);
       return "users/edit";
     }
     return "redirect:/";

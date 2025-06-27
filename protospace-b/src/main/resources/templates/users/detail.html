@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
 <head>
+  <link th:href="@{/css/userDetail.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/edit.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/prototypes.css}" rel="stylesheet" type="text/css">
@@ -12,15 +13,19 @@
   <div th:insert="~{header :: header}"></div>
   <div class="main-content">
     <div class="userName">
+      <div class="user-info-header">
       <h2><span th:text="${user.nickname}"></span>さんの情報</h2>
-      <div th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == user.id}">
-        <a th:href="@{/users/{userId}/edit(userId=${user.id})}">
-          <input type="submit" value="編集する" class="btn">
-        </a>
+      <div class="user-actions" th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == user.id}">
+        <a th:href="@{/users/{userId}/edit(userId=${user.id})}" class="action-btn">編集する</a>
+        <form th:action="@{/users/logout}" method="POST">
+          <button type="submit" class="action-btn" rel="nofollow" data-method="delete">ログアウト</button>
+        </form>
       </div>
     </div>
+    </div>
     
-    <table>
+  <div class="user-info-table-wrapper">
+    <table class="user-info-table">
       <tbody>
         <tr>
           <th>名前</th>
@@ -40,7 +45,10 @@
         </tr>
       </tbody>
     </table>
-    <h2><span th:text="${user.nickname}"></span>さんのプロトタイプ</h2>
+  </div>
+
+
+    <h2 class="bracket-title"><span th:text="${user.nickname}"></span>さんのプロトタイプ</h2>
 
     <h3>ピン止プロトタイプ</h3>
     <div th:replace="~{prototypes :: prototypes(${pinnedPrototypes}, ${readStatusMap})}"></div>
@@ -49,7 +57,7 @@
     <div th:replace="~{prototypes :: prototypes(${unpinnedPrototypes}, ${readStatusMap})}"></div>
 
     <!-- ブックマークした投稿の一覧表示 -->
-    <h2>ブックマークしたプロトタイプ</h2>
+    <h3>ブックマークしたプロトタイプ</h3>
     <div th:replace="~{prototype/bookmark :: bookmark}"></div>
   </div>
   <div th:insert="~{footer :: footer}"></div>
