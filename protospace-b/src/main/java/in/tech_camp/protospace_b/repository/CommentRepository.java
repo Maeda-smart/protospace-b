@@ -31,7 +31,7 @@ public interface CommentRepository {
         u.id u_id,
         u.nickname,
         p.id p_id,
-        p.created_at
+        c.created_at
       FROM comments c
       LEFT JOIN users u ON c.user_id = u.id
       LEFT JOIN prototype p ON c.prototype_id = p.id

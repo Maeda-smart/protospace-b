@@ -12,7 +12,7 @@
           <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">エラー</div>
 
           <div class="field">
-            <label for="text">コメント</label>
+            <label for="text" class="comment-title">コメント</label>
             <br>
             <input type="text" class="form-name" id="text" th:field="*{text}" />
           </div>
@@ -31,14 +31,14 @@
       <!-- コメントリスト -->
       <ul class="comments_list">
         <li th:each="comment : ${comments}" class="comment-item">
-          <div class="comment-content">
-            <span th:text="${comment.text}">コメント内容</span>
+          <div class="comment-header">
             <a th:href="@{/users/{userId}(userId=${comment.user.id})}" class="user-name">
               <span th:text="${comment.user.nickname}">ユーザー名</span>
             </a>
-             <span class="timestamp_wrapper">
-                <span th:text="${#temporals.format(comment.createdAt, 'yyyy/MM/dd HH:mm')}"></span>
-              </span>
+            <span class="timestamp" th:text="${#temporals.format(comment.createdAt, 'yyyy/MM/dd HH:mm')}">投稿日時</span>
+          </div>
+          <div class="comment-content">
+            <span th:text="${comment.text}">コメント内容</span>
           </div>
 
           <!-- 削除ボタン -->
