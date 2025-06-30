@@ -66,14 +66,14 @@ public class CommentController {
       model.addAttribute("prototype", prototype);
       model.addAttribute("commentForm", commentForm);
       System.out.println("エラー：" + e);
-      return "prototypes/prototypeDetail";
+      return "prototype/prototypeDetail";
     }
 
     return "redirect:/prototypes/" + prototypeId + "/detail";
   }
 
   // コメント削除機能
-    @PostMapping("/prototype/{prototypeId}/comment/delete")
+    @PostMapping("/prototypes/{prototypeId}/comment/delete")
     public String deleteComment(@PathVariable("prototypeId") Integer prototypeId, @RequestParam("commentId")Integer commentId, 
                                 @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
 
