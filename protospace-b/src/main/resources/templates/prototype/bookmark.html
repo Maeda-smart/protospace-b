@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+  <link th:href="@{/css/prototypes.css}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div class="card_wrapper" th:fragment="bookmark" >
+    <!-- プロトタイプの繰り返し表示 -->
+    <div class="card" th:each="prototype : ${bookmarkPrototypes}">
+      <div th:replace="~{card :: card(${prototype})}"></div>
+    </div>
+  </div>
+</body>
+
+</html>

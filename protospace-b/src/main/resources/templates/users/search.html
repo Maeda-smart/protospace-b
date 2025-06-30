@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Search</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="stylesheet" th:href="@{/css/search.css}" />
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+  <div th:replace="~{header :: header}"></div>
+
+  <div class="main">
+    <div class="search-container">
+      <form th:action="@{/users/search}" th:object="${form}" method="get">
+        <input type="text" th:field="*{keyword}" placeholder="Search by nickname or email" class="search-box" />
+        <button type="submit" class="search-button">Search</button>
+      </form>
+    </div>
+
+    <div class="user-list">
+      <div th:if="${users != null and !users.isEmpty()}">
+        <div th:each="user : ${users}" class="user-card">
+          <a th:href="${'/users/'+user.id}">
+            <h3 th:text="${user.nickname}">User Nickname</h3>
+          </a>
+          <p><strong>Email:</strong> <span th:text="${user.email}">user@example.com</span></p>
+          <p><strong>Affiliation:</strong> <span th:text="${user.affiliation}">Company</span></p>
+          <p><strong>Position:</strong> <span th:text="${user.position}">Role</span></p>
+          <p><strong>Profile:</strong> <span th:text="${user.profile}">About user...</span></p>
+        </div>
+      </div>
+
+      <div class="no-results" th:if="${users != null and users.isEmpty()}">
+        No users found.
+      </div>
+    </div>
+  </div>
+
+  <div th:replace="~{footer :: footer}"></div>
+
+</body>
+</html>

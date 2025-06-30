@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+
 <header class="header" th:fragment="header">
   <div class="inner">
     <div class="nav">
@@ -9,10 +11,11 @@
         </a>
       </div>
       <div class="nav_right" th:if="${#authorization.expression('isAuthenticated()')}">
-        <form th:action="@{/users/logout}" method="POST" class="nav_logout_form">
-          <button type="submit" class="nav_logout" rel="nofollow" data-method="delete">ログアウト</button>
-        </form>
+        <button id="notificationButton" class="notification-btn">🔔</button>
+        <a th:href="@{/users/{userId}(userId=${user.id})}" class="nav_btn">My Page</a>
+        
         <a class="nav_btn" th:href="@{/prototype/prototypeNew}">New Proto</a>
+        <a class="nav_btn" th:href="@{/users/search}">User Search</a>
       </div>
       <div class="nav_right" th:if="${#authorization.expression('!isAuthenticated()')}">
         <a class="nav_btn" th:href="@{/users/sign_up}">新規登録</a>
@@ -20,6 +23,16 @@
       </div>
     </div>
   </div>
+
+  <div id="notificationModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <ul id="notificationList"></ul>
+    </div>
+  </div>
+
+  <script th:src="@{/javascript/notification.js}" defer></script>
+
 </header>
 
 </html>

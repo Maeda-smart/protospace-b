@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>User Search</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="stylesheet" th:href="@{/css/search.css}" />
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <link rel="stylesheet" th:href="@{/css/prototypes.css}" />
+  <link th:href="@{/css/tags.css}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+  <div th:replace="~{header :: header}"></div>
+
+  <div class="main">
+    <div class="inner">
+      <div class="search-container">
+        <form th:action="@{/prototypes/search}" th:object="${prototypeSearchForm}" method="get">
+          <input type="text" th:field="*{prototypeName}" placeholder="Search by prototype name" class="search-box" />
+          <button type="submit" class="search-button">Search</button>
+        </form>
+      </div>
+
+        <div th:if="${prototypes != null and !prototypes.isEmpty()}">
+          <div th:replace="~{prototypes :: prototypes(${prototypes})}" class="card"></div>
+        </div>
+
+      <div class="no-results" th:if="${prototypes != null and prototypes.isEmpty()}">
+        No prototypes found.
+      </div>
+    </div>
+  </div>
+
+  <div th:replace="~{footer :: footer}"></div>
+
+</body>
+
+</html>

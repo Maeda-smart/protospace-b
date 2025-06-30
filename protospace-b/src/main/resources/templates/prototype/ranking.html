@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>ProtoSpace</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+  <link th:href="@{/css/prototypes.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/tags.css}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div th:replace="~{header :: header}"></div>
+  <main class="main">
+    <div class="inner">
+      <h2>プロトタイプランキング</h2>
+
+      <div class="card_wrapper" th:fragment="prototypes">
+        <!-- プロトタイプの繰り返し表示 -->
+        <div class="card" th:each="prototype, iterStat : ${rankingPrototypes}">
+
+          <!-- NEWアイコン -->
+          <span class="new-icon"
+            th:if="${prototypeRead != null and !prototypeRead.containsKey(prototype.id)}">NEW</span>
+
+          <!-- ランクバッジ（1位） -->
+          <div th:if="${iterStat.index == 0}" class="rank-badge rank-1" th:text="'#1'"></div>
+
+          <!-- ランクバッジ（2位） -->
+          <div th:if="${iterStat.index == 1}" class="rank-badge rank-2" th:text="'#2'"></div>
+
+          <!-- ランクバッジ（3位） -->
+          <div th:if="${iterStat.index == 2}" class="rank-badge rank-3" th:text="'#3'"></div>
+
+          <!-- ランクバッジ（4〜10位） -->
+          <div th:if="${iterStat.index >= 3 and iterStat.index < 10}" class="rank-badge rank-other"
+            th:text="'#' + (${iterStat.index + 1})">
+          </div>
+          <div th:replace="~{card :: card(${prototype})}"></div>
+        </div>
+      </div>
+
+
+    </div>
+  </main>
+  <div th:replace="~{footer :: footer}"></div>
+</body>
+
+</html>

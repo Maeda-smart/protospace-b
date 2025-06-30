@@ -1,0 +1,153 @@
+/* ===== ユーザー名部分 ===== */
+.userName {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.userName h2 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+/* ===== 共通ボタンスタイル（編集・ログアウトなど） ===== */
+.action-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  color: #fff;
+  background-color: #87CEFA;
+  border: 1px solid #87CEFA;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.action-btn:hover {
+  background-color: #5dbbe9;
+}
+
+.userName > div {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+
+/* ===== テーブルレイアウト ===== */
+/* ===== ユーザー情報テーブルのラップ：中央寄せ & 角丸 ===== */
+.user-info-table-wrapper {
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ===== ユーザー情報テーブル本体：元の見た目に戻す ===== */
+table.user-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  font-size: 1rem;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+table.user-info-table th,
+table.user-info-table td {
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+table.user-info-table th {
+  background-color: #f7f7f7;
+  font-weight: 600;
+  width: 25%;
+  white-space: nowrap;
+}
+
+table.user-info-table td {
+  word-break: break-word; /* 長い単語を折り返す */
+  white-space: pre-wrap;  /* 改行や空白も保持しつつ自然に折り返す */
+}
+
+/* ===== セクション見出し ===== */
+h3 {
+  margin-top: 40px;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #87CEFA;
+  padding-bottom: 5px;
+  color: #333;
+}
+
+.bracket-title {
+  position: relative;
+  font-size: 1.5rem;
+  margin-top: 40px;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: left;
+  padding: 0.2em 0.6em;
+  display: inline-block;
+}
+
+/* 角カッコタイプ */
+.bracket-title::before {
+  content: "【";
+  margin-right: 0.3em;
+  color: black;
+  font-weight: bold;
+}
+
+.bracket-title::after {
+  content: "】";
+  margin-left: 0.3em;
+  color: black;
+  font-weight: bold;
+}
+
+
+.user-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* スマホなど狭い画面で折り返し対応 */
+}
+
+.user-info-header h2 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.user-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.user-actions form {
+  margin: 0;
+}
+
+/* ボタンの共通スタイル（すでにあるなら合わせてください） */
+.action-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  color: #fff;
+  background-color: #87CEFA;
+  border: 1px solid #87CEFA;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.action-btn:hover {
+  background-color: #5dbbe9;
+}
