@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+  <div th:fragment="comment">
+    <!-- コメントフォーム -->
+    <div class="comment_wrapper">
+
+      <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <form class="form" th:action="@{/prototype/{prototypeId}/comment(prototypeId=${prototype.id})}" method="post"
+          th:object="${commentForm}">
+          <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">エラー</div>
+
+          <div class="field">
+            <label for="text">コメント</label>
+            <br>
+            <input type="text" class="form-name" id="text" th:field="*{text}" />
+          </div>
+          <div class="actions">
+            <input type="submit" value="送信する" class="submit-btn" />
+          </div>
+        </form>
+      </div>
+
+      <div th:if="${#authorization.expression('!isAuthenticated()')}">
+        <strong>
+          <p class="attention">※※※ コメントの投稿には新規登録/ログインが必要です ※※※</p>
+        </strong>
+      </div>
+
+      <!-- コメントリスト -->
+      <ul class="comments_list">
+        <li th:each="comment : ${comments}" class="comment-item">
+          <div class="comment-content">
+            <span th:text="${comment.text}">コメント内容</span>
+            <a th:href="@{/users/{userId}(userId=${comment.user.id})}" class="user-name">
+              <span th:text="${comment.user.nickname}">ユーザー名</span>
+            </a>
+          </div>
+
+          <!-- 削除ボタン -->
+          <th:block th:if="${userId == comment.user.id}">
+            <form th:action="@{/prototype/{prototypeId}/comment/delete(prototypeId=${prototype.id})}" method="post"
+              class="delete-form">
+              <input type="hidden" name="commentId" th:value="${comment.id}" />
+              <button type="submit" class="delete-btn" title="コメント削除">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </form>
+          </th:block>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+.comment_wrapper {
+  background-color: #f6f6f6;
+  margin: 15px 0;
+  padding:20px;
+}
+
+.comments_list {
+  list-style: none;
+  padding: 0;
+}
+
+.comment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+  position: relative;
+}
+
+.comment-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.delete-form {
+  margin-left: 10px;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 16px;
+  cursor: pointer;
+  display: none; /* 最初は非表示 */
+}
+
+.comment-item:hover .delete-btn {
+  display: inline; /* ホバー時に表示 */
+}
+
+.delete-btn:hover {
+  color: #e74c3c;
+}
+
+.comment-item {
+  transition: background-color 0.2s;
+}
+
+.comment-item:hover {
+  background-color: #f9f9f9;
+}
+
+.comment-content {
+  display: flex;
+}
+
+.user-name {
+  color: #30a3eb;
+}
