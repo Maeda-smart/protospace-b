@@ -24,9 +24,9 @@
         </form>
       </div>
 
-      <div th:if="${prototypes != null and !prototypes.isEmpty()}">
-        <div th:replace="~{prototypes :: prototypes(${prototypes}, ${readStatusMap})}" class="card"></div>
-      </div>
+        <div th:if="${prototypes != null and !prototypes.isEmpty()}">
+          <div th:replace="~{prototypes :: prototypes(${prototypes})}" class="card"></div>
+        </div>
 
       <div class="no-results" th:if="${prototypes != null and prototypes.isEmpty()}">
         No prototypes found.

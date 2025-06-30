@@ -2,13 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
 <body>
-  <div class="card_wrapper" th:fragment="prototypes(list, readStatusMap)" >
+  <div class="card_wrapper" th:fragment="prototypes(list)" >
     <!-- プロトタイプの繰り返し表示 -->
     <div class="card" th:each="prototype : ${list}">
 
       <!-- NEWアイコン -->
-      <span class="new-icon" th:if="${readStatusMap != null and !readStatusMap.containsKey(prototype.id)}">NEW</span>
-      
+      <span class="new-icon" th:if="${prototypeRead != null and !prototypeRead.containsKey(prototype.id)}">NEW</span>
       <div th:replace="~{card :: card(${prototype})}"></div>
     </div>
   </div>
