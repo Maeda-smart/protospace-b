@@ -7,6 +7,8 @@
   <link rel="stylesheet" th:href="@{/css/style.css}" />
   <link th:href="@{/css/prototypeDetail.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/tags.css}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link th:href="@{/css/comment.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/prototypes.css}" rel="stylesheet" type="text/css">
   <title>ProtoSpace</title>
 </head>
@@ -92,44 +94,9 @@
         </div>
 
 
-        <!-- コメントフォーム -->
-        <div class="comment_wrapper">
+        <!-- コメント -->
+        <div th:replace="~{comment :: comment}"></div>
 
-          <div th:if="${#authorization.expression('isAuthenticated()')}">
-
-            <form class="form" th:action="@{/prototype/{prototypeId}/comment(prototypeId=${prototype.id})}"
-              method="post" th:object="${commentForm}">
-              <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">エラー</div>
-
-              <div class="field">
-                <label for="text">コメント</label>
-                <br>
-                <input type="text" class="form-name" id="text" th:field="*{text}">
-              </div>
-              <div class="actions">
-                <input type="submit" value="送信する" class="submit-btn">
-              </div>
-            </form>
-          </div>
-
-          <div th:if="${#authorization.expression('!isAuthenticated()')}">
-            <strong>
-              <p class="attention">※※※ コメントの投稿には新規登録/ログインが必要です ※※※</p>
-            </strong>
-          </div>
-
-          <!-- コメント一覧表示 -->
-          <ul class="comments_list">
-            <li class="comments_inner" th:each="comment:${comments}">
-              <span th:text="${comment.text}">コメント内容</span>
-              <a th:href="@{/users/{userId}(userId=${comment.user.id})}" class="user-name"> (<span
-                  th:text="${comment.user.nickname}"></span>) </a>
-              <span class="timestamp_wrapper">
-                <span th:text="${#temporals.format(comment.createdAt, 'yyyy/MM/dd HH:mm')}"></span>
-              </span>
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
   </div>

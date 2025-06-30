@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.CommentEntity;
@@ -65,9 +66,22 @@ public class CommentController {
       model.addAttribute("prototype", prototype);
       model.addAttribute("commentForm", commentForm);
       System.out.println("エラー：" + e);
-      return "prototypes/prototypeDetail";
+      return "prototype/prototypeDetail";
     }
 
     return "redirect:/prototypes/" + prototypeId + "/detail";
   }
+
+  // コメント削除機能
+    @PostMapping("/prototypes/{prototypeId}/comment/delete")
+    public String deleteComment(@PathVariable("prototypeId") Integer prototypeId, @RequestParam("commentId")Integer commentId, 
+                                @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
+
+      try {
+        commentRepository.deleteById(commentId);
+      } catch (Exception e) {
+        System.out.println("Error: " + e);
+      }
+      return "redirect:/prototypes/" + prototypeId + "/detail";
+    }
 }

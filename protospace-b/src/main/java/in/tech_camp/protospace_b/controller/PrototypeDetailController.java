@@ -65,6 +65,7 @@ public class PrototypeDetailController {
 
         if (currentUser != null) {
         Integer userId = currentUser.getId();
+        model.addAttribute("userId", userId);
         boolean isBookmarked = bookmarkRepository.existBookmark(prototypeId, userId);
         model.addAttribute("isBookmarked", isBookmarked);
 

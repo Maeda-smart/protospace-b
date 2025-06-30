@@ -92,10 +92,10 @@ svg{
   stroke-width: 1.5;
 }
 
-.comments_list li{
+/* .comments_list li{
   list-style: none;
   display: flex;
   align-items: center;
   padding: 1px;
   margin-top: 10px;
-}
+} */
