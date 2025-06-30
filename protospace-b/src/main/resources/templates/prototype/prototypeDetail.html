@@ -9,11 +9,11 @@
   <link th:href="@{/css/tags.css}" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link th:href="@{/css/comment.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/prototypes.css}" rel="stylesheet" type="text/css">
   <title>ProtoSpace</title>
 </head>
 
 <body>
-
   <!-- ヘッダー -->
   <div th:insert="~{header :: header}"></div>
 
@@ -92,6 +92,7 @@
             </button>
           </form>
         </div>
+
 
         <!-- コメント -->
         <div th:replace="~{comment :: comment}"></div>
