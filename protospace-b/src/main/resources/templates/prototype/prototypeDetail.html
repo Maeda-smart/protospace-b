@@ -17,13 +17,17 @@
 
   <div class="main">
     <div class="inner">
-      <div class="protoType_wrapper">
-        <p class="title" th:text="${prototype.prototypeName}"></p>
+      <div class="prototype_wrapper">
+        <div class="prototypes-header">
+          <p class="title" th:text="${prototype.prototypeName}"></p>
 
-        <!-- ユーザー詳細ページ リンク -->
-        <a class="user_name" th:href="@{'/users/'+${prototype.user.id}}"> by <span
-            th:text="${prototype.user.nickname}"></span></a>
-
+        <span>
+          <a class="user_name" th:href="@{'/users/'+${prototype.user.id}}">
+            by 
+            <span th:text="${prototype.user.nickname}"></span>
+          </a>
+        </span>
+        </div>
         <div
           th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == prototype.user.id}">
           <div class="edit_delete">
@@ -36,7 +40,7 @@
           </div>
         </div>
 
-        <div class="protoType_img">
+        <div class="prototype_img">
           <img th:src="@{${prototype.imgPath}}" alt="プロトタイプ画像">
         </div>
 
@@ -90,46 +94,46 @@
             </button>
           </form>
         </div>
+      </div>
 
 
-        <!-- コメントフォーム -->
-        <div class="comment_wrapper">
+      <!-- コメントフォーム -->
+      <div class="comment_wrapper">
 
-          <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <div th:if="${#authorization.expression('isAuthenticated()')}">
 
-            <form class="form" th:action="@{/prototype/{prototypeId}/comment(prototypeId=${prototype.id})}"
-              method="post" th:object="${commentForm}">
-              <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">エラー</div>
+          <form class="form" th:action="@{/prototype/{prototypeId}/comment(prototypeId=${prototype.id})}"
+            method="post" th:object="${commentForm}">
+            <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">エラー</div>
 
-              <div class="field">
-                <label for="text">コメント</label>
-                <br>
-                <input type="text" class="form-name" id="text" th:field="*{text}">
-              </div>
-              <div class="actions">
-                <input type="submit" value="送信する" class="submit-btn">
-              </div>
-            </form>
-          </div>
-
-          <div th:if="${#authorization.expression('!isAuthenticated()')}">
-            <strong>
-              <p class="attention">※※※ コメントの投稿には新規登録/ログインが必要です ※※※</p>
-            </strong>
-          </div>
-
-          <!-- コメント一覧表示 -->
-          <ul class="comments_list">
-            <li class="comments_inner" th:each="comment:${comments}">
-              <span th:text="${comment.text}">コメント内容</span>
-              <a th:href="@{/users/{userId}(userId=${comment.user.id})}" class="user-name"> (<span
-                  th:text="${comment.user.nickname}"></span>) </a>
-              <span class="timestamp_wrapper">
-                <span th:text="${#temporals.format(comment.createdAt, 'yyyy/MM/dd HH:mm')}"></span>
-              </span>
-            </li>
-          </ul>
+            <div class="field">
+              <label for="text">コメント</label>
+              <br>
+              <input type="text" class="form-name" id="text" th:field="*{text}">
+            </div>
+            <div class="actions">
+              <input type="submit" value="送信する" class="submit-btn">
+            </div>
+          </form>
         </div>
+
+        <div th:if="${#authorization.expression('!isAuthenticated()')}">
+          <strong>
+            <p class="attention">※※※ コメントの投稿には新規登録/ログインが必要です ※※※</p>
+          </strong>
+        </div>
+
+        <!-- コメント一覧表示 -->
+        <ul class="comments_list">
+          <li class="comments_inner" th:each="comment:${comments}">
+            <span th:text="${comment.text}">コメント内容</span>
+            <a th:href="@{/users/{userId}(userId=${comment.user.id})}" class="user-name"> (<span
+                th:text="${comment.user.nickname}"></span>) </a>
+            <span class="timestamp_wrapper">
+              <span th:text="${#temporals.format(comment.createdAt, 'yyyy/MM/dd HH:mm')}"></span>
+            </span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
