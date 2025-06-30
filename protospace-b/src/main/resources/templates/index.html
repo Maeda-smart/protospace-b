@@ -22,14 +22,14 @@
       </div>
 
       <!-- ランキング表示ボタン -->
-       <a class="ranking-title" th:href="@{/prototypes/ranking}">♔ランキングページ</a>
+      <a class="ranking-title" th:href="@{/prototypes/ranking}">♔ランキングページ</a>
 
       <form th:action="@{/prototypes/search}" th:object="${prototypeSearchForm}" method="get">
         <input type="text" th:field="*{prototypeName}" placeholder="Search by prototype name" class="search-box" />
         <button type="submit" class="search-button">Search</button>
       </form>
 
-       <!-- プロトタイプの一覧表示 -->
+      <!-- プロトタイプの一覧表示 -->
       <div th:replace="~{prototypes :: prototypes(${prototypes})}"></div>
     </div>
   </main>
