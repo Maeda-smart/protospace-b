@@ -10,7 +10,16 @@
     <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
         th:text="${prototype.user.nickname}"></span></a>
     <span class="nice"
-      th:text="${isNicePrototype[prototype.id]} ? '♥' + ' ' + ${nicePrototype[prototype.id]}: '♡' + ' ' + ${nicePrototype[prototype.id]}"></span>
+    th:text="${isNicePrototype[prototype.id]} ? '♥' + ' ' + ${nicePrototype[prototype.id]}: '♡' + ' ' + ${nicePrototype[prototype.id]}"></span>
+    <p class="timestamp_wrapper">
+      <span th:text="${#temporals.format(prototype.createdAt, 'yyyy/MM/dd HH:mm')}"></span>
+      <span class="timestamp_edited" th:if="${prototype.createdAt} != ${prototype.updatedAt}">
+        <!-- 絵文字 -->
+        <svg width="10" height="10" viewBox="0 0 25 25">
+          <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z"/>
+        </svg>
+      </span>
+    </p>
 
   </div>
 </div>

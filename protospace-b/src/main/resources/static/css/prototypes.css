@@ -68,3 +68,34 @@
 .nice {
   color: red;
 }
+
+.timestamp_wrapper{
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+svg{
+  display: flex;
+  align-items: center;
+}
+
+.timestamp_edited {
+  color: #333;
+  margin-left: 2px;
+  margin-bottom: 3px;
+}
+
+.timestamp_edited svg path{
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.comments_list li{
+  list-style: none;
+  display: flex;
+  align-items: center;
+  padding: 1px;
+  margin-top: 10px;
+}
