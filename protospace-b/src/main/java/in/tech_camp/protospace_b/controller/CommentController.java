@@ -1,15 +1,12 @@
 package in.tech_camp.protospace_b.controller;
 
-import java.util.List;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.CommentEntity;
@@ -18,7 +15,6 @@ import in.tech_camp.protospace_b.form.CommentForm;
 import in.tech_camp.protospace_b.repository.CommentRepository;
 import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserDetailRepository;
-import in.tech_camp.protospace_b.validation.ValidationOrder;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -34,22 +30,15 @@ public class CommentController {
   // コメント保存機能
   @PostMapping("/prototype/{prototypeId}/comment")
   public String createComment(@PathVariable("prototypeId") Integer prototypeId, 
-                            @ModelAttribute("commentForm") @Validated(ValidationOrder.class) CommentForm commentForm,
-                            BindingResult result,
+                            @ModelAttribute("commentForm") CommentForm commentForm,
                             @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
 
     // プロトタイプ取得
     PrototypeEntity prototype = prototypeShowRepository.findByPrototypeId(prototypeId);
-    // コメント取得
-    List<CommentEntity> comments = commentRepository.findByPrototypeId(prototypeId);
-
-    // バリデーション
-    if (result.hasErrors()) {
-        model.addAttribute("errorMessages", result.getAllErrors());
-        model.addAttribute("prototype", prototype);
-        model.addAttribute("commentForm", commentForm);
-        model.addAttribute("comments", comments);
-        return "prototype/prototypeDetail";
+    
+    // コメントが空の場合はリダイレクト
+    if (commentForm.getText() == null || commentForm.getText().trim().isEmpty()) {
+        return "redirect:/prototypes/" + prototypeId + "/detail";
     }
 
     // コメント情報をセット
@@ -65,9 +54,22 @@ public class CommentController {
       model.addAttribute("prototype", prototype);
       model.addAttribute("commentForm", commentForm);
       System.out.println("エラー：" + e);
-      return "prototypes/prototypeDetail";
+      return "prototype/prototypeDetail";
     }
 
     return "redirect:/prototypes/" + prototypeId + "/detail";
   }
+
+  // コメント削除機能
+    @PostMapping("/prototypes/{prototypeId}/comment/delete")
+    public String deleteComment(@PathVariable("prototypeId") Integer prototypeId, @RequestParam("commentId")Integer commentId, 
+                                @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
+
+      try {
+        commentRepository.deleteById(commentId);
+      } catch (Exception e) {
+        System.out.println("Error: " + e);
+      }
+      return "redirect:/prototypes/" + prototypeId + "/detail";
+    }
 }
