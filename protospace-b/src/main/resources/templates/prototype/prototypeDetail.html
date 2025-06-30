@@ -44,19 +44,6 @@
           <img th:src="@{${prototype.imgPath}}" alt="プロトタイプ画像">
         </div>
 
-        <div th:replace="~{tags :: prototype-tags(${prototype.tags})}"></div>
-
-        <div class="prototype_body">
-          <div class="prototype_detail">
-            <p class="detail_title">キャッチコピー</p>
-            <p class="text" th:text="${prototype.catchCopy}"></p>
-          </div>
-          <div class="prototype_detail">
-            <p class="detail_title">コンセプト</p>
-            <p class="text" th:text="${prototype.concept}"></p>
-          </div>
-        </div>
-
         <div class="button-wrapper">
           <!-- ピン止めボタン -->
           <th:block th:unless="${isPinned}">
@@ -94,6 +81,19 @@
             </button>
           </form>
         </div>
+
+        <div class="prototype_body">
+          <div class="prototype_detail">
+            <p class="detail_title">キャッチコピー</p>
+            <p class="text" th:text="${prototype.catchCopy}"></p>
+          </div>
+          <div class="prototype_detail">
+            <p class="detail_title">コンセプト</p>
+            <p class="text" th:text="${prototype.concept}"></p>
+          </div>
+        </div>
+        <div th:replace="~{tags :: prototype-tags(${prototype.tags})}"></div>
+
       </div>
 
 

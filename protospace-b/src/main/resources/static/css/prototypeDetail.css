@@ -49,7 +49,8 @@
 }
 
 .prototype_img {
-    width: 90%;
+    display: block;＋margin: 0 auto;
+    width: 100%;
     padding: 10px 0;
     text-align: center;
 }
@@ -151,9 +152,9 @@ button.bookmark-button,
 button.defuse-bookmark-button,
 button.pin-on,
 button.pin-off {
-  border: 1px solid #000000;
+  border: #333 solid 1px;
   font-size: 1rem;
-  padding: 8px 14px;
+  padding: 2px 5px;
   margin-right: 10px;
   border: none;
   border-radius: 10px;
@@ -163,6 +164,7 @@ button.pin-off {
 
 .button-wrapper{
   display: flex;
+  justify-content: right;
 }
 
 /* ピンボタン */
