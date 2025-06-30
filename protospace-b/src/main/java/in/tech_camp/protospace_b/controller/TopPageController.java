@@ -27,7 +27,7 @@ public class TopPageController {
     
     // ログイン時のみuserIdを取得
     Integer userId = (currentUser != null) ? currentUser.getId() : null;
-   
+    
     // 全プロトタイプ取得を取得し、モデルに渡す
     List<PrototypeEntity> prototypes = prototypeShowRepository.showAll();
     model.addAttribute("prototypes", prototypes);
