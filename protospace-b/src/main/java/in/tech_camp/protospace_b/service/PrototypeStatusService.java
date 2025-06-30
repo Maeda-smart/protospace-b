@@ -43,6 +43,13 @@ public class PrototypeStatusService {
       readStatusMap = readList.stream()
           .collect(Collectors.toMap(ReadStatusEntity::getPrototypeId, r -> true));
 
+      // 自分が投稿したプロトタイプは既読扱いにする
+      for (PrototypeEntity prototype : prototypes) {
+        if (prototype.getUser() != null && prototype.getUser().getId().equals(userId)) {
+          readStatusMap.put(prototype.getId(), true);
+        }
+      }
+
     // ログイン時以外はfalse
     } else {
       for (PrototypeEntity prototype : prototypes) {
