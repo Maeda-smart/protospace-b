@@ -42,6 +42,8 @@ public interface NiceRepository {
         p.catchCopy,
         p.concept,
         p.img,
+        p.created_at,
+        p.updated_at,
         u.id u_id,
         u.nickname nickname,
         COUNT(n.user_id) AS nice_count
@@ -55,6 +57,8 @@ public interface NiceRepository {
         p.catchCopy,
         p.concept,
         p.img,
+        p.created_at,
+        p.updated_at,
         u.id,
         u.nickname
       ORDER BY nice_count DESC
@@ -64,8 +68,8 @@ public interface NiceRepository {
       @Result(property = "user.id", column = "u_id"),
       @Result(property = "user.nickname", column = "nickname"),
       @Result(property = "imgPath", column = "img"),
-      @Result(property="createdAt", column="created_at"),
-      @Result(property="updatedAt", column="updated_at"),
+      @Result(property = "createdAt", column="created_at"),
+      @Result(property = "updatedAt", column="updated_at"),
       @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags"))
   })
   List<PrototypeEntity> findPrototypesOrderByCountDesc();

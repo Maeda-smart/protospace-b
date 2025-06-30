@@ -20,6 +20,8 @@ public interface PrototypeSearchRepository {
         p.catchCopy,
         p.concept,
         p.img,
+        p.created_at,
+        p.updated_at,
         u.id u_id,
         u.nickname nickname
       FROM
@@ -31,8 +33,8 @@ public interface PrototypeSearchRepository {
   @Results(value = {
       @Result(property = "id", column = "p_id"),
       @Result(property = "imgPath", column = "img"),
-      @Result(property="createdAt", column="created_at"),
-      @Result(property="updatedAt", column="updated_at"),
+      @Result(property = "createdAt", column="created_at"),
+      @Result(property = "updatedAt", column="updated_at"),
       @Result(property = "user.id", column = "u_id"),
       @Result(property = "user.nickname", column = "nickname"),
       @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags"))
