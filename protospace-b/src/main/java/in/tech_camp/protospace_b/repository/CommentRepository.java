@@ -45,10 +45,10 @@ public interface CommentRepository {
   })
   List<CommentEntity> findByPrototypeId(Integer prototypeId);
 
-  // コメント保存
-  @Insert("INSERT INTO comments (text, user_id, prototype_id) VALUES (#{text}, #{user.id}, #{prototype.id})")
-  @Options(useGeneratedKeys = true, keyProperty = "id")
-  void insert(CommentEntity comment);
+    // コメント保存
+    @Insert("INSERT INTO comments (text, user_id, prototype_id) VALUES (#{text}, #{user.id}, #{prototype.id})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    void insert(CommentEntity comment);
 
   // コメント削除
   @Delete("DELETE FROM comments WHERE id = #{id}")

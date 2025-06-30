@@ -36,6 +36,9 @@
             <a th:href="@{/users/{userId}(userId=${comment.user.id})}" class="user-name">
               <span th:text="${comment.user.nickname}">ユーザー名</span>
             </a>
+             <span class="timestamp_wrapper">
+                <span th:text="${#temporals.format(comment.createdAt, 'yyyy/MM/dd HH:mm')}"></span>
+              </span>
           </div>
 
           <!-- 削除ボタン -->
