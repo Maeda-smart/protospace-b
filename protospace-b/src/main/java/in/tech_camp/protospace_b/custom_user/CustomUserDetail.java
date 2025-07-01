@@ -28,19 +28,24 @@ public class CustomUserDetail implements UserDetails {
         return user.getNickname();
     }
 
-  // ユーザー管理設定
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-      String role = user.getRoleName();
-      if (role == null || role.trim().isEmpty()) {
-          System.out.println("警告：ユーザー「" + user.getNickname() + "」にロールが設定されていません。");
-          return Collections.emptyList();
-      }
-      return List.of(new SimpleGrantedAuthority(role.trim()));
-  }
+    @Override
+    public String getPassword(){
+        return user.getPassword();
+    }
 
-  @Override
-  public boolean isEnabled() {
-    return true;
-  }
+    // ユーザー管理設定
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        String role = user.getRoleName();
+        if (role == null || role.trim().isEmpty()) {
+            System.out.println("警告：ユーザー「" + user.getNickname() + "」にロールが設定されていません。");
+            return Collections.emptyList();
+        }
+        return List.of(new SimpleGrantedAuthority(role.trim()));
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
