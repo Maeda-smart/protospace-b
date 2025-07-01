@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
 <head>
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
   <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css" />
   <link th:href="@{/css/edit.css}" rel="stylesheet" type="text/css">
