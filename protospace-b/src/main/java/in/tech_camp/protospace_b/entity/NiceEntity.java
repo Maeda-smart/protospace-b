@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class NiceEntity {
-  
-  private PrototypeEntity prototype;
 
-  private UserEntity user;
-  
+    private PrototypeEntity prototype;
+
+    private UserEntity user;
+
 }

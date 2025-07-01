@@ -12,18 +12,18 @@ import lombok.Data;
 @Data
 public class PrototypeForm {
 
-  @NotBlank(message="PrototypeName can't be blank", groups=ValidationPriority1.class)
-  private String prototypeName;
+    @NotBlank(message = "PrototypeName can't be blank", groups = ValidationPriority1.class)
+    private String prototypeName;
 
-  @NotBlank(message="CatchCopy can't be blank", groups=ValidationPriority1.class)
-  private String catchCopy;
+    @NotBlank(message = "CatchCopy can't be blank", groups = ValidationPriority1.class)
+    private String catchCopy;
 
-  @NotBlank(message="Concept can't be blank", groups=ValidationPriority1.class)
-  private String concept;
+    @NotBlank(message = "Concept can't be blank", groups = ValidationPriority1.class)
+    private String concept;
 
-  @NotNull(message="Image can't be blank", groups=ValidationPriority1.class)
-  private MultipartFile imgFile;
-  private String imgPath;
+    @NotNull(message = "Image can't be blank", groups = ValidationPriority1.class)
+    private MultipartFile imgFile;
+    private String imgPath;
 
-  private List<String> tags;
+    private List<String> tags;
 }

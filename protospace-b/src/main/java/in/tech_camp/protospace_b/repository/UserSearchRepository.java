@@ -9,6 +9,6 @@ import in.tech_camp.protospace_b.entity.UserEntity;
 
 @Mapper
 public interface UserSearchRepository {
-  @Select("SELECT * FROM users WHERE nickname LIKE CONCAT('%', #{keyword}, '%') OR email LIKE CONCAT('%', #{keyword}, '%')")
-  List<UserEntity> searchByKeyword(String keyword);
+    @Select("SELECT * FROM users WHERE nickname LIKE CONCAT('%', #{keyword}, '%') OR email LIKE CONCAT('%', #{keyword}, '%')")
+    List<UserEntity> searchByKeyword(String keyword);
 }
