@@ -11,7 +11,7 @@ import in.tech_camp.protospace_b.entity.UserEntity;
 public interface UserLoginRepository {
     @Select("""
     SELECT id, nickname, email, password, profile,
-           affiliation, position, role_name, is_enable
+           affiliation, position, role_name, enable
     FROM users
     WHERE email = #{email}
     """)
