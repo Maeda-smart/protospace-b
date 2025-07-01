@@ -6,11 +6,16 @@ body {
   margin: 0;
 }
 
+.main{
+  min-height: calc(100vh - 170px);
+}
+
 .hidden{
   display: none;
 }
 
 .header {
+  height: 80px;
   background-color: #f1f8fe;
   margin-bottom: 40px;
   padding: 20px 0;
@@ -83,8 +88,11 @@ a {
 }
 
 .footer {
+  height: 50px;
   background-color: #999;
-  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .copyright {

@@ -2,10 +2,6 @@
   box-sizing: border-box;
 }
 
-.main {
-  min-height: calc(100vh - 161px);
-}
-
 .search-container {
   max-width: 600px;
   margin: 0 auto 30px;
