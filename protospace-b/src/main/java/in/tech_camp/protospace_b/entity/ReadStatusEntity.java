@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class ReadStatusEntity {
-  private Integer prototypeId;
-  private Integer userId;
-  private LocalDateTime readAt;
+    private Integer prototypeId;
+    private Integer userId;
+    private LocalDateTime readAt;
 }

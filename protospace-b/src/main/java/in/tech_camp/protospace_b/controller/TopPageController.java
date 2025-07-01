@@ -18,25 +18,25 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TopPageController {
 
-  private final PrototypeShowRepository prototypeShowRepository;
-  private final UserDetailRepository userDetailRepository;
+    private final PrototypeShowRepository prototypeShowRepository;
+    private final UserDetailRepository userDetailRepository;
 
-  @GetMapping("")
-  public String topPage(@AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
+    @GetMapping("")
+    public String topPage(@AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
 
-    // ログイン時のみuserIdを取得
-    Integer userId = (currentUser != null) ? currentUser.getId() : null;
-    model.addAttribute("user", userDetailRepository.findById(userId));
+        // ログイン時のみuserIdを取得
+        Integer userId = (currentUser != null) ? currentUser.getId() : null;
+        model.addAttribute("user", userDetailRepository.findById(userId));
 
-    // 全プロトタイプ取得を取得し、モデルに渡す
-    List<PrototypeEntity> prototypes = prototypeShowRepository.showAll(userId);
-    model.addAttribute("prototypes", prototypes);
+        // 全プロトタイプ取得を取得し、モデルに渡す
+        List<PrototypeEntity> prototypes = prototypeShowRepository.showAll(userId);
+        model.addAttribute("prototypes", prototypes);
 
-    // プロトタイプ検索フォームをモデルに渡す
-    PrototypeSearchForm prototypeSearchForm = new PrototypeSearchForm();
-    model.addAttribute("prototypeSearchForm", prototypeSearchForm);
+        // プロトタイプ検索フォームをモデルに渡す
+        PrototypeSearchForm prototypeSearchForm = new PrototypeSearchForm();
+        model.addAttribute("prototypeSearchForm", prototypeSearchForm);
 
-    return "index";
+        return "index";
 
-  }
+    }
 }

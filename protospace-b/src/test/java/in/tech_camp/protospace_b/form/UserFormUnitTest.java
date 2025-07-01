@@ -50,7 +50,7 @@ public class UserFormUnitTest {
             userForm.setPasswordConfirmation(password);
             Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm, ValidationPriority2.class);
             // String messages = violations.stream().map(v ->
-            //     (v.getPropertyPath() + ": " + v.getMessage())
+            // (v.getPropertyPath() + ": " + v.getMessage())
             // ).collect(Collectors.joining(";"));
             assertEquals(0, violations.size());
         }
@@ -80,7 +80,7 @@ public class UserFormUnitTest {
             userForm.setEmail("this.is.not.email");
             Set<ConstraintViolation<UserForm>> violations = validator.validate(userForm, ValidationPriority2.class);
             assertEquals(1, violations.size());
-            assertEquals( "Email should be valid", violations.iterator().next().getMessage());
+            assertEquals("Email should be valid", violations.iterator().next().getMessage());
         }
 
         @Test
@@ -104,7 +104,8 @@ public class UserFormUnitTest {
         public void ValidationErrorWhenPasswordAndConfirmationAreDifferent() {
             userForm.setPasswordConfirmation("DifferentPassword");
             userForm.validatePasswordConfirmation(bindingResult);
-            verify(bindingResult).rejectValue("passwordConfirmation", "error.user", "Password confirmation doesn't match Password");
+            verify(bindingResult).rejectValue("passwordConfirmation", "error.user",
+                    "Password confirmation doesn't match Password");
         }
 
         @Test

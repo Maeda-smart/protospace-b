@@ -7,6 +7,6 @@ import in.tech_camp.protospace_b.entity.UserEntity;
 
 @Mapper
 public interface UserLoginRepository {
-  @Select("SELECT * FROM users WHERE email = #{email}")
-  UserEntity findByEmail(String email);
+    @Select("SELECT * FROM users WHERE email = #{email}")
+    UserEntity findByEmail(String email);
 }

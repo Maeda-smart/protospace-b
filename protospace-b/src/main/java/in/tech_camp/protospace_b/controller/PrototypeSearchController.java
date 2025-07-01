@@ -17,27 +17,27 @@ import lombok.AllArgsConstructor;
 @Controller
 @AllArgsConstructor
 public class PrototypeSearchController {
-  private final PrototypeShowRepository prototypeShowRepository;
+    private final PrototypeShowRepository prototypeShowRepository;
 
-  @GetMapping("/prototypes/search")
-  public String searchPrototypes(@ModelAttribute("prototypeSearchForm") PrototypeSearchForm prototypeSearchForm,
-      @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
+    @GetMapping("/prototypes/search")
+    public String searchPrototypes(@ModelAttribute("prototypeSearchForm") PrototypeSearchForm prototypeSearchForm,
+            @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
 
-    String keyword = prototypeSearchForm.getPrototypeName();
+        String keyword = prototypeSearchForm.getPrototypeName();
 
-    // 入力が空ならリダイレクトして初期状態へ戻す
-    if (keyword == null || keyword.trim().isEmpty()) {
-      return "redirect:/";
+        // 入力が空ならリダイレクトして初期状態へ戻す
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return "redirect:/";
+        }
+
+        // ログインユーザーのID取得
+        Integer userId = (currentUser != null) ? currentUser.getId() : null;
+        List<PrototypeEntity> prototypes = prototypeShowRepository.findByPrototypeName(userId, keyword);
+        model.addAttribute("prototypes", prototypes);
+
+        model.addAttribute("prototypeSearchForm", prototypeSearchForm);
+
+        return "prototype/search";
     }
-
-    // ログインユーザーのID取得
-    Integer userId = (currentUser != null) ? currentUser.getId() : null;
-    List<PrototypeEntity> prototypes = prototypeShowRepository.findByPrototypeName(userId, keyword);
-    model.addAttribute("prototypes", prototypes);
-
-    model.addAttribute("prototypeSearchForm", prototypeSearchForm);
-
-    return "prototype/search";
-  }
 
 }

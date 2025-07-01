@@ -16,19 +16,19 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class RankingController {
 
-  private final PrototypeShowRepository prototypeShowRepository;
+    private final PrototypeShowRepository prototypeShowRepository;
 
-  // ランキングページに遷移
-  @GetMapping("/prototypes/ranking")
-  public String showRanking(@AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
+    // ランキングページに遷移
+    @GetMapping("/prototypes/ranking")
+    public String showRanking(@AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
 
-    // ログインユーザーのID取得
-    Integer userId = (currentUser != null) ? currentUser.getId() : null;
+        // ログインユーザーのID取得
+        Integer userId = (currentUser != null) ? currentUser.getId() : null;
 
-    // いいね数順に並び替えたプロトタイプを取得
-    List<PrototypeEntity> prototypes = prototypeShowRepository.findPrototypesOrderByCountDesc(userId);
-    model.addAttribute("prototypes", prototypes);
+        // いいね数順に並び替えたプロトタイプを取得
+        List<PrototypeEntity> prototypes = prototypeShowRepository.findPrototypesOrderByCountDesc(userId);
+        model.addAttribute("prototypes", prototypes);
 
-    return "prototype/ranking";
-  }
+        return "prototype/ranking";
+    }
 }

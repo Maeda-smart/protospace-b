@@ -21,34 +21,34 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserDetailController {
 
-  private final UserDetailRepository userDetailRepository;
-  private final PrototypeShowRepository prototypeShowRepository;
+    private final UserDetailRepository userDetailRepository;
+    private final PrototypeShowRepository prototypeShowRepository;
 
-  // ユーザー詳細ページ遷移
-  @GetMapping("/users/{userId}")
-  public String showMyPage(@PathVariable("userId") Integer userId,
-      @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
+    // ユーザー詳細ページ遷移
+    @GetMapping("/users/{userId}")
+    public String showMyPage(@PathVariable("userId") Integer userId,
+            @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
 
-    // ユーザー情報取得
-    UserEntity users = userDetailRepository.findById(userId);
-    model.addAttribute("user", users);
+        // ユーザー情報取得
+        UserEntity users = userDetailRepository.findById(userId);
+        model.addAttribute("user", users);
 
-    // ログインユーザーのID取得
-    Integer loginUserId = (currentUser != null) ? currentUser.getId() : null;
+        // ログインユーザーのID取得
+        Integer loginUserId = (currentUser != null) ? currentUser.getId() : null;
 
-    // ユーザーの投稿一覧取得
-    List<PrototypeEntity> prototypes = prototypeShowRepository.showByUserId(loginUserId, userId);
-    Map<Boolean, List<PrototypeEntity>> partitioned = prototypes.stream().collect(Collectors.partitioningBy(prototype -> prototype.isPin()));
-    List<PrototypeEntity> pinnedPrototypes = partitioned.get(true);
-    List<PrototypeEntity> unpinnedPrototypes = partitioned.get(false);
-    model.addAttribute("pinnedPrototypes", pinnedPrototypes);
-    model.addAttribute("unpinnedPrototypes", unpinnedPrototypes);
+        // ユーザーの投稿一覧取得
+        List<PrototypeEntity> prototypes = prototypeShowRepository.showByUserId(loginUserId, userId);
+        Map<Boolean, List<PrototypeEntity>> partitioned = prototypes.stream()
+                .collect(Collectors.partitioningBy(prototype -> prototype.isPin()));
+        List<PrototypeEntity> pinnedPrototypes = partitioned.get(true);
+        List<PrototypeEntity> unpinnedPrototypes = partitioned.get(false);
+        model.addAttribute("pinnedPrototypes", pinnedPrototypes);
+        model.addAttribute("unpinnedPrototypes", unpinnedPrototypes);
 
-    // ブックマーク取得
-    List<PrototypeEntity> bookmarkPrototypes =
-    prototypeShowRepository.findBookmarkByUserId(loginUserId, userId);
-    model.addAttribute("bookmarkPrototypes", bookmarkPrototypes);
+        // ブックマーク取得
+        List<PrototypeEntity> bookmarkPrototypes = prototypeShowRepository.findBookmarkByUserId(loginUserId, userId);
+        model.addAttribute("bookmarkPrototypes", bookmarkPrototypes);
 
-    return "users/detail";
-  }
+        return "users/detail";
+    }
 }

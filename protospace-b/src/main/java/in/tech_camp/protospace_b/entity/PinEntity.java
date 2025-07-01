@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class PinEntity {
-  private Integer userId;
-  private Integer prototypeId;
+    private Integer userId;
+    private Integer prototypeId;
 }
