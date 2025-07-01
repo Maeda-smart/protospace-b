@@ -5,13 +5,8 @@ body{
   margin: 0;
   height: 100%;
 }
-.main-content{
-  margin: 0 100px;
-  /* height: 85vh; */
-  overflow: visible;
-  min-height: calc(100vh - 100px); /* ヘッダー＋フッターを差し引いた高さに調整 */
-  margin-bottom: 40px; 
-}
+
+
 input{
   display: block;
 }
