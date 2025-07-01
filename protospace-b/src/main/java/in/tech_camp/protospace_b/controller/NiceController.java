@@ -15,41 +15,41 @@ import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserNewRepository;
 import lombok.AllArgsConstructor;
 
-
 @Controller
 @AllArgsConstructor
 public class NiceController {
-  
-  private final NiceRepository niceRepository;
 
-  private final PrototypeShowRepository prototypeShowRepository;
+    private final NiceRepository niceRepository;
 
-  private final UserNewRepository userNewRepository;
+    private final PrototypeShowRepository prototypeShowRepository;
 
-  // いいねを送るメソッド
-  @PostMapping("/prototypes/{prototypeId}/nice")
-  public String sendNice(@PathVariable("prototypeId") Integer prototypeId,@AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
+    private final UserNewRepository userNewRepository;
 
-    // プロトタイプとログインしているユーザー情報を取得
-    Integer userId = currentUser.getId();
-    PrototypeEntity prototype = prototypeShowRepository.findByPrototypeId(prototypeId);
-    UserEntity user = userNewRepository.findById(userId);
+    // いいねを送るメソッド
+    @PostMapping("/prototypes/{prototypeId}/nice")
+    public String sendNice(@PathVariable("prototypeId") Integer prototypeId,
+            @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
 
-    // いいね済みかを判別
-    boolean isNice = niceRepository.existNice(prototypeId, userId);
+        // プロトタイプとログインしているユーザー情報を取得
+        Integer userId = currentUser.getId();
+        PrototypeEntity prototype = prototypeShowRepository.findByPrototypeId(currentUser.getId(), prototypeId);
+        UserEntity user = userNewRepository.findById(userId);
 
-    if(isNice){
-      // いいね済みなら削除
-      niceRepository.deleteNice(prototypeId, userId);
-    } else {
-      // NiceEntityにセット
-      NiceEntity nice = new NiceEntity();
-      nice.setPrototype(prototype);
-      nice.setUser(user);
-      niceRepository.insert(nice);
-    }  
-      
-    return "redirect:/prototypes/" + prototypeId + "/detail";
-  }
-  
+        // いいね済みかを判別
+        boolean isNice = niceRepository.existNice(prototypeId, userId);
+
+        if (isNice) {
+            // いいね済みなら削除
+            niceRepository.deleteNice(prototypeId, userId);
+        } else {
+            // NiceEntityにセット
+            NiceEntity nice = new NiceEntity();
+            nice.setPrototype(prototype);
+            nice.setUser(user);
+            niceRepository.insert(nice);
+        }
+
+        return "redirect:/prototypes/" + prototypeId + "/detail";
+    }
+
 }

@@ -17,34 +17,36 @@ import jakarta.validation.ValidatorFactory;
 
 @ActiveProfiles("test")
 public class CommentFormUnitTest {
-  private Validator validator;
-  private CommentForm commentForm;
+    private Validator validator;
+    private CommentForm commentForm;
 
-  @BeforeEach
-  public void setUp() {
-    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    validator = factory.getValidator();
-    commentForm = CommentFormFactory.createComment();
-  }
-
-  @Nested
-  class コメントが作成できる場合 {
-    @Test
-    public void テキストが存在していれば投稿できる () {
-      Set<ConstraintViolation<CommentForm>> violations = validator.validate(commentForm, ValidationPriority1.class);
-      assertEquals(0, violations.size());
+    @BeforeEach
+    public void setUp() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+        commentForm = CommentFormFactory.createComment();
     }
-  }
 
-  @Nested
-  class コメントが作成できない場合 {
-    @Test
-    public void テキストが存在しなければ投稿できない () {
-      commentForm.setText("");
-      Set<ConstraintViolation<CommentForm>> violations = validator.validate(commentForm, ValidationPriority1.class);
-      assertEquals(1, violations.size());
-      assertEquals("Comment can't be blank", violations.iterator().next().getMessage());
+    @Nested
+    class コメントが作成できる場合 {
+        @Test
+        public void テキストが存在していれば投稿できる() {
+            Set<ConstraintViolation<CommentForm>> violations = validator.validate(commentForm,
+                    ValidationPriority1.class);
+            assertEquals(0, violations.size());
+        }
     }
-  }
-  
+
+    @Nested
+    class コメントが作成できない場合 {
+        @Test
+        public void テキストが存在しなければ投稿できない() {
+            commentForm.setText("");
+            Set<ConstraintViolation<CommentForm>> violations = validator.validate(commentForm,
+                    ValidationPriority1.class);
+            assertEquals(1, violations.size());
+            assertEquals("Comment can't be blank", violations.iterator().next().getMessage());
+        }
+    }
+
 }

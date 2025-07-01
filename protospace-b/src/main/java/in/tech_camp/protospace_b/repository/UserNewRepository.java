@@ -7,7 +7,7 @@ import in.tech_camp.protospace_b.entity.UserEntity;
 
 @Mapper
 public interface UserNewRepository {
-  // ユーザーidでユーザー情報を取得
-  @Select("SELECT * FROM users WHERE id = #{id}")
-  UserEntity findById(Integer id);
+    // ユーザーidでユーザー情報を取得
+    @Select("SELECT * FROM users WHERE id = #{id}")
+    UserEntity findById(Integer id);
 }

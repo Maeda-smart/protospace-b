@@ -12,37 +12,37 @@ import lombok.Data;
 
 @Data
 public class UserEditForm {
-  private Integer id;
-  
-  @NotBlank(message = "Nickname can't be blank", groups = ValidationPriority1.class)
-  private String nickname;
+    private Integer id;
 
-  @NotBlank(message = "Email can't be blank", groups = ValidationPriority1.class)
-  @Email(message = "Email should be valid", groups = ValidationPriority2.class)
-  private String email;
+    @NotBlank(message = "Nickname can't be blank", groups = ValidationPriority1.class)
+    private String nickname;
 
-  @ValidOptionalPassword(groups = ValidationPriority2.class)
-  private String password;
+    @NotBlank(message = "Email can't be blank", groups = ValidationPriority1.class)
+    @Email(message = "Email should be valid", groups = ValidationPriority2.class)
+    private String email;
 
-  // 再入力したパスワード
-  private String passwordConfirmation;
+    @ValidOptionalPassword(groups = ValidationPriority2.class)
+    private String password;
 
-  // プロフィール
-  @NotBlank(message = "Profile can't be blank", groups = ValidationPriority1.class)
-  private String profile;
+    // 再入力したパスワード
+    private String passwordConfirmation;
 
-  // 所属
-  @NotBlank(message = "Affiliation can't be blank", groups = ValidationPriority1.class)
-  private String affiliation;
-  
-  // 役職
-  @NotBlank(message = "Position can't be blank", groups = ValidationPriority1.class)
-  private String position;
+    // プロフィール
+    @NotBlank(message = "Profile can't be blank", groups = ValidationPriority1.class)
+    private String profile;
 
-  // 2つのパスワードが一致しているか確認
-  public void validatePasswordConfirmation(BindingResult result) {
-      if (!password.equals(passwordConfirmation)) {
-          result.rejectValue("passwordConfirmation", "error.user", "Password confirmation doesn't match Password");
-      }
-  }
+    // 所属
+    @NotBlank(message = "Affiliation can't be blank", groups = ValidationPriority1.class)
+    private String affiliation;
+
+    // 役職
+    @NotBlank(message = "Position can't be blank", groups = ValidationPriority1.class)
+    private String position;
+
+    // 2つのパスワードが一致しているか確認
+    public void validatePasswordConfirmation(BindingResult result) {
+        if (!password.equals(passwordConfirmation)) {
+            result.rejectValue("passwordConfirmation", "error.user", "Password confirmation doesn't match Password");
+        }
+    }
 }

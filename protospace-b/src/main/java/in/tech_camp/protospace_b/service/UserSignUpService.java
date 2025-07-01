@@ -14,12 +14,12 @@ public class UserSignUpService {
     private final PasswordEncoder passwordEncoder;
 
     public void createUserWithEncryptedPassword(UserEntity userEntity) {
-      String encodedPassword = encodePassword(userEntity.getPassword());
-      userEntity.setPassword(encodedPassword);
-      userSignUpRepository.insert(userEntity);
+        String encodedPassword = encodePassword(userEntity.getPassword());
+        userEntity.setPassword(encodedPassword);
+        userSignUpRepository.insert(userEntity);
     }
 
-    private String encodePassword(String password){
-      return passwordEncoder.encode(password);
+    private String encodePassword(String password) {
+        return passwordEncoder.encode(password);
     }
 }

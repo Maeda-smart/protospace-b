@@ -24,66 +24,69 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserEditController {
 
-  private final UserEditRepository userEditRepository;
+    private final UserEditRepository userEditRepository;
 
-  private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-  @GetMapping("/users/{userId}/edit")
-  public String editUserForm(@PathVariable("userId") Integer userId, Model model) {
-    UserEntity user = userEditRepository.findById(userId);
+    @GetMapping("/users/{userId}/edit")
+    public String editUserForm(@PathVariable("userId") Integer userId, Model model) {
+        UserEntity user = userEditRepository.findById(userId);
 
-    UserEditForm userForm = new UserEditForm();
-    userForm.setId(user.getId());
-    userForm.setNickname(user.getNickname());
-    userForm.setEmail(user.getEmail());
-    userForm.setProfile(user.getProfile());
-    userForm.setAffiliation(user.getAffiliation());
-    userForm.setPosition(user.getPosition());
+        UserEditForm userForm = new UserEditForm();
+        userForm.setId(user.getId());
+        userForm.setNickname(user.getNickname());
+        userForm.setEmail(user.getEmail());
+        userForm.setProfile(user.getProfile());
+        userForm.setAffiliation(user.getAffiliation());
+        userForm.setPosition(user.getPosition());
 
-    model.addAttribute("userForm", userForm);
-    return "users/edit";
-  }
-
-  @PostMapping("/users/{userId}")
-  public String updateUser(@PathVariable("userId") Integer userId, @ModelAttribute("userForm") @Validated(ValidationOrder.class) UserEditForm userEditForm, BindingResult result, Model model) {
-    String newEmail = userEditForm.getEmail();
-    if (userEditRepository.existsByEmailExcludingCurrent(newEmail, userId)) {
-      result.rejectValue("email", "error.user", "Email already exists");
-    }
-    if (result.hasErrors()) {
-      List<String> errorMessages = result.getAllErrors().stream()
-                                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                                    .collect(Collectors.toList());
-      model.addAttribute("errorMessages", errorMessages);
-      model.addAttribute("userForm", userEditForm);
-      return "users/edit";
+        model.addAttribute("userForm", userForm);
+        return "users/edit";
     }
 
-    // String encodedPassword = null;
-    // if (userEditForm.getPassword() != null && !userEditForm.getPassword().isEmpty()) {
-    //     encodedPassword = passwordEncoder.encode(userEditForm.getPassword());
-    // }
+    @PostMapping("/users/{userId}")
+    public String updateUser(@PathVariable("userId") Integer userId,
+            @ModelAttribute("userForm") @Validated(ValidationOrder.class) UserEditForm userEditForm,
+            BindingResult result, Model model) {
+        String newEmail = userEditForm.getEmail();
+        if (userEditRepository.existsByEmailExcludingCurrent(newEmail, userId)) {
+            result.rejectValue("email", "error.user", "Email already exists");
+        }
+        if (result.hasErrors()) {
+            List<String> errorMessages = result.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .collect(Collectors.toList());
+            model.addAttribute("errorMessages", errorMessages);
+            model.addAttribute("userForm", userEditForm);
+            return "users/edit";
+        }
 
-    UserEntity user = userEditRepository.findById(userId);
-    user.setNickname(userEditForm.getNickname());
-    user.setEmail(userEditForm.getEmail());
-    // user.setPassword(userEditForm.getPassword());
-    user.setProfile(userEditForm.getProfile());
-    user.setAffiliation(userEditForm.getAffiliation());
-    user.setPosition(userEditForm.getPosition());
+        // String encodedPassword = null;
+        // if (userEditForm.getPassword() != null &&
+        // !userEditForm.getPassword().isEmpty()) {
+        // encodedPassword = passwordEncoder.encode(userEditForm.getPassword());
+        // }
 
-    if (userEditForm.getPassword() != null && !userEditForm.getPassword().isEmpty()) {
-    String encodedPassword = passwordEncoder.encode(userEditForm.getPassword());
-    user.setPassword(encodedPassword);
+        UserEntity user = userEditRepository.findById(userId);
+        user.setNickname(userEditForm.getNickname());
+        user.setEmail(userEditForm.getEmail());
+        // user.setPassword(userEditForm.getPassword());
+        user.setProfile(userEditForm.getProfile());
+        user.setAffiliation(userEditForm.getAffiliation());
+        user.setPosition(userEditForm.getPosition());
+
+        if (userEditForm.getPassword() != null && !userEditForm.getPassword().isEmpty()) {
+            String encodedPassword = passwordEncoder.encode(userEditForm.getPassword());
+            user.setPassword(encodedPassword);
+        }
+
+        try {
+            userEditRepository.update(user);
+        } catch (Exception e) {
+            System.out.println("エラー：" + e);
+            model.addAttribute("userForm", userEditForm);
+            return "users/edit";
+        }
+        return "redirect:/";
     }
-
-    try {
-      userEditRepository.update(user);
-    } catch (Exception e) {
-      System.out.println("エラー：" + e);
-      model.addAttribute("userForm", userEditForm);
-      return "users/edit";
-    }
-    return "redirect:/";
-  }
 }
