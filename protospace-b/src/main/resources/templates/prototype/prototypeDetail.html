@@ -38,7 +38,7 @@
             <a th:href="@{'/prototype/' + ${prototype.id} + '/edit'}">
               <input type="submit" value="編集する" class="btn">
             </a>
-            <form th:action="@{'/prototypes/' + ${prototype.id} + '/delete'}" th:method="post">
+            <form th:action="@{'/prototypes/' + ${prototype.id} + '/delete'}" th:method="post" onsubmit=" return confirm('本当に削除しますか?');">
               <input type="submit" value="削除する" class="btn">
             </form>
           </div>
