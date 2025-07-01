@@ -19,13 +19,17 @@
 
   <div class="main">
     <div class="inner">
-      <div class="protoType_wrapper">
-        <p class="title" th:text="${prototype.prototypeName}"></p>
+      <div class="prototype_wrapper">
+        <div class="prototypes-header">
+          <p class="title" th:text="${prototype.prototypeName}"></p>
 
-        <!-- ユーザー詳細ページ リンク -->
-        <a class="user_name" th:href="@{'/users/'+${prototype.user.id}}"> by <span
-            th:text="${prototype.user.nickname}"></span></a>
-
+          <span>
+            <a class="user_name" th:href="@{'/users/'+${prototype.user.id}}">
+              by
+              <span th:text="${prototype.user.nickname}"></span>
+            </a>
+          </span>
+        </div>
         <div
           th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == prototype.user.id}">
           <div class="edit_delete">
@@ -38,21 +42,8 @@
           </div>
         </div>
 
-        <div class="protoType_img">
+        <div class="prototype_img">
           <img th:src="@{${prototype.imgPath}}" alt="プロトタイプ画像">
-        </div>
-
-        <div th:replace="~{tags :: prototype-tags(${prototype.tags})}"></div>
-
-        <div class="prototype_body">
-          <div class="prototype_detail">
-            <p class="detail_title">キャッチコピー</p>
-            <p class="text" th:text="${prototype.catchCopy}"></p>
-          </div>
-          <div class="prototype_detail">
-            <p class="detail_title">コンセプト</p>
-            <p class="text" th:text="${prototype.concept}"></p>
-          </div>
         </div>
 
         <div class="button-wrapper">
@@ -93,12 +84,22 @@
           </form>
         </div>
 
-
-        <!-- コメント -->
-        <div th:replace="~{comment :: comment}"></div>
-
+        <div class="prototype_body">
+          <div class="prototype_detail">
+            <p class="detail_title">キャッチコピー</p>
+            <p class="text" th:text="${prototype.catchCopy}"></p>
+          </div>
+          <div class="prototype_detail">
+            <p class="detail_title">コンセプト</p>
+            <p class="text" th:text="${prototype.concept}"></p>
+          </div>
+        </div>
+        <div th:replace="~{tags :: prototype-tags(${prototype.tags})}"></div>
       </div>
+
+      <div th:replace="~{comment :: comment}"></div>
     </div>
+  </div>
   </div>
 
   <!-- フッダー -->
