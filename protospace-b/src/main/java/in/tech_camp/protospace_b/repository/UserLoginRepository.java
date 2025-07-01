@@ -24,7 +24,7 @@ public interface UserLoginRepository {
         @Result(property = "affiliation", column = "affiliation"),
         @Result(property = "position", column = "position"),
         @Result(property = "roleName", column = "role_name"),
-        @Result(property = "enable", column = "is_enable")
+        @Result(property = "enable", column = "enable")
     })
     UserEntity findByEmail(String email);
 }
