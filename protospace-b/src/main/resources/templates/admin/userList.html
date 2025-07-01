@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ユーザー管理</title>
+</head>
+<body>
+<h2>ユーザー一覧</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>メール</th>
+        <th>ニックネーム</th>
+        <th>ステータス</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${userList}">
+        <td th:text="${user.id}">1</td>
+        <td th:text="${user.email}">sample@example.com</td>
+        <td th:text="${user.nickname}">にっく</td>
+        <td th:text="${user.enable ? '有効' : '凍結中'}"></td>
+        <td>
+            <form th:action="@{/admin/users/{userId}/freeze(userId=${user.id})}" method="post"
+                  th:if="${user.enable}">
+                <button type="submit">凍結</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
