@@ -17,12 +17,10 @@
 
   <div class="main">
     <div class="inner">
-      <div class="search-container">
-        <form th:action="@{/prototypes/search}" th:object="${prototypeSearchForm}" method="get">
+        <form th:action="@{/prototypes/search}" th:object="${prototypeSearchForm}" method="get" class="form-wrapper">
           <input type="text" th:field="*{prototypeName}" placeholder="Search by prototype name" class="search-box" />
-          <button type="submit" class="search-button">Search</button>
+          <button type="submit" class="search-button">🔍</button>
         </form>
-      </div>
 
         <div th:if="${prototypes != null and !prototypes.isEmpty()}">
           <div th:replace="~{prototypes :: prototypes(${prototypes})}" class="card"></div>

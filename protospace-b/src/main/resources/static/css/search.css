@@ -7,59 +7,83 @@
 }
 
 .search-container {
-      max-width: 600px;
-      margin: 0 auto 30px;
-      text-align: center;
-    }
+  max-width: 600px;
+  margin: 0 auto 30px;
+  text-align: center;
+}
+
+.form-wrapper {
+  height: 50px;
+  width: 60vh;
+  border-radius: 100px;
+  border: #87CEFA solid 2px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
 
 .search-box {
-      width: 70%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid lightgray;
-      border-radius: 999px;
-      background-color: #f0f2f5;
-    }
+  width: calc(50vh);
+  margin: 5px;
+  font-size: 16px;
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 100px;
+  background: transparent;
+}
+
+.search-box:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* ブラウザデフォルト色を消す */
+input.search-box:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset !important;
+  box-shadow: 0 0 0px 1000px #fff inset !important;
+  background-color: #fff !important;
+  color: #000 !important;
+}
 
 .search-button {
-      padding: 10px 20px;
-      font-size: 12px;
-      margin-left: 10px;
-      display: inline-block;
-      color: #fff;
-      text-decoration: none;
-      background: #87CEFA;
-      border: 1px #87CEFA solid;
-      border-radius: 3px;
-      box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 2px 0 rgba(0, 0, 0, 0.12);
-      transition: 0.2s ease;
-    }
+  height: 30px;
+  width: 50px;
+  background: transparent;
+  text-decoration: none;
+  border: 2px #87CEFA solid;
+  border-radius: 100px;
+  transition: 0.2s ease;
+}
+
+.search-button:hover{
+  background-color: #f0f0f0;
+  border:1px solid #4fbcff;
+}
 
 .user-list {
-      max-width: 600px;
-      margin: 0 auto;
-    }
+  max-width: 600px;
+  margin: 0 auto;
+}
 
 .user-card {
-      border: 1px solid #ccc;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      background-color: #f9f9f9;
-    }
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
 
 .user-card h3 {
-      margin: 0 0 5px 0;
-    }
+  margin: 0 0 5px 0;
+}
 
 .user-card p {
-      margin: 2px 0;
-      font-size: 14px;
-      color: #555;
-    }
+  margin: 2px 0;
+  font-size: 14px;
+  color: #555;
+}
 
 .no-results {
-      text-align: center;
-      color: #999;
-      margin-top: 20px;
-    }
+  text-align: center;
+  color: #999;
+  margin-top: 20px;
+}
