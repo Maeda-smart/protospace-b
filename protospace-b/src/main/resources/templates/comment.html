@@ -44,9 +44,9 @@
           <!-- 削除ボタン -->
           <th:block th:if="${userId == comment.user.id}">
             <form th:action="@{/prototypes/{prototypeId}/comment/delete(prototypeId=${prototype.id})}" method="post"
-              class="delete-form">
+              class="delete-form" onsubmit="return confirm('本当に削除しますか?');">
               <input type="hidden" name="commentId" th:value="${comment.id}" />
-              <button type="submit" class="delete-btn" title="コメント削除">
+              <button type="submit" class="delete-btn" title="コメント削除" >
                 <i class="fas fa-trash-alt"></i>
               </button>
             </form>
