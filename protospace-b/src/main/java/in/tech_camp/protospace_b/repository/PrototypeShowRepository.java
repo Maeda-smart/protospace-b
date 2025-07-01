@@ -23,6 +23,9 @@ public interface PrototypeShowRepository {
         p.catchCopy,
         p.concept,
         p.img,
+        p.user_id,
+        p.created_at,
+        p.updated_at,
         u.id u_id,
         u.nickname nickname,
         COALESCE(n.niceCount, 0) niceCount,
@@ -32,7 +35,7 @@ public interface PrototypeShowRepository {
         prototype p
       LEFT JOIN users u ON p.user_id = u.id
       LEFT JOIN (
-        SELECT 
+        SELECT
           n_summary.user_id,
           n_summary.prototype_id,
           COUNT(*) niceCount
@@ -50,6 +53,8 @@ public interface PrototypeShowRepository {
         p.catchCopy,
         p.concept,
         p.img,
+        p.created_at,
+        p.updated_at,
         u.id,
         u.nickname,
         n.niceCount
@@ -59,7 +64,9 @@ public interface PrototypeShowRepository {
       @Result(property = "user.id", column = "u_id"),
       @Result(property = "user.nickname", column = "nickname"),
       @Result(property = "imgPath", column = "img"),
-      @Result(property = "tags", column = "p_id", many=@Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags"))
+      @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
+      @Result(property = "createdAt", column = "created_at"),
+      @Result(property = "updatedAt", column = "updated_at")
   })
   List<PrototypeEntity> showAll(Integer currentUserId);
 
@@ -71,6 +78,8 @@ public interface PrototypeShowRepository {
         p.catchCopy,
         p.concept,
         p.img,
+        p.created_at,
+        p.updated_at,
         u.id u_id,
         u.nickname nickname,
         COALESCE(n.niceCount, 0) niceCount,
@@ -81,7 +90,7 @@ public interface PrototypeShowRepository {
         prototype p
       LEFT JOIN users u ON p.user_id = u.id AND p.user_id = #{userId}
       LEFT JOIN (
-        SELECT 
+        SELECT
           n_summary.user_id,
           n_summary.prototype_id,
           COUNT(*) niceCount
@@ -100,6 +109,8 @@ public interface PrototypeShowRepository {
         p.catchCopy,
         p.concept,
         p.img,
+        p.created_at,
+        p.updated_at,
         u.id,
         u.nickname,
         n.niceCount
@@ -111,6 +122,8 @@ public interface PrototypeShowRepository {
       @Result(property = "imgPath", column = "img"),
       @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
       @Result(property = "pin", column = "pinned"),
+      @Result(property = "createdAt", column = "created_at"),
+      @Result(property = "updatedAt", column = "updated_at")
   })
   List<PrototypeEntity> showByUserId(Integer currentUserId, Integer userId);
 
@@ -121,6 +134,8 @@ public interface PrototypeShowRepository {
         p.catchCopy,
         p.concept,
         p.img,
+        p.created_at,
+        p.updated_at,
         p.user_id u_id,
         COALESCE(n.niceCount, 0) niceCount,
         MAX(CASE WHEN n.user_id = #{currentUserId} THEN 1 ELSE 0 END) isNice,
@@ -128,7 +143,7 @@ public interface PrototypeShowRepository {
       FROM
         prototype p
       LEFT JOIN (
-        SELECT 
+        SELECT
           n_summary.user_id,
           n_summary.prototype_id,
           COUNT(*) niceCount
@@ -149,6 +164,8 @@ public interface PrototypeShowRepository {
         p.catchCopy,
         p.concept,
         p.img,
+        p.created_at,
+        p.updated_at,
         p.user_id,
         n.niceCount
       """)
@@ -156,7 +173,9 @@ public interface PrototypeShowRepository {
       @Result(property = "id", column = "p_id"),
       @Result(property = "user", column = "u_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
       @Result(property = "imgPath", column = "img"),
-      @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags"))
+      @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
+      @Result(property = "createdAt", column = "created_at"),
+      @Result(property = "updatedAt", column = "updated_at")
   })
   PrototypeEntity findByPrototypeId(Integer currentUserId, Integer id);
 
@@ -167,6 +186,8 @@ public interface PrototypeShowRepository {
         p.catchCopy,
         p.concept,
         p.img,
+        p.created_at,
+        p.updated_at,
         u.id u_id,
         u.nickname nickname,
         COALESCE(n.niceCount, 0) niceCount,
@@ -176,7 +197,7 @@ public interface PrototypeShowRepository {
         prototype p
       LEFT JOIN users u ON p.user_id = u.id AND p.prototypeName LIKE CONCAT('%', #{prototypeName}, '%')
       LEFT JOIN (
-        SELECT 
+        SELECT
           n_summary.user_id,
           n_summary.prototype_id,
           COUNT(*) niceCount
@@ -195,6 +216,8 @@ public interface PrototypeShowRepository {
         p.catchCopy,
         p.concept,
         p.img,
+        p.created_at,
+        p.updated_at,
         u.id,
         u.nickname,
         n.niceCount
@@ -206,6 +229,9 @@ public interface PrototypeShowRepository {
       @Result(property = "imgPath", column = "img"),
       @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
       @Result(property = "pin", column = "pinned"),
+      @Result(property = "createdAt", column = "created_at"),
+      @Result(property = "updatedAt", column = "updated_at")
   })
-  List<PrototypeEntity> findByPrototypeName(@Param("currentUserId") Integer currentUserId, @Param("prototypeName") String prototypeName);
+  List<PrototypeEntity> findByPrototypeName(@Param("currentUserId") Integer currentUserId,
+      @Param("prototypeName") String prototypeName);
 }

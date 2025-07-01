@@ -22,10 +22,17 @@ public class PrototypeSearchController {
   @GetMapping("/prototypes/search")
   public String searchPrototypes(@ModelAttribute("prototypeSearchForm") PrototypeSearchForm prototypeSearchForm,
       @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
+
+    String keyword = prototypeSearchForm.getPrototypeName();
+
+    // 入力が空ならリダイレクトして初期状態へ戻す
+    if (keyword == null || keyword.trim().isEmpty()) {
+      return "redirect:/";
+    }
+
     // ログインユーザーのID取得
     Integer userId = (currentUser != null) ? currentUser.getId() : null;
-    List<PrototypeEntity> prototypes = prototypeShowRepository.findByPrototypeName(userId,
-        prototypeSearchForm.getPrototypeName());
+    List<PrototypeEntity> prototypes = prototypeShowRepository.findByPrototypeName(userId, keyword);
     model.addAttribute("prototypes", prototypes);
 
     model.addAttribute("prototypeSearchForm", prototypeSearchForm);

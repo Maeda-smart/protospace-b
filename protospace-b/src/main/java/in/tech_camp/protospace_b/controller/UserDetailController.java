@@ -14,10 +14,8 @@ import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.repository.BookmarkRepository;
-import in.tech_camp.protospace_b.repository.PinRepository;
 import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserDetailRepository;
-import in.tech_camp.protospace_b.service.PrototypeStatusService;
 import lombok.AllArgsConstructor;
 
 @Controller

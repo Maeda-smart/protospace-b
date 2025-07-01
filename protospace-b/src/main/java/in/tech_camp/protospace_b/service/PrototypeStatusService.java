@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.ReadStatusEntity;
 import in.tech_camp.protospace_b.repository.NiceRepository;
-import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -44,7 +43,14 @@ public class PrototypeStatusService {
       readStatusMap = readList.stream()
           .collect(Collectors.toMap(ReadStatusEntity::getPrototypeId, r -> true));
 
-      // ログイン時以外はfalse
+      // 自分が投稿したプロトタイプは既読扱いにする
+      for (PrototypeEntity prototype : prototypes) {
+        if (prototype.getUser() != null && prototype.getUser().getId().equals(userId)) {
+          readStatusMap.put(prototype.getId(), true);
+        }
+      }
+
+    // ログイン時以外はfalse
     } else {
       for (PrototypeEntity prototype : prototypes) {
         isNiceMap.put(prototype.getId(), false);
