@@ -6,11 +6,13 @@ import lombok.Data;
 
 @Data
 public class CommentNotificationEntity {
+  private Integer id;
   private Integer commentId;
-  private String commentText;
   private LocalDateTime createdAt;
   private Integer prototypeId;
   private String prototypeName;
-  private Integer commenterId;
+  private Integer commenterUserId;
   private String commenterName;
+  private Integer recipientUserId;
+  private boolean isRead;
 }
