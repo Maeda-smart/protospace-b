@@ -10,7 +10,7 @@ import in.tech_camp.protospace_b.repository.ReadStatusRepository;
 
 @Service
 public class ReadStatusService {
-  
+
   @Autowired
   private ReadStatusRepository readStatusRepository;
 
@@ -28,6 +28,6 @@ public class ReadStatusService {
   }
 
   public List<ReadStatusEntity> findAllByUserId(Integer userId) {
-  return readStatusRepository.findAllByUserId(userId);
+    return readStatusRepository.findAllByUserId(userId);
   }
 }

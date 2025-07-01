@@ -10,7 +10,7 @@
     <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
         th:text="${prototype.user.nickname}"></span></a>
     <span class="nice"
-      th:text="${isNicePrototype[prototype.id]} ? '♥' + ' ' + ${nicePrototype[prototype.id]}: '♡' + ' ' + ${nicePrototype[prototype.id]}"></span>
+      th:text="${prototype.isNice} ? '♥' + ' ' + ${prototype.niceCount}: '♡' + ' ' + ${prototype.niceCount}"></span>
 
   </div>
 </div>

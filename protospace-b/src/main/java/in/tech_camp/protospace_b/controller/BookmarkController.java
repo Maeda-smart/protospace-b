@@ -40,7 +40,7 @@ public class BookmarkController {
       bookmarkRepository.deleteBookmark(prototypeId, userId);
     } else {
     // プロトタイプとログインしているユーザー情報を取得
-    PrototypeEntity prototype = prototypeShowRepository.findByPrototypeId(prototypeId);
+    PrototypeEntity prototype = prototypeShowRepository.findByPrototypeId(userId, prototypeId);
     UserEntity user = userNewRepository.findById(userId);
     
     BookmarkEntity bookmark = new BookmarkEntity();

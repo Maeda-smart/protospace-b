@@ -33,23 +33,23 @@ public class CommentController {
 
   // コメント保存機能
   @PostMapping("/prototype/{prototypeId}/comment")
-  public String createComment(@PathVariable("prototypeId") Integer prototypeId, 
-                            @ModelAttribute("commentForm") @Validated(ValidationOrder.class) CommentForm commentForm,
-                            BindingResult result,
-                            @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
+  public String createComment(@PathVariable("prototypeId") Integer prototypeId,
+      @ModelAttribute("commentForm") @Validated(ValidationOrder.class) CommentForm commentForm,
+      BindingResult result,
+      @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
 
     // プロトタイプ取得
-    PrototypeEntity prototype = prototypeShowRepository.findByPrototypeId(prototypeId);
+    PrototypeEntity prototype = prototypeShowRepository.findByPrototypeId(currentUser.getId(), prototypeId);
     // コメント取得
     List<CommentEntity> comments = commentRepository.findByPrototypeId(prototypeId);
 
     // バリデーション
     if (result.hasErrors()) {
-        model.addAttribute("errorMessages", result.getAllErrors());
-        model.addAttribute("prototype", prototype);
-        model.addAttribute("commentForm", commentForm);
-        model.addAttribute("comments", comments);
-        return "prototype/prototypeDetail";
+      model.addAttribute("errorMessages", result.getAllErrors());
+      model.addAttribute("prototype", prototype);
+      model.addAttribute("commentForm", commentForm);
+      model.addAttribute("comments", comments);
+      return "prototype/prototypeDetail";
     }
 
     // コメント情報をセット

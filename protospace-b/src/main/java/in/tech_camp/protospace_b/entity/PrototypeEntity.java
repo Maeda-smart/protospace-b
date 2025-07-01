@@ -16,4 +16,10 @@ public class PrototypeEntity {
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt; 
   private List<TagEntity> tags;
+  private TagEntity tag;
+  private Integer niceCount;
+  private boolean isNice;
+  private boolean read;
+  private boolean bookmark;
+  private boolean pin;
 }

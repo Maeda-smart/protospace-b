@@ -23,7 +23,7 @@ public class DeleteController {
       @PathVariable("prototypeId") Integer prototypeId,
       @AuthenticationPrincipal CustomUserDetail currentUser) {
 
-    PrototypeEntity prototypeEntity = prototypeShowRepository.findByPrototypeId(prototypeId);
+    PrototypeEntity prototypeEntity = prototypeShowRepository.findByPrototypeId(currentUser.getId(), prototypeId);
 
     Integer ownerUserId = prototypeEntity.getUser().getId();
 

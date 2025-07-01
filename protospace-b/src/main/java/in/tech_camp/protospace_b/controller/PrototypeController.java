@@ -62,7 +62,7 @@ public class PrototypeController {
     public String showPrototypeEdit(@PathVariable("prototypeId") Integer prototypeId, Model model,
             @AuthenticationPrincipal CustomUserDetail currentUser) {
 
-        PrototypeEntity prototypeEntity = prototypeShowRepository.findByPrototypeId(prototypeId);
+        PrototypeEntity prototypeEntity = prototypeShowRepository.findByPrototypeId(currentUser.getId(), prototypeId);
 
         Integer ownerUserId = prototypeEntity.getUser().getId();
 
