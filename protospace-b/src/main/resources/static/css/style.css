@@ -74,6 +74,11 @@ img {
   transition: 0.4s ease;
 }
 
+.nav_btn:hover,
+.nav_logout:hover{
+  background-color: #c9eaff;
+}
+
 .greeting {
   margin-bottom: 20px;
 }
