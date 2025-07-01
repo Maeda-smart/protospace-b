@@ -1,9 +1,10 @@
 package in.tech_camp.protospace_b.custom_user;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import in.tech_camp.protospace_b.entity.UserEntity;
@@ -31,8 +32,18 @@ public class CustomUserDetail implements UserDetails {
     return user.getPassword();
   }
 
+  // ユーザー管理設定
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities(){
-    return Collections.emptyList();
+    // ユーザーのロールを権限として返す（ROLE_ADMIN や ROLE_USER）
+    return List.of(new SimpleGrantedAuthority(user.getRole()));
+
+    // return Collections.emptyList();
+  }
+
+
+  @Override
+  public boolean isEnabled() {
+    return true;
   }
 }
