@@ -10,7 +10,7 @@
     <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
         th:text="${prototype.user.nickname}"></span></a>
     <span class="nice"
-      th:text="${prototype.isNice} ? '♥' + ' ' + ${prototype.niceCount}: '♡' + ' ' + ${prototype.niceCount"></span>
+      th:text="${prototype.isNice} ? '♥' + ' ' + ${prototype.niceCount}: '♡' + ' ' + ${prototype.niceCount}"></span>
     <p class="timestamp_wrapper">
       <span th:text="${#temporals.format(prototype.createdAt, 'yyyy/MM/dd HH:mm')}"></span>
       <span class="timestamp_edited" th:if="${prototype.createdAt} != ${prototype.updatedAt}">
