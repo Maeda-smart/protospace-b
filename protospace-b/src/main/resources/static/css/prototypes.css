@@ -1,32 +1,48 @@
 .card_wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; /* カード間の余白 */
+  gap: 20px;
   justify-content: flex-start;
-  margin: 40px 0 10px;
+  margin: 6% 0 10px;
 }
 
 .card {
-  flex: 0 1 calc(33.333% - 20px); /* 3列、gap考慮 */
+  flex-basis: 100%;
   box-sizing: border-box;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   background-color: #fff;
-  margin-bottom: 40px;
+  margin-bottom: 6%;
   position: relative;
+}
+
+@media (min-width: 600px) {
+  .card {
+    flex-basis: calc((100% - 3%) / 2);
+  }
+}
+@media (min-width: 900px) {
+  .card {
+    flex-basis: calc((100% - 6%) / 3);
+  }
+}
+@media (min-width: 1200px) {
+  .card {
+    flex-basis: calc((100% - 9%) / 4);
+  }
 }
 
 .new-icon {
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: red;
+  background-color: rgb(212, 71, 71);
   color: white;
   font-weight: bold;
   font-size: 8px;
   padding: 3px 6px;
-  border-radius: 12px;
+  border-radius: 10px;
   z-index: 10;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
@@ -34,7 +50,8 @@
 /* 画像サイズ調整 */
 .card_img {
   width: 100%;
-  height: auto;
+  aspect-ratio: 5 / 3;
+  object-fit: cover;
   display: block;
 }
 

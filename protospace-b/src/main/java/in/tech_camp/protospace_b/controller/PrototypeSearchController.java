@@ -28,6 +28,13 @@ public class PrototypeSearchController {
     List<PrototypeEntity> prototypes = prototypeSearchRepository.findByPrototypeName(prototypeSearchForm.getPrototypeName());
     model.addAttribute("prototypes", prototypes);
 
+    String keyword = prototypeSearchForm.getPrototypeName();
+
+    // 入力が空ならリダイレクトして初期状態へ戻す
+    if (keyword == null || keyword.trim().isEmpty()) {
+        return "redirect:/";
+    }
+
     // ログインユーザーのID取得
     Integer userId = (currentUser != null) ? currentUser.getId() : null;
 
