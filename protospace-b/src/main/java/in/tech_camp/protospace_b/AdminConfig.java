@@ -6,13 +6,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import in.tech_camp.protospace_b.entity.UserEntity;
+import in.tech_camp.protospace_b.repository.UserSignUpRepository;
 
 @Configuration
 public class AdminConfig {
    @Bean
-    public CommandLineRunner initAdmin(UserRepository userRepository, PasswordEncoder encoder) {
+    public CommandLineRunner initAdmin(UserSignUpRepository UserSignUpRepository, PasswordEncoder encoder) {
         return args -> {
-            if (!userRepository.existsByEmail("admin@admin.com")) {
+            if (!UserSignUpRepository.existsByEmail("admin@admin.com")) {
                 UserEntity admin = new UserEntity();
                 admin.setNickname("管理者");
                 admin.setEmail("admin@admin.com");
@@ -21,7 +22,7 @@ public class AdminConfig {
                 admin.setAffiliation("管理者");
                 admin.setPosition("管理者");
                 admin.setRoleName("ROLE_ADMIN");
-                userRepository.insert(admin);
+                UserSignUpRepository.insert(admin);
             }
         };
     }

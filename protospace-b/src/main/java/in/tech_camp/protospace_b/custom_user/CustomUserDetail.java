@@ -1,6 +1,7 @@
 package in.tech_camp.protospace_b.custom_user;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -34,13 +35,14 @@ public class CustomUserDetail implements UserDetails {
 
   // ユーザー管理設定
   @Override
-  public Collection<? extends GrantedAuthority> getAuthorities(){
-    // ユーザーのロールを権限として返す（ROLE_ADMIN や ROLE_USER）
-    return List.of(new SimpleGrantedAuthority(user.getRole()));
-
-    // return Collections.emptyList();
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+      String role = user.getRoleName();
+      if (role == null || role.trim().isEmpty()) {
+          System.out.println("警告：ユーザー「" + user.getNickname() + "」にロールが設定されていません。");
+          return Collections.emptyList();
+      }
+      return List.of(new SimpleGrantedAuthority(role.trim()));
   }
-
 
   @Override
   public boolean isEnabled() {

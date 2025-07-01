@@ -13,5 +13,5 @@ public class UserEntity {
   private String position;
   // "ROLE_USER"|"ROLE_MODERATOR"|"ROLE_ADMIN"
   private String roleName; 
-  private boolean isLocked;
+  private boolean isEnable;
 }
