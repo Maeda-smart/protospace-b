@@ -15,9 +15,9 @@
 
   <div class="main">
     <div class="search-container">
-      <form th:action="@{/users/search}" th:object="${form}" method="get">
+      <form th:action="@{/users/search}" th:object="${form}" method="get" class="form-wrapper">
         <input type="text" th:field="*{keyword}" placeholder="Search by nickname or email" class="search-box" />
-        <button type="submit" class="search-button">Search</button>
+        <button type="submit" class="search-button">🔍</button>
       </form>
     </div>
 

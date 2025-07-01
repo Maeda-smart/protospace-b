@@ -15,7 +15,13 @@
   background-color: #fff;
   margin-bottom: 6%;
   position: relative;
+  transition: transform 0.18s cubic-bezier(.4,0,.2,1);
 }
+
+.card:hover {
+  transform: scale(1.025);
+}
+
 
 @media (min-width: 600px) {
   .card {
