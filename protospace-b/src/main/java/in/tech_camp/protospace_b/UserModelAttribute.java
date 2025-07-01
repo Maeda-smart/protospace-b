@@ -13,15 +13,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserModelAttribute {
 
-  private final UserDetailRepository userDetailRepository;
+    private final UserDetailRepository userDetailRepository;
 
-  // ログインしていれば自動でユーザー情報をモデルに渡す
-  @ModelAttribute("user")
-  public UserEntity addUserToModel(@AuthenticationPrincipal CustomUserDetail currentUser) {
-    if (currentUser != null) {
-      return userDetailRepository.findById(currentUser.getId());
+    // ログインしていれば自動でユーザー情報をモデルに渡す
+    @ModelAttribute("user")
+    public UserEntity addUserToModel(@AuthenticationPrincipal CustomUserDetail currentUser) {
+        if (currentUser != null) {
+            return userDetailRepository.findById(currentUser.getId());
+        }
+        return null;
     }
-    return null;
-  }
-  
+
 }

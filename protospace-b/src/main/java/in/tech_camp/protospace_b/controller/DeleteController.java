@@ -15,28 +15,28 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class DeleteController {
 
-  private final PrototypeDeleteRepository prototypeDeleteRepository;
-  private final PrototypeShowRepository prototypeShowRepository; 
+    private final PrototypeDeleteRepository prototypeDeleteRepository;
+    private final PrototypeShowRepository prototypeShowRepository;
 
-  @PostMapping("/prototypes/{prototypeId}/delete")
-  public String deletePrototype(
-      @PathVariable("prototypeId") Integer prototypeId,
-      @AuthenticationPrincipal CustomUserDetail currentUser) {
+    @PostMapping("/prototypes/{prototypeId}/delete")
+    public String deletePrototype(
+            @PathVariable("prototypeId") Integer prototypeId,
+            @AuthenticationPrincipal CustomUserDetail currentUser) {
 
-    PrototypeEntity prototypeEntity = prototypeShowRepository.findByPrototypeId(prototypeId);
+        PrototypeEntity prototypeEntity = prototypeShowRepository.findByPrototypeId(currentUser.getId(), prototypeId);
 
-    Integer ownerUserId = prototypeEntity.getUser().getId();
+        Integer ownerUserId = prototypeEntity.getUser().getId();
 
-    if (!ownerUserId.equals(currentUser.getId())) {
+        if (!ownerUserId.equals(currentUser.getId())) {
+            return "redirect:/";
+        }
+
+        try {
+            prototypeDeleteRepository.deleteById(prototypeId);
+        } catch (Exception e) {
+            System.out.println("エラー：" + e);
+            return "redirect:/";
+        }
         return "redirect:/";
     }
-
-    try {
-      prototypeDeleteRepository.deleteById(prototypeId);
-    } catch (Exception e) {
-      System.out.println("エラー：" + e);
-      return "redirect:/";
-    }
-    return "redirect:/";
-  }
 }

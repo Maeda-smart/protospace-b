@@ -1,8 +1,6 @@
 package in.tech_camp.protospace_b.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -13,50 +11,31 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.form.PrototypeSearchForm;
-import in.tech_camp.protospace_b.repository.NiceRepository;
-import in.tech_camp.protospace_b.repository.PrototypeSearchRepository;
+import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
 public class PrototypeSearchController {
-  private final PrototypeSearchRepository prototypeSearchRepository;
-  private final NiceRepository niceRepository;
+    private final PrototypeShowRepository prototypeShowRepository;
 
-  @GetMapping("/prototypes/search")
-  public String searchPrototypes(@ModelAttribute("prototypeSearchForm") PrototypeSearchForm prototypeSearchForm,
-      @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
-    List<PrototypeEntity> prototypes = prototypeSearchRepository
-        .findByPrototypeName(prototypeSearchForm.getPrototypeName());
+    @GetMapping("/prototypes/search")
+    public String searchPrototypes(@ModelAttribute("prototypeSearchForm") PrototypeSearchForm prototypeSearchForm,
+            @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
+        String keyword = prototypeSearchForm.getPrototypeName();
 
-    // プロトタイプごとのいいね数表示
-    Map<Integer, Integer> niceCountMap = new HashMap<>();
+        // 入力が空ならリダイレクトして初期状態へ戻す
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return "redirect:/";
+        }
 
-    for (PrototypeEntity prototype : prototypes) {
-      int count = niceRepository.countNiceByPrototypeId(prototype.getId());
-      niceCountMap.put(prototype.getId(), count);
+        // ログインユーザーのID取得
+        Integer userId = (currentUser != null) ? currentUser.getId() : null;
+        List<PrototypeEntity> prototypes = prototypeShowRepository.findByPrototypeName(userId, keyword);
+        model.addAttribute("prototypes", prototypes);
+
+        model.addAttribute("prototypeSearchForm", prototypeSearchForm);
+
+        return "prototype/search";
     }
-    model.addAttribute("niceCountMap", niceCountMap);
-
-    // ログインユーザーが各プロトタイプに対し、いいねしたかを判定
-    Map<Integer, Boolean> isNiceMap = new HashMap<>();
-    if (currentUser != null) {
-      Integer userId = currentUser.getId();
-
-      for (PrototypeEntity prototype : prototypes) {
-        boolean isNice = niceRepository.existNice(prototype.getId(), userId);
-        isNiceMap.put(prototype.getId(), isNice);
-      }
-    } else {
-      // ログインしていない場合はすべてfalseに設定
-      for (PrototypeEntity prototype : prototypes) {
-        isNiceMap.put(prototype.getId(), false);
-      }
-    }
-    model.addAttribute("isNiceMap", isNiceMap);
-    model.addAttribute("prototypes", prototypes);
-    model.addAttribute("prototypeSearchForm", prototypeSearchForm);
-    return "prototype/search";
-  }
-
 }

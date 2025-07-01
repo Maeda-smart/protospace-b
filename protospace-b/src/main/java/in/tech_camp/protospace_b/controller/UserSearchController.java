@@ -16,15 +16,15 @@ import lombok.AllArgsConstructor;
 @Controller
 @AllArgsConstructor
 public class UserSearchController {
-  
-  private final UserSearchRepository userSearchRepository;
 
-  @GetMapping("/users/search")
+    private final UserSearchRepository userSearchRepository;
+
+    @GetMapping("/users/search")
     public String searchUsers(@ModelAttribute("form") UserSearchForm form, Model model) {
         List<UserEntity> users;
 
         if (form.getKeyword() == null || form.getKeyword().isBlank()) {
-            users = Collections.emptyList();  // 初期表示 or 空入力
+            users = Collections.emptyList(); // 初期表示 or 空入力
         } else {
             users = userSearchRepository.searchByKeyword(form.getKeyword());
         }

@@ -11,28 +11,28 @@ import lombok.Data;
 
 @Data
 public class CustomUserDetail implements UserDetails {
-  private final UserEntity user;
-  
-  public CustomUserDetail(UserEntity user){
-    this.user = user;
-  }
+    private final UserEntity user;
 
-  public Integer getId(){
-    return user.getId();
-  }
+    public CustomUserDetail(UserEntity user) {
+        this.user = user;
+    }
 
-  @Override
-  public String getUsername(){
-    return user.getNickname();
-  }
+    public Integer getId() {
+        return user.getId();
+    }
 
-  @Override
-  public String getPassword(){
-    return user.getPassword();
-  }
+    @Override
+    public String getUsername() {
+        return user.getNickname();
+    }
 
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities(){
-    return Collections.emptyList();
-  }
+    @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.emptyList();
+    }
 }

@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class TagEntity {
-  private Integer id;
-  private String tagName;
+    private Integer id;
+    private String tagName;
 }

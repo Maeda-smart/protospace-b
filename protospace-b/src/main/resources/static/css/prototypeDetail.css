@@ -7,8 +7,11 @@
   margin: 0 auto;
 }
 
-.protoType_wrapper {
-  min-height: calc(100vh - 161px);
+.prototype_wrapper {
+  /* min-height: calc(100vh - 161px); */
+  background-color: #f6f6f6;
+  margin: 0 130px;
+  padding: 40px;
 }
 
 .title {
@@ -45,17 +48,14 @@
     background-color: white;
 }
 
-.protoType_img {
-    width: 40%;
-    margin: 0 auto;
-    padding: 16px 0;
+.prototype_img {
+    display: block;＋margin: 0 auto;
+    width: 100%;
+    padding: 10px 0;
     text-align: center;
 }
 
 .prototype_detail {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
   margin-bottom: 8px;
 }
 
@@ -72,16 +72,6 @@
 label{
   margin-bottom: 5px;
 }
-
-.comment_wrapper {
-  background-color: #f6f6f6;
-  margin: 15px 0;
-  padding:20px;
-}
-
-/* .form {
-  margin-bottom: 7px;
-} */
 
 .field {
   margin: 10px 0;
@@ -109,10 +99,6 @@ label{
 .attention {
   text-align: center;
   color: #999;
-}
-
-.comment_lists {
-  padding-left: 20px;
 }
 
 .user-name{
@@ -152,8 +138,9 @@ button.bookmark-button,
 button.defuse-bookmark-button,
 button.pin-on,
 button.pin-off {
+  border: #333 solid 1px;
   font-size: 1rem;
-  padding: 8px 14px;
+  padding: 2px 5px;
   margin-right: 10px;
   border: none;
   border-radius: 10px;
@@ -163,6 +150,7 @@ button.pin-off {
 
 .button-wrapper{
   display: flex;
+  justify-content: right;
 }
 
 /* ピンボタン */

@@ -3,44 +3,88 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
   <link rel="stylesheet" th:href="@{/css/style.css}" />
   <link th:href="@{/css/prototypeDetail.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/tags.css}" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link th:href="@{/css/comment.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/prototypes.css}" rel="stylesheet" type="text/css">
   <title>ProtoSpace</title>
 </head>
 
 <body>
-
   <!-- ヘッダー -->
   <div th:insert="~{header :: header}"></div>
 
   <div class="main">
     <div class="inner">
-      <div class="protoType_wrapper">
-        <p class="title" th:text="${prototype.prototypeName}"></p>
+      <div class="prototype_wrapper">
+        <div class="prototypes-header">
+          <p class="title" th:text="${prototype.prototypeName}"></p>
 
-        <!-- ユーザー詳細ページ リンク -->
-        <a class="user_name" th:href="@{'/users/'+${prototype.user.id}}"> by <span
-            th:text="${prototype.user.nickname}"></span></a>
-
+          <span>
+            <a class="user_name" th:href="@{'/users/'+${prototype.user.id}}">
+              by
+              <span th:text="${prototype.user.nickname}"></span>
+            </a>
+          </span>
+        </div>
         <div
           th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == prototype.user.id}">
           <div class="edit_delete">
             <a th:href="@{'/prototype/' + ${prototype.id} + '/edit'}">
               <input type="submit" value="編集する" class="btn">
             </a>
-            <form th:action="@{'/prototypes/' + ${prototype.id} + '/delete'}" th:method="post">
+            <form th:action="@{'/prototypes/' + ${prototype.id} + '/delete'}" th:method="post" onsubmit=" return confirm('本当に削除しますか?');">
               <input type="submit" value="削除する" class="btn">
             </form>
           </div>
         </div>
 
-        <div class="protoType_img">
+        <div class="prototype_img">
           <img th:src="@{${prototype.imgPath}}" alt="プロトタイプ画像">
         </div>
 
-        <div th:replace="~{tags :: prototype-tags(${prototype.tags})}"></div>
+        <div class="button-wrapper">
+          <!-- ピン止めボタン -->
+          <th:block th:unless="${prototype.pin}">
+            <form th:action="@{'/prototypes/' + ${prototype.id} + '/pin/on'}" method="post">
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+              <button type="submit" class="pin-btn pin-on">▷ピン</button>
+            </form>
+          </th:block>
+          <th:block th:if="${prototype.pin}">
+            <form th:action="@{'/prototypes/' + ${prototype.id} + '/pin/off'}" method="post">
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+              <button type="submit" class="pin-btn pin-off">▶ピン</button>
+            </form>
+          </th:block>
+
+          <!-- ブックマークボタン -->
+          <form th:action="@{/prototypes/{prototypeId}/bookmark(prototypeId=${prototype.id})}" method="post">
+            <!-- CSRFを追加 -->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+            <input type="hidden" name="prototypeId" th:value="${prototype.id}" />
+            <button type="submit" th:class="${prototype.bookmark} ? 'defuse-bookmark-button' : 'bookmark-button'">
+              <span th:text="${prototype.bookmark} ? '★ブックマーク' : '☆ブックマーク'"></span>
+            </button>
+          </form>
+
+          <!-- いいねボタン -->
+          <form th:action="@{/prototypes/{prototypeId}/nice(prototypeId=${prototype.id})}" method="post">
+            <!-- CSRFを追加 -->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+            <input type="hidden" name="prototypeId" th:value="${prototype.id}" />
+            <button type="submit" th:class="${prototype.isNice} ? 'defuse-nice-button' : 'nice-button'">
+              <span th:text="${isNice} ? '♥' + ' ' + ${prototype.niceCount}: '♡' + ' ' + ${prototype.niceCount}"></span>
+            </button>
+          </form>
+        </div>
 
         <div class="prototype_body">
           <div class="prototype_detail">
@@ -52,83 +96,12 @@
             <p class="text" th:text="${prototype.concept}"></p>
           </div>
         </div>
-
-        <div class="button-wrapper">
-        <!-- ピン止めボタン -->
-          <th:block th:unless="${isPinned}">
-            <form th:action="@{'/prototypes/' + ${prototype.id} + '/pin/on'}" method="post">
-              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-              <button type="submit" class="pin-btn pin-on">▷ピン</button>
-            </form>
-          </th:block>
-          <th:block th:if="${isPinned}">
-            <form th:action="@{'/prototypes/' + ${prototype.id} + '/pin/off'}" method="post">
-              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-              <button type="submit" class="pin-btn pin-off">▶ピン</button>
-            </form>
-          </th:block>
-          
-          <!-- ブックマークボタン -->
-          <form th:action="@{/prototypes/{prototypeId}/bookmark(prototypeId=${prototype.id})}" method="post">
-            <!-- CSRFを追加 -->
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            
-            <input type="hidden" name="prototypeId" th:value="${prototype.id}" />
-            <button type="submit" th:class="${isBookmarked} ? 'defuse-bookmark-button' : 'bookmark-button'">
-              <span th:text="${isBookmarked} ? '★ブックマーク' : '☆ブックマーク'"></span>
-            </button>
-          </form>
-
-          <!-- いいねボタン -->
-          <form th:action="@{/prototypes/{prototypeId}/nice(prototypeId=${prototype.id})}" method="post">
-            <!-- CSRFを追加 -->
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            
-            <input type="hidden" name="prototypeId" th:value="${prototype.id}" />
-            <button type="submit" th:class="${isNice} ? 'defuse-nice-button' : 'nice-button'">
-              <span th:text="${isNice} ? '♥' + ' ' + ${countNice}: '♡' + ' ' + ${countNice}"></span>
-            </button>
-          </form>
-        </div>
-        
-
-        <!-- コメントフォーム -->
-        <div class="comment_wrapper">
-
-          <div th:if="${#authorization.expression('isAuthenticated()')}">
-
-            <form class="form" th:action="@{/prototype/{prototypeId}/comment(prototypeId=${prototype.id})}"
-              method="post" th:object="${commentForm}">
-              <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">エラー</div>
-
-              <div class="field">
-                <label for="text">コメント</label>
-                <br>
-                <input type="text" class="form-name" id="text" th:field="*{text}">
-              </div>
-              <div class="actions">
-                <input type="submit" value="送信する" class="submit-btn">
-              </div>
-            </form>
-          </div>
-
-          <div th:if="${#authorization.expression('!isAuthenticated()')}">
-            <strong>
-              <p class="attention">※※※ コメントの投稿には新規登録/ログインが必要です ※※※</p>
-            </strong>
-          </div>
-
-          <!-- コメント一覧表示 -->
-          <ul class="comments_list">
-            <li th:each="comment:${comments}">
-              <span th:text="${comment.text}">コメント内容</span>
-              <a th:href="@{/users/{userId}(userId=${comment.user.id})}" class="user-name"> (<span
-                  th:text="${comment.user.nickname}"></span>) </a>
-            </li>
-          </ul>
-        </div>
+        <div th:replace="~{tags :: prototype-tags(${prototype.tags})}"></div>
       </div>
+
+      <div th:replace="~{comment :: comment}"></div>
     </div>
+  </div>
   </div>
 
   <!-- フッダー -->

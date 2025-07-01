@@ -1,0 +1,85 @@
+.comment_wrapper {
+  background-color: #f6f6f6;
+  margin: 15px 0;
+  padding: 20px;
+}
+
+/* コメントリスト全体 */
+.comments_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+/* 各コメント項目 */
+.comment-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  position: relative;
+  transition: background-color 0.2s;
+}
+
+.comment-item:hover {
+  background-color: #f9f9f9;
+}
+
+/* コメントの上段（ユーザー名と投稿日時） */
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+/* ユーザー名 */
+.user-name {
+  color: #30a3eb;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.user-name:hover {
+  text-decoration: underline;
+}
+
+/* 投稿日時 */
+.timestamp {
+  color: #999;
+  font-size: 12px;
+}
+
+/* コメント本文 */
+.comment-content {
+  font-size: 15px;
+  color: #222;
+  line-height: 1.5;
+  flex-direction: column;
+}
+
+/* 削除ボタンフォーム */
+.delete-form {
+  position: absolute;
+  top: 8px;
+  right: 0;
+}
+
+/* 削除ボタン */
+.delete-btn {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 16px;
+  cursor: pointer;
+  display: none; /* 最初は非表示 */
+}
+
+.comment-item:hover .delete-btn {
+  display: inline; /* ホバー時に表示 */
+}
+
+.delete-btn:hover {
+  color: #e74c3c;
+}

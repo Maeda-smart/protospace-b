@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class CountNiceEntity {
 
-  private Integer prototypeId;
+    private Integer prototypeId;
 
-  private Integer countNice;
-  
+    private Integer countNice;
+
 }

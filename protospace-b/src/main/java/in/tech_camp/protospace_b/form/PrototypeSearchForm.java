@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class PrototypeSearchForm {
-  private String prototypeName;
+    private String prototypeName;
 }
