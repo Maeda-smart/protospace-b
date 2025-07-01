@@ -61,9 +61,11 @@ public class PrototypeDetailController {
         // プロトタイプごとのいいね数を取得してビューに渡す
         int countNice = niceRepository.countNiceByPrototypeId(prototypeId);
         model.addAttribute("countNice", countNice);
+        
 
         if (currentUser != null) {
         Integer userId = currentUser.getId();
+        model.addAttribute("userId", userId);
         boolean isBookmarked = bookmarkRepository.existBookmark(prototypeId, userId);
         model.addAttribute("isBookmarked", isBookmarked);
 
