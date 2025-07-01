@@ -53,6 +53,10 @@ public class SignUpController {
         userEntity.setProfile(userForm.getProfile());
         userEntity.setAffiliation(userForm.getAffiliation());
         userEntity.setPosition(userForm.getPosition());
+        if (userEntity.getRoleName() == null) {
+            userEntity.setRoleName("ROLE_USER");
+        }
+
         try {
             userSignUpService.createUserWithEncryptedPassword(userEntity);
         } catch (Exception e) {

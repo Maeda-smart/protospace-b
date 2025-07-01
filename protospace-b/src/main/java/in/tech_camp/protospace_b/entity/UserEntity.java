@@ -11,4 +11,7 @@ public class UserEntity {
     private String profile;
     private String affiliation;
     private String position;
+    // "ROLE_USER"|"ROLE_MODERATOR"|"ROLE_ADMIN"
+    private String roleName;
+    private boolean enable;
 }
