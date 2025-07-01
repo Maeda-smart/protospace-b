@@ -33,8 +33,9 @@ public class SignUpController {
     }
 
     @PostMapping("/user")
-    public String signUp(@ModelAttribute("userForm") @Validated(ValidationOrder.class) UserForm userForm, BindingResult result, Model model) {
-        if(userSignUpRepository.existsByEmail(userForm.getEmail())){
+    public String signUp(@ModelAttribute("userForm") @Validated(ValidationOrder.class) UserForm userForm,
+            BindingResult result, Model model) {
+        if (userSignUpRepository.existsByEmail(userForm.getEmail())) {
             result.rejectValue("email", "error.user", "Email already exists");
         }
         if (result.hasErrors()) {

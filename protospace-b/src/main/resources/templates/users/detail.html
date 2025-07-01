@@ -16,38 +16,39 @@
   <div class="main-content">
     <div class="userName">
       <div class="user-info-header">
-      <h2><span th:text="${user.nickname}"></span>さんの情報</h2>
-      <div class="user-actions" th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == user.id}">
-        <a th:href="@{/users/{userId}/edit(userId=${user.id})}" class="action-btn">編集する</a>
-        <form th:action="@{/users/logout}" method="POST">
-          <button type="submit" class="action-btn" rel="nofollow" data-method="delete">ログアウト</button>
-        </form>
+        <h2><span th:text="${user.nickname}"></span>さんの情報</h2>
+        <div class="user-actions"
+          th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == user.id}">
+          <a th:href="@{/users/{userId}/edit(userId=${user.id})}" class="action-btn">編集する</a>
+          <form th:action="@{/users/logout}" method="POST">
+            <button type="submit" class="action-btn" rel="nofollow" data-method="delete">ログアウト</button>
+          </form>
+        </div>
       </div>
     </div>
+
+    <div class="user-info-table-wrapper">
+      <table class="user-info-table">
+        <tbody>
+          <tr>
+            <th>名前</th>
+            <th><span th:text="${user.nickname}"></span></th>
+          </tr>
+          <tr>
+            <th>プロフィール</th>
+            <th><span th:text="${user.profile}"></span></th>
+          </tr>
+          <tr>
+            <th>所属</th>
+            <th><span th:text="${user.affiliation}"></span></th>
+          </tr>
+          <tr>
+            <th>役職</th>
+            <th><span th:text="${user.position}"></span></th>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    
-  <div class="user-info-table-wrapper">
-    <table class="user-info-table">
-      <tbody>
-        <tr>
-          <th>名前</th>
-          <th><span th:text="${user.nickname}"></span></th>
-        </tr>
-        <tr>
-          <th>プロフィール</th>
-          <th><span th:text="${user.profile}"></span></th>
-        </tr>
-        <tr>
-          <th>所属</th>
-          <th><span th:text="${user.affiliation}"></span></th>
-        </tr>
-        <tr>
-          <th>役職</th>
-          <th><span th:text="${user.position}"></span></th>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 
 
     <h2 class="bracket-title"><span th:text="${user.nickname}"></span>さんのプロトタイプ</h2>
