@@ -6,8 +6,8 @@ import lombok.Data;
 
 @Data
 public class RoomEntity {
-  private Integer id;
-  private String name;
-  private List<RoomUserEntity> roomUsers;
-  private List<MessageEntity> messages;
+    private Integer id;
+    private String name;
+    private List<RoomUserEntity> roomUsers;
+    private List<MessageEntity> messages;
 }

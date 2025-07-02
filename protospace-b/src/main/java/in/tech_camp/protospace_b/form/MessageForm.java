@@ -7,13 +7,13 @@ import lombok.Data;
 
 @Data
 public class MessageForm {
-  private String content;
+    private String content;
 
-  private MultipartFile image;
+    private MultipartFile image;
 
-  public void validateMessage(BindingResult result) {
-    if ((content == null || content.isEmpty()) && (image == null || image.isEmpty())) {
-      result.rejectValue("Content", "error.Message", "Please enter either content or image");
+    public void validateMessage(BindingResult result) {
+        if ((content == null || content.isEmpty()) && (image == null || image.isEmpty())) {
+            result.rejectValue("Content", "error.Message", "Please enter either content or image");
+        }
     }
-  }
 }

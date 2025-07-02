@@ -10,13 +10,13 @@ import in.tech_camp.protospace_b.entity.RoomEntity;
 
 @Mapper
 public interface RoomRepository {
-  @Insert("insert into rooms(name) values(#{name})")
-  @Options(useGeneratedKeys = true, keyProperty = "id")
-  void insert(RoomEntity roomEntity);
+    @Insert("insert into rooms(name) values(#{name})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    void insert(RoomEntity roomEntity);
 
-  @Select("select * from rooms where id = #{id}")
-  RoomEntity findById(Integer id);
+    @Select("select * from rooms where id = #{id}")
+    RoomEntity findById(Integer id);
 
-  @Delete("DELETE FROM rooms WHERE id = #{id}")
-  void deleteById(Integer id);
+    @Delete("DELETE FROM rooms WHERE id = #{id}")
+    void deleteById(Integer id);
 }

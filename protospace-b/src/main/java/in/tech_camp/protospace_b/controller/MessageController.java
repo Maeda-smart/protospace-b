@@ -35,90 +35,94 @@ import lombok.AllArgsConstructor;
 @Controller
 @AllArgsConstructor
 public class MessageController {
-  private final UserNewRepository userRepository;
+    private final UserNewRepository userRepository;
 
-  private final RoomUserRepository roomUserRepository;
+    private final RoomUserRepository roomUserRepository;
 
-  private final RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
-  private final MessageRepository messageRepository;
+    private final MessageRepository messageRepository;
 
-  private final ImageUrl imageUrl;
+    private final ImageUrl imageUrl;
 
-  @GetMapping("/rooms/{roomId}/messages")
-  public String showMessages(@PathVariable("roomId") Integer roomId,@AuthenticationPrincipal CustomUserDetail currentUser, Model model){
+    @GetMapping("/rooms/{roomId}/messages")
+    public String showMessages(@PathVariable("roomId") Integer roomId,
+            @AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
 
-    Integer currentUserId =currentUser.getId();
+        Integer currentUserId = currentUser.getId();
 
-    List<RoomUserEntity> members =roomUserRepository.findByRoomId(roomId);
-    boolean isMember = members.stream().anyMatch(member -> member.getUser().getId().equals(currentUserId));
-    if (!isMember) {
-      return "redirect:error/403";
+        List<RoomUserEntity> members = roomUserRepository.findByRoomId(roomId);
+        boolean isMember = members.stream().anyMatch(member -> member.getUser().getId().equals(currentUserId));
+        if (!isMember) {
+            return "redirect:error/403";
+        }
+
+        UserEntity user = userRepository.findById(currentUser.getId());
+        model.addAttribute("user", user);
+        model.addAttribute("currentUser", user);
+        List<RoomUserEntity> roomUserEntities = roomUserRepository.findByUserId(currentUser.getId());
+        List<RoomEntity> roomList = roomUserEntities.stream()
+                .map(RoomUserEntity::getRoom)
+                .collect(Collectors.toList());
+        model.addAttribute("rooms", roomList);
+
+        model.addAttribute("messageForm", new MessageForm());
+
+        RoomEntity room = roomRepository.findById(roomId);
+        model.addAttribute("room", room);
+
+        List<MessageEntity> messages = messageRepository.findByRoomId(roomId);
+        model.addAttribute("messages", messages);
+        return "chat/messages/index";
     }
 
-    UserEntity user = userRepository.findById(currentUser.getId());
-    model.addAttribute("user", user);
-    model.addAttribute("currentUser",user);
-    List<RoomUserEntity> roomUserEntities = roomUserRepository.findByUserId(currentUser.getId());
-    List<RoomEntity> roomList = roomUserEntities.stream()
-        .map(RoomUserEntity::getRoom)
-        .collect(Collectors.toList());
-    model.addAttribute("rooms", roomList);
+    @PostMapping("/rooms/{roomId}/messages")
+    public String saveMessage(@PathVariable("roomId") Integer roomId,
+            @ModelAttribute("messageForm") MessageForm messageForm, BindingResult bindingResult,
+            @AuthenticationPrincipal CustomUserDetail currentUser) {
 
-    model.addAttribute("messageForm", new MessageForm());
-    
-    RoomEntity room = roomRepository.findById(roomId);
-    model.addAttribute("room", room);
+        Integer currentUserId = currentUser.getId();
 
-    List<MessageEntity> messages = messageRepository.findByRoomId(roomId);
-    model.addAttribute("messages", messages);
-      return "chat/messages/index";
-  }
+        List<RoomUserEntity> members = roomUserRepository.findByRoomId(roomId);
+        boolean isMember = members.stream().anyMatch(member -> member.getUser().getId().equals(currentUserId));
+        if (!isMember) {
+            return "redirect:error/403";
+        }
 
-  @PostMapping("/rooms/{roomId}/messages")
-  public String saveMessage(@PathVariable("roomId") Integer roomId, @ModelAttribute("messageForm") MessageForm messageForm, BindingResult bindingResult, @AuthenticationPrincipal CustomUserDetail currentUser) {
+        messageForm.validateMessage(bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "redirect:/rooms/" + roomId + "/messages";
+        }
 
-    Integer currentUserId =currentUser.getId();
+        MessageEntity message = new MessageEntity();
+        message.setContent(messageForm.getContent());
 
-    List<RoomUserEntity> members =roomUserRepository.findByRoomId(roomId);
-    boolean isMember = members.stream().anyMatch(member -> member.getUser().getId().equals(currentUserId));
-    if (!isMember) {
-      return "redirect:error/403";
-    }
+        MultipartFile imageFile = messageForm.getImage();
+        if (imageFile != null && !imageFile.isEmpty()) {
+            try {
+                String uploadDir = imageUrl.getImageUrl();
+                String fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_"
+                        + imageFile.getOriginalFilename();
+                Path imagePath = Paths.get(uploadDir, fileName);
+                Files.copy(imageFile.getInputStream(), imagePath);
+                message.setImage("/uploads/" + fileName);
+            } catch (IOException e) {
+                System.out.println("エラー：" + e);
+                return "redirect:/rooms/" + roomId + "/messages";
+            }
+        }
 
-    messageForm.validateMessage(bindingResult);
-    if (bindingResult.hasErrors()) {
-      return "redirect:/rooms/" + roomId + "/messages";
-    }
-    
-    MessageEntity message = new MessageEntity();
-    message.setContent(messageForm.getContent());
+        UserEntity user = userRepository.findById(currentUser.getId());
+        RoomEntity room = roomRepository.findById(roomId);
+        message.setUser(user);
+        message.setRoom(room);
 
-    MultipartFile imageFile = messageForm.getImage();
-    if (imageFile != null && !imageFile.isEmpty()) {
-      try {
-        String uploadDir = imageUrl.getImageUrl();
-        String fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + "_" + imageFile.getOriginalFilename();
-        Path imagePath = Paths.get(uploadDir, fileName);
-        Files.copy(imageFile.getInputStream(), imagePath);
-        message.setImage("/uploads/" + fileName);
-      } catch (IOException e) {
-        System.out.println("エラー：" + e);
+        try {
+            messageRepository.insert(message);
+        } catch (Exception e) {
+            System.out.println("エラー：" + e);
+        }
+
         return "redirect:/rooms/" + roomId + "/messages";
-      }
     }
-
-    UserEntity user = userRepository.findById(currentUser.getId());
-    RoomEntity room = roomRepository.findById(roomId);
-    message.setUser(user);
-    message.setRoom(room);
-
-    try {
-      messageRepository.insert(message);
-    } catch (Exception e) {
-      System.out.println("エラー：" + e);
-    }
-
-    return "redirect:/rooms/" + roomId + "/messages";
-  }
 }
