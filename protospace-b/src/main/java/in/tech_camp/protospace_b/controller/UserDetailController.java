@@ -46,7 +46,7 @@ public class UserDetailController {
         model.addAttribute("unpinnedPrototypes", unpinnedPrototypes);
 
         // ブックマーク取得
-        List<PrototypeEntity> bookmarkPrototypes = prototypeShowRepository.findBookmarkByUserId(loginUserId, userId);
+        List<PrototypeEntity> bookmarkPrototypes = prototypes.stream().filter(prototype -> prototype.isBookmark()).collect(Collectors.toList());
         model.addAttribute("bookmarkPrototypes", bookmarkPrototypes);
 
         return "users/detail";
