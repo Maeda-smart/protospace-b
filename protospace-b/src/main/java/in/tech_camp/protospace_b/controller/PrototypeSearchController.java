@@ -25,7 +25,9 @@ public class PrototypeSearchController {
 
     @GetMapping("/prototypes/search")
     public String searchPrototypes(@ModelAttribute("prototypeSearchForm") PrototypeSearchForm prototypeSearchForm,
-            @AuthenticationPrincipal CustomUserDetail currentUser, @RequestParam(value="prototypeName", required=false) String prototypeName, @RequestParam(value="tag", required=false) Integer tag_id, Model model) {
+            @AuthenticationPrincipal CustomUserDetail currentUser,
+            @RequestParam(value = "prototypeName", required = false) String prototypeName,
+            @RequestParam(value = "tag", required = false) Integer tag_id, Model model) {
         String keyword = prototypeName;
         Integer tagId = tag_id;
         TagEntity tag = null;
@@ -34,17 +36,22 @@ public class PrototypeSearchController {
         Integer userId = (currentUser != null) ? currentUser.getId() : null;
         List<PrototypeEntity> prototypes;
 
-        // 入力が空ならリダイレクトして初期状態へ戻す
-        if ((keyword == null || keyword.trim().isEmpty()) && tagId == null) {
-            return "redirect:/";
-        }
-
-        // 入力が空だがtagsがある場合
-        if (keyword == null || keyword.trim().isEmpty() && tagId != null) {
-            prototypes = prototypeShowRepository.findByPrototypeNameWithTag(userId, "", tagId);
-            tag = tagRepository.getById(tagId);
+        if (keyword == null || keyword.trim().isEmpty()) {
+            if (tagId == null) {
+                // 入力が空ならリダイレクトして初期状態へ戻す
+                return "redirect:/";
+            } else {
+                // 入力が空だがtagsがある場合
+                prototypes = prototypeShowRepository.findByPrototypeNameWithTag(userId, "", tagId);
+                tag = tagRepository.getById(tagId);
+            }
         } else {
-            prototypes = prototypeShowRepository.findByPrototypeName(userId, keyword);
+            if (tagId == null) {
+                prototypes = prototypeShowRepository.findByPrototypeName(userId, keyword);
+            } else {
+                prototypes = prototypeShowRepository.findByPrototypeNameWithTag(userId, keyword, tagId);
+                tag = tagRepository.getById(tagId);
+            }
         }
 
         model.addAttribute("prototypes", prototypes);
