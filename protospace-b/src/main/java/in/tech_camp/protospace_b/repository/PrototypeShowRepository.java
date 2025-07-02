@@ -199,6 +199,62 @@ public interface PrototypeShowRepository {
                 MAX(CASE WHEN r.user_id = #{currentUserId} THEN 1 ELSE 0 END) read
             FROM
                 prototype p
+            LEFT JOIN prototype_tags pt ON pt.prototype_id = p.id
+            LEFT JOIN users u ON p.user_id = u.id
+            LEFT JOIN (
+                SELECT
+                    nice.prototype_id,
+                    MAX(CASE WHEN nice.user_id = #{currentUserId} THEN 1 ELSE 0 END) isNice,
+                    count(*) niceCount
+                FROM
+                    nice
+                GROUP BY
+                    nice.prototype_id
+            ) n ON p.id = n.prototype_id
+            LEFT JOIN prototype_read_status r ON r.prototype_id = p.id AND r.user_id = #{currentUserId}
+            WHERE pt.tags_id = #{tagId} AND p.prototypeName LIKE CONCAT('%', #{prototypeName}, '%')
+            GROUP BY
+                p.id,
+                p.prototypeName,
+                p.catchCopy,
+                p.concept,
+                p.img,
+                p.created_at,
+                p.updated_at,
+                u.id,
+                u.nickname,
+                n.isNice,
+                n.niceCount
+            """)
+    @Results(value = {
+            @Result(property = "id", column = "p_id"),
+            @Result(property = "user.id", column = "u_id"),
+            @Result(property = "user.nickname", column = "nickname"),
+            @Result(property = "imgPath", column = "img"),
+            @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
+            @Result(property = "createdAt", column = "created_at"),
+            @Result(property = "updatedAt", column = "updated_at")
+    })
+    List<PrototypeEntity> findByPrototypeNameWithTag(@Param("currentUserId") Integer currentUserId,
+            @Param("prototypeName") String prototypeName, @Param("tagId") Integer tagId);
+
+    // OPTIMIZE: N+1
+    @Select("""
+            SELECT
+                p.id p_id,
+                p.prototypeName,
+                p.catchCopy,
+                p.concept,
+                p.img,
+                p.created_at,
+                p.updated_at,
+                u.id u_id,
+                u.nickname nickname,
+                COALESCE(n.niceCount, 0) niceCount,
+                n.isNice,
+                MAX(CASE WHEN r.user_id = #{currentUserId} THEN 1 ELSE 0 END) read
+            FROM
+                prototype p
             LEFT JOIN users u ON p.user_id = u.id
             LEFT JOIN (
                 SELECT
@@ -213,17 +269,17 @@ public interface PrototypeShowRepository {
             LEFT JOIN prototype_read_status r ON r.prototype_id = p.id AND r.user_id = #{currentUserId}
             WHERE p.prototypeName LIKE CONCAT('%', #{prototypeName}, '%')
             GROUP BY
-              p.id,
-              p.prototypeName,
-              p.catchCopy,
-              p.concept,
-              p.img,
-              p.created_at,
-              p.updated_at,
-              u.id,
-              u.nickname,
-              n.isNice,
-              n.niceCount
+                p.id,
+                p.prototypeName,
+                p.catchCopy,
+                p.concept,
+                p.img,
+                p.created_at,
+                p.updated_at,
+                u.id,
+                u.nickname,
+                n.isNice,
+                n.niceCount
             """)
     @Results(value = {
             @Result(property = "id", column = "p_id"),

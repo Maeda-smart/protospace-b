@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
-import in.tech_camp.protospace_b.entity.TagEntity;
 import in.tech_camp.protospace_b.form.PrototypeSearchForm;
 import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import lombok.AllArgsConstructor;
@@ -23,23 +22,26 @@ public class PrototypeSearchController {
 
     @GetMapping("/prototypes/search")
     public String searchPrototypes(@ModelAttribute("prototypeSearchForm") PrototypeSearchForm prototypeSearchForm,
-            @AuthenticationPrincipal CustomUserDetail currentUser, @RequestParam("prototypeName") String prototypeName, @RequestParam(required=false) List<TagEntity> tags, Model model) {
+            @AuthenticationPrincipal CustomUserDetail currentUser, @RequestParam(value="prototypeName", required=false) String prototypeName, @RequestParam(value="tag", required=false) Integer tag, Model model) {
         String keyword = prototypeName;
+        Integer tagId = tag;
+
+        // ログインユーザーのID取得
+        Integer userId = (currentUser != null) ? currentUser.getId() : null;
+        List<PrototypeEntity> prototypes;
 
         // 入力が空ならリダイレクトして初期状態へ戻す
-        if ((keyword == null || keyword.trim().isEmpty()) && tags == null) {
+        if ((keyword == null || keyword.trim().isEmpty()) && tagId == null) {
             return "redirect:/";
         }
 
         // 入力が空だがtagsがある場合
-        if (keyword == null || keyword.trim().isEmpty()) {
-            // 検索
-            return "redirect:/";
+        if (keyword == null || keyword.trim().isEmpty() && tagId != null) {
+            prototypes = prototypeShowRepository.findByPrototypeNameWithTag(userId, "", tagId);
+        } else {
+            prototypes = prototypeShowRepository.findByPrototypeName(userId, keyword);
         }
 
-        // ログインユーザーのID取得
-        Integer userId = (currentUser != null) ? currentUser.getId() : null;
-        List<PrototypeEntity> prototypes = prototypeShowRepository.findByPrototypeName(userId, keyword);
         model.addAttribute("prototypes", prototypes);
 
         model.addAttribute("prototypeSearchForm", prototypeSearchForm);
