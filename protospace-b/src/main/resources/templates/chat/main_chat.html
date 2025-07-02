@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<div th:fragment="main_chat">
+  <div class="chat-header">
+    <div class="left-header">
+      <div class="group-name" th:text="${room.name}">ルーム名</div>
+    </div>
+    <div class="right-header">
+      <div class="delete-button">
+        <form th:action="@{/rooms/{roomId}/delete(roomId=${room.id})}" method="post">
+          <input type="submit" value="🗑"/>
+        </form>
+      </div>
+      <div class="chat-end">
+        <form th:action="@{/}" method="get">
+          <input type="submit" value="チャットを終了する"/>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="messages">
+    <div th:each="message : ${messages}"
+          th:class="${message.user.id == currentUser.id} ? 'message message-right' : 'message message-left'">
+      <div th:class="${message.user.id == currentUser.id} ? 'user-date-right' : 'user-date-left'" class="user-date">
+        <div class="message-user" th:text="${message.user.nickname}">ユーザー名</div>
+        <div class="date" th:text="${#dates.format(message.createdAt, 'yyyy/MM/dd HH:mm')}">日付</div>
+      </div>
+      <div class="text-area">
+        <div class="text" th:text="${message.content}">メッセージ内容</div>
+      </div>
+      <div th:if="${message.image}">
+        <img th:src="@{${message.image}}" alt="メッセージ画像"/>
+      </div>
+    </div>
+  </div>
+
+  <form th:action="@{/rooms/{roomId}/messages(roomId=${room.id})}" method="post" th:object="${messageForm}" class="form" enctype="multipart/form-data">
+    <div class="form-input">
+      <input th:field="*{content}" class="form-message" placeholder= "type a message">
+      <label class="image-button">
+        <span class="image-file">画像</span>
+        <input type="file" th:field="*{image}" class="hidden">
+      </label> 
+    </div>
+    <input type="submit" value="送信" class="submit">
+  </form>
+</div>
+</html>

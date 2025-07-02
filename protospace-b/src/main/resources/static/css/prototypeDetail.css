@@ -2,27 +2,39 @@
   box-sizing: border-box;
 }
 
-.inner {
-  width: 90%;
-  margin: 0 auto;
+.prototype_inner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .prototype_wrapper {
   /* min-height: calc(100vh - 161px); */
   background-color: #f6f6f6;
-  margin: 0 130px;
   padding: 40px;
+  margin: 0 50px;
+}
+
+@media (min-width: 800px) {
+  .prototype_wrapper {
+    width: 720px;
+  }
+}
+
+.prototypes-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
 }
 
 .title {
   font-size: 24px;
   font-weight: bold;
-  text-align: center;
   margin: 0%;
 }
 
 .user_name {
-  display: block;
+  height: 20px;
   font-size: 16px;
   color: #999;
   text-align: center;
@@ -31,25 +43,26 @@
 
 .edit_delete {
   display: flex;
-  justify-content: center;
+  justify-content: right;
   padding-top: 16px;
 }
 
 .btn {
-    padding: 0.4em 1.6em;
-    font-size: 0.4em;
-    color: #999;
+    padding: 0.3em 1.2em;
+    font-size: 14px;
+    color: #4c4c4c;
     text-decoration: none;
     user-select: none;
     border: 1px #999 solid;
     border-radius: 3px;
     transition: 0.4s ease;
-    margin: 0 4px;
+    margin-left: 10px;
     background-color: white;
 }
 
 .prototype_img {
-    display: block;＋margin: 0 auto;
+    display: block;
+    margin: 0 auto;
     width: 100%;
     padding: 10px 0;
     text-align: center;
@@ -138,11 +151,11 @@ button.bookmark-button,
 button.defuse-bookmark-button,
 button.pin-on,
 button.pin-off {
-  border: #333 solid 1px;
+  border: #e6e6e6 solid 2px;
   font-size: 1rem;
+  font-weight: bold;
   padding: 2px 5px;
   margin-right: 10px;
-  border: none;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -151,6 +164,8 @@ button.pin-off {
 .button-wrapper{
   display: flex;
   justify-content: right;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #999;
 }
 
 /* ピンボタン */
@@ -169,7 +184,7 @@ button.pin-off {
 }
 
 .pin-off:hover {
-  background-color: #ffe6ee;
+  background-color: #a32c2a;
 }
 
 /* いいねボタン */
@@ -225,4 +240,9 @@ button.pin-off {
 /* ボタンの配置整えたい場合（横並びに） */
 .prototype_body form {
   display: inline-block;
+}
+
+.tags-wrapper{
+  border-bottom: 1px solid #999;
+  padding-bottom: 30px;
 }
