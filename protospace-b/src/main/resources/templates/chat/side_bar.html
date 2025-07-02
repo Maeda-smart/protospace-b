@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<div th:fragment="side_bar">
+  <div class="side-header">
+    <div class="user-name">
+      <a th:href="@{/users/{userId}(userId=${user.id})}" th:text="${user.nickname}">ユーザー名</a>
+    </div>
+    <div class="create-link">
+      <a th:href="@{/rooms/new}">チャットを作成する</a>
+    </div>
+  </div>
+  <div class="rooms">
+    <div th:each="room : ${rooms}"  class="room">
+      <div class="room-name">
+        <a th:href="@{/rooms/{roomId}/messages(roomId=${room.id})}" th:text="${room.name}">roomname</a>
+      </div>
+    </div>
+  </div>
+</div>
+</html>

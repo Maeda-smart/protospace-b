@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="stylesheet" th:href="@{/css/chat.css}" />
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+  <div th:replace="~{header :: header}"></div>
+
+  <div class="wrapper">
+    <div class="side-bar">
+      <div th:insert="~{chat/side_bar :: side_bar}"></div>
+    </div>
+  </div>
+  <div th:replace="~{footer :: footer}"></div>
+</body>
+</html>
