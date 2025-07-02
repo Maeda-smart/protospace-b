@@ -28,7 +28,9 @@
             th:text="${prototype.user.nickname}"></span>
           </a>
         </div>
-        <div th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == prototype.user.id}">
+        <div th:if="${#authorization.expression('isAuthenticated()') and 
+           (#authentication?.principal?.id == prototype.user.id or 
+            #authorization.expression('hasRole(''ROLE_MODERATOR'') or hasRole(''ROLE_ADMIN'')'))}">
           <div class="edit_delete">
             <a th:href="@{'/prototype/' + ${prototype.id} + '/edit'}">
               <input type="submit" value="編集する" class="btn">

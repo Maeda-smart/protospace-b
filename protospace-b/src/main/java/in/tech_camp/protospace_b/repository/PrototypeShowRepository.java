@@ -349,4 +349,26 @@ public interface PrototypeShowRepository {
             @Result(property = "updatedAt", column = "updated_at")
     })
     List<PrototypeEntity> findBookmarkByUserId(Integer currentUserId, Integer userId);
+
+    @Select("""
+        SELECT
+            id AS p_id,
+            prototypeName,
+            catchCopy,
+            concept,
+            img,
+            created_at,
+            updated_at,
+            user_id AS u_id
+        FROM prototype
+        WHERE id = #{id}
+    """)
+    @Results(value = {
+            @Result(property = "id", column = "p_id"),
+            @Result(property = "user", column = "u_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
+            @Result(property = "imgPath", column = "img"),
+            @Result(property = "createdAt", column = "created_at"),
+            @Result(property = "updatedAt", column = "updated_at")
+    })
+    PrototypeEntity findByPrototypeIdWithoutUser(Integer id);
 }

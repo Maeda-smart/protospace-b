@@ -24,10 +24,15 @@ public class DeleteController {
             @AuthenticationPrincipal CustomUserDetail currentUser) {
 
         PrototypeEntity prototypeEntity = prototypeShowRepository.findByPrototypeId(currentUser.getId(), prototypeId);
-
         Integer ownerUserId = prototypeEntity.getUser().getId();
 
-        if (!ownerUserId.equals(currentUser.getId())) {
+        // 投稿主・モデレーター・管理者以外は拒否
+        boolean isOwner = ownerUserId.equals(currentUser.getId());
+        boolean isModeratorOrAdmin = 
+                "ROLE_MODERATOR".equals(currentUser.getUser().getRoleName()) ||
+                "ROLE_ADMIN".equals(currentUser.getUser().getRoleName());
+
+        if (!isOwner && !isModeratorOrAdmin) {
             return "redirect:/";
         }
 
