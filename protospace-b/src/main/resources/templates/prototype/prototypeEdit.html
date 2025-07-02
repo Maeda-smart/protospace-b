@@ -13,14 +13,16 @@
 <body>
   <div th:replace="~{header :: header}"></div>
 
-  <div class="main-content">
-    <h2>プロトタイプ編集</h2>
-    <form th:action="@{/prototypes/{prototypeId}/edit/submit(prototypeId=${prototypeId})}" th:object="${prototypeForm}"
-      method="post" enctype="multipart/form-data">
-      <div th:replace="~{prototypeEditor :: prototype-editor}"></div>
-      <div class="notice">※ 画像を変更しない場合はそのまま保存してよ</div>
-      <input type="submit" value="保存する">
-    </form>
+  <div class="main">
+    <div class="inner">
+      <h2>プロトタイプ編集</h2>
+      <form th:action="@{/prototypes/{prototypeId}/edit/submit(prototypeId=${prototypeId})}"
+        th:object="${prototypeForm}" method="post" enctype="multipart/form-data">
+        <div th:replace="~{prototypeEditor :: prototype-editor}"></div>
+        <div class="notice">※ 画像を変更しない場合はそのまま保存してよ</div>
+        <input type="submit" value="保存する">
+      </form>
+    </div>
   </div>
   <div th:insert="~{footer :: footer}"></div>
 </body>

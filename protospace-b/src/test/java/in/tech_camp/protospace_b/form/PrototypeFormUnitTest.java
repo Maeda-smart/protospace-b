@@ -43,7 +43,8 @@ public class PrototypeFormUnitTest {
         @Test
         public void SubmitWhenFilledAllInput() {
             assertNotNull(prototypeForm);
-            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm, ValidationPriority1.class);
+            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm,
+                    ValidationPriority1.class);
             assertEquals(0, violations.size());
         }
     }
@@ -54,7 +55,8 @@ public class PrototypeFormUnitTest {
         @Test
         public void ValidationErrorWhenPrototypeNameIsBlank() {
             prototypeForm.setPrototypeName("");
-            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm, ValidationPriority1.class);
+            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm,
+                    ValidationPriority1.class);
             assertEquals(1, violations.size());
             assertEquals("PrototypeName can't be blank", violations.iterator().next().getMessage());
         }
@@ -62,7 +64,8 @@ public class PrototypeFormUnitTest {
         @Test
         public void ValidationErrorWhenCatchCopyIsBlank() {
             prototypeForm.setCatchCopy("");
-            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm, ValidationPriority1.class);
+            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm,
+                    ValidationPriority1.class);
             assertEquals(1, violations.size());
             assertEquals("CatchCopy can't be blank", violations.iterator().next().getMessage());
         }
@@ -70,7 +73,8 @@ public class PrototypeFormUnitTest {
         @Test
         public void ValidationErrorWhenConceptIsBlank() {
             prototypeForm.setConcept("");
-            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm, ValidationPriority1.class);
+            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm,
+                    ValidationPriority1.class);
             assertEquals(1, violations.size());
             assertEquals("Concept can't be blank", violations.iterator().next().getMessage());
         }
@@ -78,7 +82,8 @@ public class PrototypeFormUnitTest {
         @Test
         public void ValidationErrorWhenImageIsBlank() {
             prototypeForm.setImgFile(null);
-            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm, ValidationPriority1.class);
+            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm,
+                    ValidationPriority1.class);
             assertEquals(1, violations.size());
             assertEquals("Image can't be blank", violations.iterator().next().getMessage());
         }

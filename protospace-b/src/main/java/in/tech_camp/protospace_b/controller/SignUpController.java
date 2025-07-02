@@ -33,8 +33,9 @@ public class SignUpController {
     }
 
     @PostMapping("/user")
-    public String signUp(@ModelAttribute("userForm") @Validated(ValidationOrder.class) UserForm userForm, BindingResult result, Model model) {
-        if(userSignUpRepository.existsByEmail(userForm.getEmail())){
+    public String signUp(@ModelAttribute("userForm") @Validated(ValidationOrder.class) UserForm userForm,
+            BindingResult result, Model model) {
+        if (userSignUpRepository.existsByEmail(userForm.getEmail())) {
             result.rejectValue("email", "error.user", "Email already exists");
         }
         if (result.hasErrors()) {
@@ -52,6 +53,10 @@ public class SignUpController {
         userEntity.setProfile(userForm.getProfile());
         userEntity.setAffiliation(userForm.getAffiliation());
         userEntity.setPosition(userForm.getPosition());
+        if (userEntity.getRoleName() == null) {
+            userEntity.setRoleName("ROLE_USER");
+        }
+
         try {
             userSignUpService.createUserWithEncryptedPassword(userEntity);
         } catch (Exception e) {

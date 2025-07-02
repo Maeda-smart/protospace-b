@@ -62,7 +62,7 @@ public class PrototypeController {
     public String showPrototypeEdit(@PathVariable("prototypeId") Integer prototypeId, Model model,
             @AuthenticationPrincipal CustomUserDetail currentUser) {
 
-        PrototypeEntity prototypeEntity = prototypeShowRepository.findByPrototypeId(prototypeId);
+        PrototypeEntity prototypeEntity = prototypeShowRepository.findByPrototypeId(currentUser.getId(), prototypeId);
 
         Integer ownerUserId = prototypeEntity.getUser().getId();
 
@@ -167,6 +167,9 @@ public class PrototypeController {
             @AuthenticationPrincipal CustomUserDetail currentUser,
             Model model) {
 
+        PrototypeEntity beforeEntity = prototypeShowRepository.findByPrototypeId(currentUser.getId(),prototypeId);
+        String beforeImgPath = beforeEntity.getImgPath();
+
         if (result.hasErrors()) {
             List<String> errorMessages = result.getAllErrors().stream()
                     .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -216,6 +219,10 @@ public class PrototypeController {
             prototype.setImgPath(newImgPath);
             prototype.setUser(userEntity);
 
+            if (beforeImgPath != null && !beforeImgPath.equals(newImgPath)) {
+                deleteImageFile(beforeImgPath);
+            }
+
             // 検索用のIDを渡さないといけない
             prototypeEditRepository.update(prototype);
             List<String> tagNames = prototypeForm.getTags();
@@ -251,5 +258,17 @@ public class PrototypeController {
         // 保存
         Files.copy(imageFile.getInputStream(), imagePath);
         return fileName;
+    }
+
+    private void deleteImageFile(String imgPath) {
+        if (imgPath == null || imgPath.isEmpty()) return;
+        String uploadDir = imageUrl.getImageUrl();
+        String fileName = imgPath.substring(imgPath.lastIndexOf('/') + 1);
+        java.nio.file.Path path = java.nio.file.Paths.get(uploadDir, fileName);
+        try {
+            java.nio.file.Files.deleteIfExists(path);
+        } catch (Exception e) {
+            System.out.println("画像ファイルの削除に失敗: " + e.getMessage());
+        }
     }
 }

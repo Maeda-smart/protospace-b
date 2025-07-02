@@ -29,9 +29,9 @@
       <!-- ランキング表示ボタン -->
       <a class="ranking-title" th:href="@{/prototypes/ranking}">♔ランキングページ</a>
 
-      <form th:action="@{/prototypes/search}" th:object="${prototypeSearchForm}" method="get">
+      <form th:action="@{/prototypes/search}" th:object="${prototypeSearchForm}" method="get" class="form-wrapper">
         <input type="text" th:field="*{prototypeName}" placeholder="Search by prototype name" class="search-box" />
-        <button type="submit" class="search-button">Search</button>
+        <button type="submit" class="search-button">🔍</button>
       </form>
 
       <!-- プロトタイプの一覧表示 -->
