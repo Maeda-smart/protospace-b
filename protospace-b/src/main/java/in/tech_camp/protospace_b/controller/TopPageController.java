@@ -37,6 +37,5 @@ public class TopPageController {
         model.addAttribute("prototypeSearchForm", prototypeSearchForm);
 
         return "index";
-
     }
 }

@@ -6,7 +6,7 @@
 </head>
 <div class="tags" th:fragment="prototype-tags(tags)">
   <div th:each="tag : ${tags}">
-    <div class="tag"><a th:text="${tag.tagName}" th:href="@{'/prototypes/search?tag='+${tag.tagName}}"></a></div>
+    <div class="tag"><a th:text="${tag.tagName}" th:href="@{'/prototypes/search?tags='+${tag.tagName}}"></a></div>
   </div>
   <div class="tag" th:if="${#lists.isEmpty(tags)}">タグはありません</div>
 </div>
