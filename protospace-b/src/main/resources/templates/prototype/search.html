@@ -23,12 +23,17 @@
         <form th:action="@{/prototypes/search}" th:object="${prototypeSearchForm}" method="get">
           <input type="text" th:field="*{prototypeName}" placeholder="Search by prototype name" class="search-box" />
           <button type="submit" class="search-button">Search</button>
+          <div class="tags">
+            <div class="tag" th:if="${tag != null}"><span th:text="${tag.tagName}"></span><span
+                class="delete-button">×</span><input type="text" name="tags" class="hidden" th:value="${tag.tagName}">
+            </div>
+          </div>
         </form>
       </div>
 
-        <div th:if="${prototypes != null and !prototypes.isEmpty()}">
-          <div th:replace="~{prototypes :: prototypes(${prototypes})}" class="card"></div>
-        </div>
+      <div th:if="${prototypes != null and !prototypes.isEmpty()}">
+        <div th:replace="~{prototypes :: prototypes(${prototypes})}" class="card"></div>
+      </div>
 
       <div class="no-results" th:if="${prototypes != null and prototypes.isEmpty()}">
         No prototypes found.

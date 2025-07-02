@@ -11,20 +11,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import in.tech_camp.protospace_b.custom_user.CustomUserDetail;
 import in.tech_camp.protospace_b.entity.PrototypeEntity;
+import in.tech_camp.protospace_b.entity.TagEntity;
 import in.tech_camp.protospace_b.form.PrototypeSearchForm;
 import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
+import in.tech_camp.protospace_b.repository.TagRepository;
 import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
 public class PrototypeSearchController {
     private final PrototypeShowRepository prototypeShowRepository;
+    private final TagRepository tagRepository;
 
     @GetMapping("/prototypes/search")
     public String searchPrototypes(@ModelAttribute("prototypeSearchForm") PrototypeSearchForm prototypeSearchForm,
-            @AuthenticationPrincipal CustomUserDetail currentUser, @RequestParam(value="prototypeName", required=false) String prototypeName, @RequestParam(value="tag", required=false) Integer tag, Model model) {
+            @AuthenticationPrincipal CustomUserDetail currentUser, @RequestParam(value="prototypeName", required=false) String prototypeName, @RequestParam(value="tag", required=false) Integer tag_id, Model model) {
         String keyword = prototypeName;
-        Integer tagId = tag;
+        Integer tagId = tag_id;
+        TagEntity tag = null;
 
         // ログインユーザーのID取得
         Integer userId = (currentUser != null) ? currentUser.getId() : null;
@@ -38,12 +42,13 @@ public class PrototypeSearchController {
         // 入力が空だがtagsがある場合
         if (keyword == null || keyword.trim().isEmpty() && tagId != null) {
             prototypes = prototypeShowRepository.findByPrototypeNameWithTag(userId, "", tagId);
+            tag = tagRepository.getById(tagId);
         } else {
             prototypes = prototypeShowRepository.findByPrototypeName(userId, keyword);
         }
 
         model.addAttribute("prototypes", prototypes);
-
+        model.addAttribute("tag", tag);
         model.addAttribute("prototypeSearchForm", prototypeSearchForm);
 
         return "prototype/search";
