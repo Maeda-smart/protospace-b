@@ -47,6 +47,15 @@
         </tr>
       </tbody>
     </table>
+
+    <!--  このユーザーとチャットするボタン（自分以外 & ログイン済み） -->
+    <div class="user-actions" 
+         th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() != user.id}">
+      <form method="post" th:action="@{/dm/{id}(id=${user.id})}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit" class="action-btn">このユーザーとチャットする</button>
+      </form>
+    </div>
   </div>
 
 
