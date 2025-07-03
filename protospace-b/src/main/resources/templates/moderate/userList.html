@@ -50,7 +50,7 @@
                         th:classappend=" 
                         ${user.roleName == 'ROLE_ADMIN'} ? 'role-admin' : 
                         (${user.roleName == 'ROLE_MODERATOR'} ? 'role-mod' : 'role-user')">ロール</td>
-                    <td>
+                    <td th:if="${currentUserRole == 'ROLE_ADMIN'}">
                         <form th:action="@{/admin/users/{userId}/promote(userId=${user.id})}" method="post"
                             th:if="${user.roleName == 'ROLE_USER'}">
                             <button type="submit" class="btn btn-red">昇格</button>

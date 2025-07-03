@@ -16,7 +16,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
         if (exception instanceof DisabledException) {
-            request.getSession().setAttribute("error", "アカウントが凍結されています。管理者にお問い合わせください。");
+            request.getSession().setAttribute("error", "アカウントが凍結されています。");
         } else {
             request.getSession().setAttribute("error", "ユーザー名またはパスワードが正しくありません。");
         }

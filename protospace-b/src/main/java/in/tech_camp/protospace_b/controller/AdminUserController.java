@@ -27,6 +27,7 @@ public class AdminUserController {
         Integer adminUserId = adminUserRepository.findAdminId();
         List<UserEntity> userList = adminUserRepository.findAllUsers(loginUserId, adminUserId);
         model.addAttribute("userList", userList);
+        model.addAttribute("currentUserRole", currentUser.getUser().getRoleName());
         return "moderate/userList";
     }
 
