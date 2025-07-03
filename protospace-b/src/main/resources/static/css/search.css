@@ -9,6 +9,7 @@
 }
 
 .form-wrapper {
+  margin: 30px auto 20px; /* ← ここを追加して中央配置 */
   height: 50px;
   width: 60vh;
   border-radius: 100px;
