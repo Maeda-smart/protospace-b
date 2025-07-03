@@ -271,10 +271,10 @@ public class PrototypeController {
             PrototypeEntity prototype = new PrototypeEntity();
 
             if ("draft".equals(mode)) {
-                prototypeForm.setPrototypeName(prototypeForm.getPrototypeName() != null ? prototypeForm.getPrototypeName() : "");
-                prototypeForm.setCatchCopy(prototypeForm.getCatchCopy() != null ? prototypeForm.getCatchCopy() : "");
-                prototypeForm.setConcept(prototypeForm.getConcept() != null ? prototypeForm.getConcept() : "");
-                prototype.setPublished(false);
+              prototypeForm.setPrototypeName(prototypeForm.getPrototypeName() != null ? prototypeForm.getPrototypeName() : "");
+              prototypeForm.setCatchCopy(prototypeForm.getCatchCopy() != null ? prototypeForm.getCatchCopy() : "");
+              prototypeForm.setConcept(prototypeForm.getConcept() != null ? prototypeForm.getConcept() : "");
+              prototype.setPublished(false);
             }
 
             prototype.setId(prototypeId);

@@ -32,9 +32,15 @@ public class TopPageController {
         // 全プロトタイプ取得を取得し、モデルに渡す
         List<PrototypeEntity> prototypes = prototypeShowRepository.showAll(userId);
 
+        System.out.println(prototypes);
+        System.out.println("ああああああああああああああああああああ");
+
         List<PrototypeEntity> publishedPrototypes = prototypes.stream()
         .filter(PrototypeEntity::isPublished)
         .collect(Collectors.toList());
+
+        System.out.println(publishedPrototypes);
+        System.out.println("いいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいい");
 
         model.addAttribute("prototypes", publishedPrototypes);
 
