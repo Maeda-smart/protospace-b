@@ -66,9 +66,7 @@ public class PrototypeController {
         boolean isModeratorOrAdmin = "ROLE_MODERATOR".equals(currentUser.getUser().getRoleName()) ||
             "ROLE_ADMIN".equals(currentUser.getUser().getRoleName());
 
-        PrototypeEntity prototypeEntity = isModeratorOrAdmin
-                ? prototypeShowRepository.findByPrototypeIdWithoutUser(prototypeId)
-                : prototypeShowRepository.findByPrototypeId(currentUser.getId(), prototypeId);
+        PrototypeEntity prototypeEntity = prototypeShowRepository.findByPrototypeId(currentUser.getId(), prototypeId);
 
         if (prototypeEntity == null) {
             return "redirect:/";
