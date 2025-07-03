@@ -16,7 +16,7 @@ input.prototype{
 textarea.catchcopy, textarea.concept{
   width: 500px;
 }
-input[type=submit]{
+input[type=submit],submit{
   margin-top: 30px;
   width: 120px;
   height: 30px;
@@ -26,20 +26,27 @@ input[type=submit]{
   color: white;
   box-shadow: lightgray 0 2px 2px;
 }
-.logout-btn {
-    margin-top: 30px;
-    width: 120px;
-    height: 30px;
-    border: none;
-    border-radius: 2px;
-    background-color: #92cefc;
-    color: white;
-    box-shadow: lightgray 0 2px 2px;
+
+.new-proto-btn {
+  margin-right: 30px;
+  width: 120px;
+  height: 30px;
+  border: none;
+  border-radius: 2px;
+  background-color: #6abeff;
+  color: white;
 }
+
+.submit-wrapper{
+  width: 500px;
+  margin-top: 30px;
+}
+
 table{
   text-align: left;
   border-collapse: collapse;
 }
+
 tbody th{
   padding: 10px 20px 10px 5px;
   border: 1px solid #dddddd;

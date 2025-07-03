@@ -25,6 +25,7 @@ public interface PrototypeShowRepository {
                 p.img,
                 p.created_at,
                 p.updated_at,
+                p.published,
                 u.id u_id,
                 u.nickname nickname,
                 COALESCE(n.niceCount, 0) niceCount,
@@ -52,6 +53,7 @@ public interface PrototypeShowRepository {
                 p.img,
                 p.created_at,
                 p.updated_at,
+                p.published,
                 u.id,
                 u.nickname,
                 n.isNice,
@@ -65,7 +67,9 @@ public interface PrototypeShowRepository {
             @Result(property = "imgPath", column = "img"),
             @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
             @Result(property = "createdAt", column = "created_at"),
-            @Result(property = "updatedAt", column = "updated_at")
+            @Result(property = "updatedAt", column = "updated_at"),
+            @Result(property = "published", column = "published")
+
     })
     List<PrototypeEntity> showAll(Integer currentUserId);
 
@@ -79,6 +83,7 @@ public interface PrototypeShowRepository {
                 p.img,
                 p.created_at,
                 p.updated_at,
+                p.published,
                 u.id u_id,
                 u.nickname nickname,
                 COALESCE(n.niceCount, 0) niceCount,
@@ -111,6 +116,7 @@ public interface PrototypeShowRepository {
                 p.img,
                 p.created_at,
                 p.updated_at,
+                p.published,
                 u.id,
                 u.nickname,
                 n.isNice,
@@ -125,7 +131,8 @@ public interface PrototypeShowRepository {
             @Result(property = "pin", column = "pinned"),
             @Result(property = "bookmark", column = "is_bookmark"),
             @Result(property = "createdAt", column = "created_at"),
-            @Result(property = "updatedAt", column = "updated_at")
+            @Result(property = "updatedAt", column = "updated_at"),
+            @Result(property = "published", column = "published")
     })
     List<PrototypeEntity> showByUserId(Integer currentUserId, Integer userId);
 
@@ -138,6 +145,7 @@ public interface PrototypeShowRepository {
                 p.img,
                 p.created_at,
                 p.updated_at,
+                p.published,
                 p.user_id u_id,
                 COALESCE(n.niceCount, 0) niceCount,
                 n.isNice,
@@ -168,6 +176,7 @@ public interface PrototypeShowRepository {
                 p.img,
                 p.created_at,
                 p.updated_at,
+                p.published,
                 p.user_id,
                 n.isNice,
                 n.niceCount
@@ -179,7 +188,8 @@ public interface PrototypeShowRepository {
             @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
             @Result(property = "pin", column = "pinned"),
             @Result(property = "createdAt", column = "created_at"),
-            @Result(property = "updatedAt", column = "updated_at")
+            @Result(property = "updatedAt", column = "updated_at"),
+            @Result(property = "published", column = "published")
     })
     PrototypeEntity findByPrototypeId(Integer currentUserId, Integer id);
 
@@ -193,6 +203,7 @@ public interface PrototypeShowRepository {
                 p.img,
                 p.created_at,
                 p.updated_at,
+                p.published,
                 u.id u_id,
                 u.nickname nickname,
                 COALESCE(n.niceCount, 0) niceCount,
@@ -222,6 +233,7 @@ public interface PrototypeShowRepository {
                 p.img,
                 p.created_at,
                 p.updated_at,
+                p.published,
                 u.id,
                 u.nickname,
                 n.isNice,
@@ -234,7 +246,8 @@ public interface PrototypeShowRepository {
             @Result(property = "imgPath", column = "img"),
             @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
             @Result(property = "createdAt", column = "created_at"),
-            @Result(property = "updatedAt", column = "updated_at")
+            @Result(property = "updatedAt", column = "updated_at"),
+            @Result(property = "published", column = "published")
     })
     List<PrototypeEntity> findByPrototypeNameWithTag(@Param("currentUserId") Integer currentUserId,
             @Param("prototypeName") String prototypeName, @Param("tagId") Integer tagId);
@@ -249,6 +262,7 @@ public interface PrototypeShowRepository {
                 p.img,
                 p.created_at,
                 p.updated_at,
+                p.published,
                 u.id u_id,
                 u.nickname nickname,
                 COALESCE(n.niceCount, 0) niceCount,
@@ -277,6 +291,7 @@ public interface PrototypeShowRepository {
                 p.img,
                 p.created_at,
                 p.updated_at,
+                p.published,
                 u.id,
                 u.nickname,
                 n.isNice,
@@ -289,7 +304,8 @@ public interface PrototypeShowRepository {
             @Result(property = "imgPath", column = "img"),
             @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
             @Result(property = "createdAt", column = "created_at"),
-            @Result(property = "updatedAt", column = "updated_at")
+            @Result(property = "updatedAt", column = "updated_at"),
+            @Result(property = "published", column = "published")
     })
     List<PrototypeEntity> findByPrototypeName(@Param("currentUserId") Integer currentUserId,
             @Param("prototypeName") String prototypeName);
@@ -303,6 +319,7 @@ public interface PrototypeShowRepository {
                 p.img,
                 p.created_at,
                 p.updated_at,
+                p.published,
                 u.id u_id,
                 u.nickname nickname,
                 COALESCE(n.niceCount, 0) niceCount,
@@ -330,6 +347,7 @@ public interface PrototypeShowRepository {
                 p.img,
                 p.created_at,
                 p.updated_at,
+                p.published,
                 u.id,
                 u.nickname,
                 n.isNice,
@@ -343,11 +361,11 @@ public interface PrototypeShowRepository {
             @Result(property = "imgPath", column = "img"),
             @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
             @Result(property = "createdAt", column = "created_at"),
-            @Result(property = "updatedAt", column = "updated_at")
+            @Result(property = "updatedAt", column = "updated_at"),
+            @Result(property = "published", column = "published")
     })
     List<PrototypeEntity> findPrototypesOrderByCountDesc(Integer currentUserId);
 
-    // 古い順
     @Select("""
             SELECT
                 p.id p_id,
@@ -400,4 +418,29 @@ public interface PrototypeShowRepository {
         @Result(property = "updatedAt", column = "updated_at")
     })
     List<PrototypeEntity> showAllOrderByCreatedAtAsc(@Param("currentUserId") Integer currentUserId);
+}
+
+// NEW
+                p.published,
+                u.id u_id,
+                u.nickname nickname
+            FROM
+                prototype p
+            LEFT JOIN users u ON p.user_id = u.id
+            WHERE
+                p.published = false
+                AND p.user_id = #{userId}
+            ORDER BY p.updated_at DESC
+            """)
+    @Results(value = {
+            @Result(property = "id", column = "p_id"),
+            @Result(property = "user.id", column = "u_id"),
+            @Result(property = "user.nickname", column = "nickname"),
+            @Result(property = "imgPath", column = "img"),
+            @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
+            @Result(property = "createdAt", column = "created_at"),
+            @Result(property = "updatedAt", column = "updated_at"),
+            @Result(property = "published", column = "published")
+    })
+    List<PrototypeEntity> findDraftsByUserId(@Param("userId") Integer userId);
 }

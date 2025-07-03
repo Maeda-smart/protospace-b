@@ -45,6 +45,12 @@ public class UserDetailController {
         model.addAttribute("pinnedPrototypes", pinnedPrototypes);
         model.addAttribute("unpinnedPrototypes", unpinnedPrototypes);
 
+        
+        if (loginUserId != null && loginUserId.equals(userId)) {
+          List<PrototypeEntity> draftPrototypes = prototypeShowRepository.findDraftsByUserId(userId);
+          model.addAttribute("draftPrototypes", draftPrototypes);
+        }
+
         // ブックマーク取得
         List<PrototypeEntity> bookmarkPrototypes = prototypes.stream().filter(prototype -> prototype.isBookmark()).collect(Collectors.toList());
         model.addAttribute("bookmarkPrototypes", bookmarkPrototypes);
