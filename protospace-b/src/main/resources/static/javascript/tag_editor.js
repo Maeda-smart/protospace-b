@@ -5,8 +5,8 @@ validation = (value) => {
 before_send_hook = (value) => {
   return value;
 };
-delete_handler = (delete_button)=>{
-  delete_button.addEventListener("click", ()=>{
+delete_handler = (delete_button) => {
+  delete_button.addEventListener("click", () => {
     delete_button.parentElement.remove();
   });
 };
@@ -17,11 +17,17 @@ window.addEventListener("load", () => {
   const edit_input = document.querySelector(".tag.edit-input");
   const add_button = document.querySelector(".add-button");
   const tag_input = document.getElementById("create-tag");
-  document.querySelectorAll("span.delete-button").forEach(delete_button =>{delete_handler(delete_button)});
+  document.querySelectorAll("span.delete-button").forEach(delete_button => { delete_handler(delete_button) });
   edit_button.addEventListener("click", () => {
     edit_button.classList.add("hidden");
     edit_input.classList.remove("hidden");
   });
+  tag_input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      add_button.click();
+    }
+  })
   add_button.addEventListener("click", (event) => {
     event.stopPropagation();
     let value = tag_input.value;
@@ -29,7 +35,7 @@ window.addEventListener("load", () => {
     tag_input.value = "";
     try {
       value = validation(value);
-    } catch(error){
+    } catch (error) {
       edit_button.classList.remove("hidden");
       edit_input.classList.add("hidden");
     }
