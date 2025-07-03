@@ -33,6 +33,15 @@ import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserNewRepository;
 import in.tech_camp.protospace_b.service.TagService;
 import in.tech_camp.protospace_b.validation.ValidationOrder;
+
+import jakarta.validation.Validator;
+import jakarta.validation.ConstraintViolation;
+
+import java.util.Set;
+
+import org.springframework.web.bind.annotation.RequestParam;
+
+import in.tech_camp.protospace_b.validation.ValidationPriority1;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -43,9 +52,10 @@ public class PrototypeController {
     private final PrototypeNewRepository prototypeNewRepository;
     @Autowired
     private final PrototypeEditRepository prototypeEditRepository;
-
     @Autowired
     private final UserNewRepository userNewRepository;
+    @Autowired
+    private Validator validator;
 
     private final TagService tagService;
     private final PrototypeShowRepository prototypeShowRepository;
@@ -88,10 +98,27 @@ public class PrototypeController {
     @Transactional
     @PostMapping("/prototypes")
     public String createPrototype(
-            @ModelAttribute("prototypeForm") @Validated(ValidationOrder.class) PrototypeForm prototypeForm,
+            @ModelAttribute("prototypeForm")  PrototypeForm prototypeForm,
             BindingResult result,
+            @RequestParam("mode") String mode,
             @AuthenticationPrincipal CustomUserDetail currentUser,
             Model model) {
+
+        // 投稿ボタン押下時のみバリデーション発動
+        if ("submit".equals(mode)) {
+
+            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm,
+                    ValidationPriority1.class);
+            for (ConstraintViolation<PrototypeForm> violation : violations) {
+                result.rejectValue(violation.getPropertyPath().toString(), "", violation.getMessage());
+            }
+
+            if (prototypeForm.getImgFile() == null ||
+                    prototypeForm.getImgFile().getOriginalFilename() == null ||
+                    prototypeForm.getImgFile().getOriginalFilename().isEmpty()) {
+                result.rejectValue("imgFile", "", "画像ファイルが選択されていません。");
+            }
+        }
 
         if (result.hasErrors()) {
             List<String> errorMessages = result.getAllErrors().stream()
@@ -115,10 +142,13 @@ public class PrototypeController {
                     && !imageFile.getOriginalFilename().isEmpty()) {
                 fileName = saveImage(imageFile);
                 newImgPath = "/uploads/" + fileName;
-            } else {
+            } else if("submit".equals(mode)){
                 model.addAttribute("errorMessage", "画像ファイルが選択されていません。");
                 model.addAttribute("prototypeForm", prototypeForm);
                 return "prototype/prototypeNew";
+            } else {
+                // テキトウな画像の用意
+                newImgPath = "/uploads/noimg.png";
             }
 
             Integer userId = (currentUser != null) ? currentUser.getId() : null;
@@ -130,6 +160,14 @@ public class PrototypeController {
             if (userEntity == null) {
                 model.addAttribute("errorMessage", "ユーザーがデータベースに存在しません。");
                 return "prototype/prototypeNew";
+            }
+
+            // 下書き保存のnullの部分を空文字に
+            if ("draft".equals(mode)) {
+                prototypeForm.setPrototypeName(prototypeForm.getPrototypeName() != null ? prototypeForm.getPrototypeName() : "");
+                prototypeForm.setCatchCopy(prototypeForm.getCatchCopy() != null ? prototypeForm.getCatchCopy() : "");
+                prototypeForm.setConcept(prototypeForm.getConcept() != null ? prototypeForm.getConcept() : "");
+                
             }
 
             PrototypeEntity prototype = new PrototypeEntity();
