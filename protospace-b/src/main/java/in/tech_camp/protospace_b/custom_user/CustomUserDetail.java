@@ -33,6 +33,12 @@ public class CustomUserDetail implements UserDetails {
         return user.getPassword();
     }
 
+    // アカウントの状態(有効/凍結)
+    @Override
+    public boolean isEnabled() {
+        return user.isEnable();
+    }
+
     // ユーザー管理設定
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -42,10 +48,5 @@ public class CustomUserDetail implements UserDetails {
             return Collections.emptyList();
         }
         return List.of(new SimpleGrantedAuthority(role.trim()));
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 }

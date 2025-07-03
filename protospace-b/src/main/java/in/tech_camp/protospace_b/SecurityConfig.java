@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -35,7 +36,8 @@ public class SecurityConfig {
                         .loginProcessingUrl("/login")
                         .loginPage("/users/login")
                         .defaultSuccessUrl("/", true)
-                        .failureUrl("/users/login?error")
+                        // .failureUrl("/users/login?error")
+                        .failureHandler(customAuthenticationFailureHandler()) // カスタムハンドラー設定
                         .usernameParameter("email")
                         .permitAll())
 
@@ -51,5 +53,11 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    // ログインエラーのカスタムハンドラー
+    @Bean
+    public AuthenticationFailureHandler customAuthenticationFailureHandler() {
+        return new CustomAuthenticationFailureHandler();
     }
 }

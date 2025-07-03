@@ -70,11 +70,20 @@ public class PrototypeController {
     public String showPrototypeEdit(@PathVariable("prototypeId") Integer prototypeId, Model model,
             @AuthenticationPrincipal CustomUserDetail currentUser) {
 
+        // 投稿主・モデレーター・管理者以外は拒否
+        boolean isModeratorOrAdmin = "ROLE_MODERATOR".equals(currentUser.getUser().getRoleName()) ||
+            "ROLE_ADMIN".equals(currentUser.getUser().getRoleName());
+
         PrototypeEntity prototypeEntity = prototypeShowRepository.findByPrototypeId(currentUser.getId(), prototypeId);
 
-        Integer ownerUserId = prototypeEntity.getUser().getId();
+        if (prototypeEntity == null) {
+            return "redirect:/";
+        }
 
-        if (!ownerUserId.equals(currentUser.getId())) {
+        Integer ownerUserId = prototypeEntity.getUser().getId();
+        boolean isOwner = ownerUserId.equals(currentUser.getId());
+
+        if (!isOwner && !isModeratorOrAdmin) {
             return "redirect:/";
         }
 

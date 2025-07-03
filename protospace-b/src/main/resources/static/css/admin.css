@@ -1,0 +1,97 @@
+/* 全体を中央に配置 */
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+/* テーブルスタイル */
+table {
+    border-collapse: collapse;
+    width: 90%;
+    max-width: 1000px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* テーブルのヘッダー */
+thead {
+    background-color: #008CAF;
+    color: white;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: center;
+}
+
+/* 奇数行を少しグレーにして見やすく */
+tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+/* ボタンデザイン */
+button {
+    padding: 6px 12px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0b7dda;
+}
+
+/* 共通ボタンスタイル */
+.btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+/* 青ボタン（凍結・降格） */
+.btn-blue {
+    background-color: #2196F3;
+}
+
+.btn-blue:hover {
+    background-color: #0b7dda;
+}
+
+/* 赤ボタン（解除・昇格） */
+.btn-red {
+    background-color: #f44336;
+}
+
+.btn-red:hover {
+    background-color: #d32f2f;
+}
+
+.status-active {
+    color: #4CAF50; /* 緑 */
+    font-weight: bold;
+}
+.status-frozen {
+    color: #9E9E9E; /* グレー */
+    font-weight: bold;
+}
+
+.role-admin {
+    color: #f44336; /* 赤 */
+    font-weight: bold;
+}
+.role-mod {
+    color: #2196F3; /* 青 */
+    font-weight: bold;
+}
+.role-user {
+    color: #757575; /* グレー */
+    font-weight: bold;
+}
