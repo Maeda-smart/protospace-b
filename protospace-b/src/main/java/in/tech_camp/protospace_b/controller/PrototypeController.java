@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +31,6 @@ import in.tech_camp.protospace_b.repository.PrototypeNewRepository;
 import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserNewRepository;
 import in.tech_camp.protospace_b.service.TagService;
-import in.tech_camp.protospace_b.validation.ValidationOrder;
 
 import jakarta.validation.Validator;
 import jakarta.validation.ConstraintViolation;
@@ -170,6 +168,8 @@ public class PrototypeController {
                 prototypeForm.setCatchCopy(prototypeForm.getCatchCopy() != null ? prototypeForm.getCatchCopy() : "");
                 prototypeForm.setConcept(prototypeForm.getConcept() != null ? prototypeForm.getConcept() : "");
                 prototype.setPublished(false);
+            } else if("submit".equals(mode)){
+                prototype.setPublished(true);
             }
 
             prototype.setPrototypeName(prototypeForm.getPrototypeName());
@@ -177,6 +177,8 @@ public class PrototypeController {
             prototype.setConcept(prototypeForm.getConcept());
             prototype.setImgPath(newImgPath);
             prototype.setUser(userEntity);
+
+            System.out.println(prototype);
 
 
 
@@ -210,16 +212,21 @@ public class PrototypeController {
 
         // 投稿ボタン押下時のみバリデーション発動
         if ("submit".equals(mode)) {
-          Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm,
-                  ValidationPriority1.class);
-          for (ConstraintViolation<PrototypeForm> violation : violations) {
-              result.rejectValue(violation.getPropertyPath().toString(), "", violation.getMessage());
-          }
+            Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm,
+                    ValidationPriority1.class);
+            for (ConstraintViolation<PrototypeForm> violation : violations) {
+                result.rejectValue(violation.getPropertyPath().toString(), "", violation.getMessage());
+            }
+        }
 
-          if (prototypeForm.getImgFile() == null ||
-                  prototypeForm.getImgFile().getOriginalFilename() == null ||
-                  prototypeForm.getImgFile().getOriginalFilename().isEmpty()) {
-              result.rejectValue("imgFile", "", "画像ファイルが選択されていません。");
+        if ("submit".equals(mode)) {
+          if ((prototypeForm.getImgFile() == null
+              || prototypeForm.getImgFile().getOriginalFilename() == null
+              || prototypeForm.getImgFile().getOriginalFilename().isEmpty())
+              && prototypeForm.getImgPath().endsWith("noimg.png")) {
+              result.rejectValue("imgFile", "", "ダミー画像では公開できません");
+              model.addAttribute("prototypeForm", prototypeForm);
+              return "prototype/prototypeEdit";
           }
       }
 
@@ -271,10 +278,12 @@ public class PrototypeController {
             PrototypeEntity prototype = new PrototypeEntity();
 
             if ("draft".equals(mode)) {
-              prototypeForm.setPrototypeName(prototypeForm.getPrototypeName() != null ? prototypeForm.getPrototypeName() : "");
-              prototypeForm.setCatchCopy(prototypeForm.getCatchCopy() != null ? prototypeForm.getCatchCopy() : "");
-              prototypeForm.setConcept(prototypeForm.getConcept() != null ? prototypeForm.getConcept() : "");
-              prototype.setPublished(false);
+                prototypeForm.setPrototypeName(prototypeForm.getPrototypeName() != null ? prototypeForm.getPrototypeName() : "");
+                prototypeForm.setCatchCopy(prototypeForm.getCatchCopy() != null ? prototypeForm.getCatchCopy() : "");
+                prototypeForm.setConcept(prototypeForm.getConcept() != null ? prototypeForm.getConcept() : "");
+                prototype.setPublished(false);
+            } else if("submit".equals(mode)){
+                prototype.setPublished(true);
             }
 
             prototype.setId(prototypeId);
@@ -327,6 +336,8 @@ public class PrototypeController {
 
     private void deleteImageFile(String imgPath) {
         if (imgPath == null || imgPath.isEmpty()) return;
+        // ダミー画像保護
+        if (imgPath.endsWith("noimg.png")) return;
         String uploadDir = imageUrl.getImageUrl();
         String fileName = imgPath.substring(imgPath.lastIndexOf('/') + 1);
         java.nio.file.Path path = java.nio.file.Paths.get(uploadDir, fileName);

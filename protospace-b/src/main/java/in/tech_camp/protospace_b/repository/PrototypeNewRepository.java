@@ -12,8 +12,8 @@ import in.tech_camp.protospace_b.entity.PrototypeEntity;
 @Mapper
 public interface PrototypeNewRepository {
 
-    @Insert("INSERT INTO prototype (prototypeName, catchCopy, concept, img, user_id) " +
-            "VALUES (#{prototypeName}, #{catchCopy}, #{concept}, #{imgPath}, #{user.id})")
+    @Insert("INSERT INTO prototype (prototypeName, catchCopy, concept, img, published, user_id) " +
+            "VALUES (#{prototypeName}, #{catchCopy}, #{concept}, #{imgPath}, #{published}, #{user.id})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     @Results(value = {
             @Result(property = "id", column = "id"),
