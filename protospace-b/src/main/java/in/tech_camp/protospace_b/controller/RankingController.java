@@ -1,6 +1,7 @@
 package in.tech_camp.protospace_b.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -27,7 +28,13 @@ public class RankingController {
 
         // いいね数順に並び替えたプロトタイプを取得
         List<PrototypeEntity> prototypes = prototypeShowRepository.findPrototypesOrderByCountDesc(userId);
-        model.addAttribute("prototypes", prototypes);
+
+        List<PrototypeEntity> publishedPrototypes = prototypes.stream()
+        .filter(PrototypeEntity::isPublished)
+        .collect(Collectors.toList());
+
+        model.addAttribute("prototypes", publishedPrototypes);
+        
 
         return "prototype/ranking";
     }
