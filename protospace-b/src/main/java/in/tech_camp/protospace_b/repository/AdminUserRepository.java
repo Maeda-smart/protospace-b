@@ -11,19 +11,23 @@ import in.tech_camp.protospace_b.entity.UserEntity;
 
 @Mapper
 public interface AdminUserRepository {
-    // 全ユーザー情報を取得
+    // 全ユーザー情報を取得(自分と管理者ユーザーは除く)
     @Select("""
         SELECT id, nickname, email, password, profile, affiliation, position, role_name, enable
         FROM users
-        WHERE id != #{loginUserId}
+        WHERE id != #{loginUserId} AND id != #{adminUserId}
         ORDER BY id ASC
     """)
     @Result(property = "roleName", column = "role_name")
-    List<UserEntity> findAllUsers(Integer loginUserId);
+    List<UserEntity> findAllUsers(Integer loginUserId, Integer adminUserId);
 
     // 指定のユーザーをidで検索
     @Select("SELECT * FROM users WHERE id = #{id}")
     UserEntity findById(Integer id);
+
+    // 管理者のidを検索
+    @Select("SELECT id FROM users WHERE role_name = 'ROLE_ADMIN'")
+    Integer findAdminId();
 
     // 指定のユーザーのenableをfalseに更新（凍結）
     @Update("UPDATE users SET enable = false WHERE id = #{id}")

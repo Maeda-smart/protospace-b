@@ -22,9 +22,10 @@ public class AdminUserController {
 
     // ユーザー管理ページに遷移
     @GetMapping("/moderate/users")
-    public String showUserList(@AuthenticationPrincipal CustomUserDetail currentUser ,Model model) {
+    public String showUserList(@AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
         Integer loginUserId = currentUser.getId();
-        List<UserEntity> userList = adminUserRepository.findAllUsers(loginUserId);
+        Integer adminUserId = adminUserRepository.findAdminId();
+        List<UserEntity> userList = adminUserRepository.findAllUsers(loginUserId, adminUserId);
         model.addAttribute("userList", userList);
         return "moderate/userList";
     }
