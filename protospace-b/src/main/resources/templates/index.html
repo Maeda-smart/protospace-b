@@ -17,7 +17,7 @@
 <body>
   <div th:replace="~{header :: header}"></div>
 
-  
+
 
   <main class="main">
     <div class="inner">
@@ -26,18 +26,29 @@
         <a class="greeting_link" th:href="${'/users/'+user.id}"><span th:text="${user.nickname}"></span>さん</a>
       </div>
 
-      <!-- ランキング表示ボタン -->
-      <a class="ranking-title" th:href="@{/prototypes/ranking}">♔ランキングページ</a>
-
-      <form th:action="@{/prototypes/search}" th:object="${prototypeSearchForm}" method="get" class="form-wrapper">
-        <input type="text" th:field="*{prototypeName}" placeholder="Search by prototype name" class="search-box" />
-        <button type="submit" class="search-button">🔍</button>
-      </form>
+      <div class="top-layout">
+        <!-- ランキング表示ボタン -->
+        <a class="ranking-title" th:href="@{/prototypes/ranking}">♔ランキングページ</a>
+        <form th:action="@{/prototypes/search}" th:object="${prototypeSearchForm}" method="get" class="form-wrapper">
+          <input type="text" th:field="*{prototypeName}" placeholder="Search by prototype name" class="search-box" />
+          <button type="submit" class="search-button">🔍</button>
+        </form>
+      </div>
 
       <!-- プロトタイプの一覧表示 -->
+      <div class="sort">
+        <form method="get" th:action="@{/}">
+          <label for="sort">並び替え:</label>
+          <select name="sort" id="sort" onchange="this.form.submit()">
+            <option value="desc" th:selected="${sort == 'desc'}">新しい順</option>
+            <option value="asc" th:selected="${sort == 'asc'}">古い順</option>
+          </select>
+        </form>
+      </div>
       <div th:replace="~{prototypes :: prototypes(${prototypes})}"></div>
     </div>
   </main>
   <div th:replace="~{footer :: footer}"></div>
 </body>
+
 </html>

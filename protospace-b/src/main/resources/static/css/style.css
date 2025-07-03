@@ -188,3 +188,31 @@ a {
   font-size: 16px;
   cursor: pointer;
 }
+
+.sort {
+  padding-top: 10px;
+}
+
+.top-layout {
+  display: flex;
+  justify-content: space-between; /* 左右に配置 */
+  align-items: center;
+  padding: 20px 0;
+  position: relative;
+}
+
+.ranking-title {
+  margin-left: 20px;
+}
+
+.form-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
+.ranking-title {
+  margin-left: 0;     /* ← 左端に寄せる */
+  padding-left: 20px; /* ← ちょっと余白をつけたい場合 */
+}
