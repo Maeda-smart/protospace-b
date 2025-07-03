@@ -22,4 +22,5 @@ public class PrototypeEntity {
     private boolean read;
     private boolean bookmark;
     private boolean pin;
+    private boolean published;
 }
