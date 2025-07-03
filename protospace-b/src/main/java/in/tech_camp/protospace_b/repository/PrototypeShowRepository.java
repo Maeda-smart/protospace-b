@@ -94,7 +94,7 @@ public interface PrototypeShowRepository {
                 MAX(CASE WHEN b.user_id = #{userId} THEN 1 ELSE 0 END) is_bookmark
             FROM
                 prototype p
-            LEFT JOIN users u ON p.user_id = u.id AND u.id = #{userId}
+            LEFT JOIN users u ON p.user_id = u.id
             LEFT JOIN (
                 SELECT
                     nice.prototype_id,
@@ -108,7 +108,7 @@ public interface PrototypeShowRepository {
             LEFT JOIN prototype_tags pt ON p.id = pt.prototype_id
             LEFT JOIN bookmark b ON p.id = b.prototype_id
             LEFT JOIN pin ON p.id = pin.prototype_id
-            WHERE p.published = true
+            WHERE p.published = true  AND u.id = #{userId}
             GROUP BY
                 p.id,
                 p.prototypeName,
