@@ -98,8 +98,7 @@ public class PrototypeController {
     @Transactional
     @PostMapping("/prototypes")
     public String createPrototype(
-            @ModelAttribute("prototypeForm")  PrototypeForm prototypeForm,
-            BindingResult result,
+            @ModelAttribute("prototypeForm")  PrototypeForm prototypeForm, BindingResult result,
             @RequestParam("mode") String mode,
             @AuthenticationPrincipal CustomUserDetail currentUser,
             Model model) {
@@ -128,8 +127,8 @@ public class PrototypeController {
             model.addAttribute("userForm", prototypeForm);
             return "prototype/prototypeNew";
         }
-        MultipartFile imageFile = prototypeForm.getImgFile();
 
+        MultipartFile imageFile = prototypeForm.getImgFile();
         if (imageFile != null) {
             System.out.println("imageFileName: " + imageFile.getOriginalFilename());
         }
@@ -204,13 +203,25 @@ public class PrototypeController {
     @PostMapping("/prototypes/{prototypeId}/edit/submit")
     public String editPrototype(
             @PathVariable("prototypeId") Integer prototypeId,
-            @ModelAttribute("prototypeForm") @Validated(ValidationOrder.class) PrototypeForm prototypeForm,
-            BindingResult result,
+            @ModelAttribute("prototypeForm") PrototypeForm prototypeForm, BindingResult result,
+            @RequestParam("mode") String mode,
             @AuthenticationPrincipal CustomUserDetail currentUser,
             Model model) {
 
-        PrototypeEntity beforeEntity = prototypeShowRepository.findByPrototypeId(currentUser.getId(),prototypeId);
-        String beforeImgPath = beforeEntity.getImgPath();
+        // 投稿ボタン押下時のみバリデーション発動
+        if ("submit".equals(mode)) {
+          Set<ConstraintViolation<PrototypeForm>> violations = validator.validate(prototypeForm,
+                  ValidationPriority1.class);
+          for (ConstraintViolation<PrototypeForm> violation : violations) {
+              result.rejectValue(violation.getPropertyPath().toString(), "", violation.getMessage());
+          }
+
+          if (prototypeForm.getImgFile() == null ||
+                  prototypeForm.getImgFile().getOriginalFilename() == null ||
+                  prototypeForm.getImgFile().getOriginalFilename().isEmpty()) {
+              result.rejectValue("imgFile", "", "画像ファイルが選択されていません。");
+          }
+      }
 
         if (result.hasErrors()) {
             List<String> errorMessages = result.getAllErrors().stream()
@@ -220,6 +231,10 @@ public class PrototypeController {
             model.addAttribute("prototypeForm", prototypeForm);
             return "prototype/prototypeEdit";
         }
+
+
+        PrototypeEntity beforeEntity = prototypeShowRepository.findByPrototypeId(currentUser.getId(),prototypeId);
+        String beforeImgPath = beforeEntity.getImgPath();
 
         try {
             MultipartFile imageFile = prototypeForm.getImgFile();
@@ -254,6 +269,14 @@ public class PrototypeController {
             }
 
             PrototypeEntity prototype = new PrototypeEntity();
+
+            if ("draft".equals(mode)) {
+                prototypeForm.setPrototypeName(prototypeForm.getPrototypeName() != null ? prototypeForm.getPrototypeName() : "");
+                prototypeForm.setCatchCopy(prototypeForm.getCatchCopy() != null ? prototypeForm.getCatchCopy() : "");
+                prototypeForm.setConcept(prototypeForm.getConcept() != null ? prototypeForm.getConcept() : "");
+                prototype.setPublished(false);
+            }
+
             prototype.setId(prototypeId);
             prototype.setPrototypeName(prototypeForm.getPrototypeName());
             prototype.setCatchCopy(prototypeForm.getCatchCopy());
