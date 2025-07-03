@@ -20,7 +20,10 @@
         <h5>ユーザーログイン</h5>
       </div>
 
-      <div th:if="${loginError}" class="error-message" th:text="${loginError}"></div>
+      <!-- エラー表示 -->
+       <div th:if="${error}">
+          <p th:text="${error}" style="color:red;"></p>
+      </div>
 
       <div class="login-inner">
         <form th:action="@{/login}" th:object="${loginForm}" method="post">
