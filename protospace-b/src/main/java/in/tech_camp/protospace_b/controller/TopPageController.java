@@ -31,21 +31,19 @@ public class TopPageController {
         Integer userId = (currentUser != null) ? currentUser.getId() : null;
         model.addAttribute("user", userDetailRepository.findById(userId));
 
-        // 全プロトタイプ取得を取得し、モデルに渡す
+        // 並び順に応じてプロトタイプを取得
         List<PrototypeEntity> prototypes = "asc".equalsIgnoreCase(sort)
             ? prototypeShowRepository.showAllOrderByCreatedAtAsc(userId)
             : prototypeShowRepository.showAll(userId);
 
-        model.addAttribute("prototypes", prototypes);
-        model.addAttribute("sort", sort);
-        List<PrototypeEntity> prototypes = prototypeShowRepository.showAll(userId);
-
-        // NEW
+        // 公開プロトタイプだけを抽出
         List<PrototypeEntity> publishedPrototypes = prototypes.stream()
-        .filter(PrototypeEntity::isPublished)
-        .collect(Collectors.toList());
+            .filter(PrototypeEntity::isPublished)
+            .collect(Collectors.toList());
 
+        // モデルに追加
         model.addAttribute("prototypes", publishedPrototypes);
+        model.addAttribute("sort", sort);
 
         // プロトタイプ検索フォームをモデルに渡す
         PrototypeSearchForm prototypeSearchForm = new PrototypeSearchForm();
