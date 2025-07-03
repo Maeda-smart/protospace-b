@@ -32,11 +32,7 @@ public class TopPageController {
         // 全プロトタイプ取得を取得し、モデルに渡す
         List<PrototypeEntity> prototypes = prototypeShowRepository.showAll(userId);
 
-        List<PrototypeEntity> publishedPrototypes = prototypes.stream()
-        .filter(PrototypeEntity::isPublished)
-        .collect(Collectors.toList());
-
-        model.addAttribute("prototypes", publishedPrototypes);
+        model.addAttribute("prototypes", prototypes);
 
         // プロトタイプ検索フォームをモデルに渡す
         PrototypeSearchForm prototypeSearchForm = new PrototypeSearchForm();
