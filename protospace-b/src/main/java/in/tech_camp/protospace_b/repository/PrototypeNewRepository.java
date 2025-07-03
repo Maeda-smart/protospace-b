@@ -19,6 +19,7 @@ public interface PrototypeNewRepository {
             @Result(property = "id", column = "id"),
             @Result(property = "user", column = "user_id", one = @One(select = "in.tech_camp.protospace_b.repository.UserDetailRepository.findById")),
             @Result(property = "imgPath", column = "img"),
+            @Result(property = "published", column = "published"),
     })
     void insert(PrototypeEntity prototype);
 }

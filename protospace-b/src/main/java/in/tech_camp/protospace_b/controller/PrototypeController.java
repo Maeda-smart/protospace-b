@@ -162,20 +162,24 @@ public class PrototypeController {
                 return "prototype/prototypeNew";
             }
 
+
+            PrototypeEntity prototype = new PrototypeEntity();
+
             // 下書き保存のnullの部分を空文字に
             if ("draft".equals(mode)) {
                 prototypeForm.setPrototypeName(prototypeForm.getPrototypeName() != null ? prototypeForm.getPrototypeName() : "");
                 prototypeForm.setCatchCopy(prototypeForm.getCatchCopy() != null ? prototypeForm.getCatchCopy() : "");
                 prototypeForm.setConcept(prototypeForm.getConcept() != null ? prototypeForm.getConcept() : "");
-                
+                prototype.setPublished(false);
             }
 
-            PrototypeEntity prototype = new PrototypeEntity();
             prototype.setPrototypeName(prototypeForm.getPrototypeName());
             prototype.setCatchCopy(prototypeForm.getCatchCopy());
             prototype.setConcept(prototypeForm.getConcept());
             prototype.setImgPath(newImgPath);
             prototype.setUser(userEntity);
+
+
 
             prototypeNewRepository.insert(prototype);
             List<String> tagNames = prototypeForm.getTags();
