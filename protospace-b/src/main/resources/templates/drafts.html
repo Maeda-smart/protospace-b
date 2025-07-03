@@ -1,0 +1,24 @@
+<div class="card_wrapper" th:fragment="drafts(list)">
+  <div class="card" th:each="prototype : ${list}">
+    <a th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}">
+      <img class="card_img" th:src="@{${prototype.imgPath}}">
+    </a>
+    <div class="card_body">
+      <a class="card_title"
+        th:href="@{'/prototypes/' + ${prototype.id} + '/detail'}"
+        th:text="${prototype.prototypeName}"></a>
+      <div th:replace="~{tags :: prototype-tags(${prototype.tags})}"></div>
+      <p class="card_summary" th:text="${prototype.catchCopy}"></p>
+      <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
+          th:text="${prototype.user.nickname}"></span></a>
+      <p class="timestamp_wrapper">
+        <span th:text="${#temporals.format(prototype.createdAt, 'yyyy/MM/dd HH:mm')}"></span>
+        <span class="timestamp_edited" th:if="${prototype.createdAt} != ${prototype.updatedAt}">
+          <svg width="10" height="10" viewBox="0 0 25 25">
+            <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" />
+          </svg>
+        </span>
+      </p>
+    </div>
+  </div>
+</div>

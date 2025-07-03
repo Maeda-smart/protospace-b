@@ -32,13 +32,19 @@ public class PrototypeDetailController {
         Integer loginUserId = (currentUser != null) ? currentUser.getId() : null;
         // リポジトリからエンティティ取得
         PrototypeEntity prototype = prototypeShowRepository.findByPrototypeId(loginUserId, prototypeId);
+
+        // 公開前のプロトは持ち主しか見られなくする
+    if (!prototype.isPublished()) {
+        if (currentUser == null || !prototype.getUser().getId().equals(currentUser.getId())) {
+            return "redirect:/";
+        }
+  }
+
         model.addAttribute("prototype", prototype);
 
-        // コメントフォームを初期化してビューに渡す
         CommentForm commentForm = new CommentForm();
         model.addAttribute(commentForm);
 
-        // コメント一覧を取得してビューに渡す
         List<CommentEntity> comments = commentRepository.findByPrototypeId(prototypeId);
         model.addAttribute("comments", comments);
 

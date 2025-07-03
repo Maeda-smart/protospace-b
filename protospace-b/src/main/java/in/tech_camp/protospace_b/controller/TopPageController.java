@@ -1,6 +1,7 @@
 package in.tech_camp.protospace_b.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,12 @@ public class TopPageController {
 
         // 全プロトタイプ取得を取得し、モデルに渡す
         List<PrototypeEntity> prototypes = prototypeShowRepository.showAll(userId);
-        model.addAttribute("prototypes", prototypes);
+
+        List<PrototypeEntity> publishedPrototypes = prototypes.stream()
+        .filter(PrototypeEntity::isPublished)
+        .collect(Collectors.toList());
+
+        model.addAttribute("prototypes", publishedPrototypes);
 
         // プロトタイプ検索フォームをモデルに渡す
         PrototypeSearchForm prototypeSearchForm = new PrototypeSearchForm();

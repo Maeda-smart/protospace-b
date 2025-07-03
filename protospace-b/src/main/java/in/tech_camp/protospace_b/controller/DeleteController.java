@@ -40,7 +40,7 @@ public class DeleteController {
 
         try {
             prototypeDeleteRepository.deleteById(prototypeId);
-            // 画像ローカルからの削除
+            
             String imgPath = prototypeEntity.getImgPath();
             if (imgPath != null && !imgPath.isEmpty()) {
                 deleteImageFile(imgPath);
@@ -55,6 +55,8 @@ public class DeleteController {
 
     private void deleteImageFile(String imgPath) {
         if (imgPath == null || imgPath.isEmpty()) return;
+        // ダミー画像の保護
+        if (imgPath.endsWith("noimg.png")) return;
         String uploadDir = imageUrl.getImageUrl();
         String fileName = imgPath.substring(imgPath.lastIndexOf('/') + 1);
         java.nio.file.Path path = java.nio.file.Paths.get(uploadDir, fileName);
