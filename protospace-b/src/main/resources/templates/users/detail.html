@@ -66,6 +66,9 @@
       <h3>ピン止めプロトタイプ</h3>
       <div th:replace="~{prototypes :: prototypes(${pinnedPrototypes})}"></div>
 
+      <h3>その他のプロトタイプ</h3>
+      <div th:replace="~{prototypes :: prototypes(${unpinnedPrototypes})}"></div>
+
       <th:block th:if="${draftPrototypes != null} and ${#lists.size(draftPrototypes)} > 0">
         <h3>下書きプロトタイプ</h3>
         <div th:replace="~{drafts :: drafts(${draftPrototypes})}"></div>
