@@ -151,3 +151,7 @@ h3 {
 .action-btn:hover {
   background-color: #5dbbe9;
 }
+
+.user-actions {
+  padding-top: 10px;
+}

@@ -52,21 +52,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    // @Bean
-    // public AuthenticationSuccessHandler authenticationSuccessHandler(){
-    // return (request, response, authentication)->{
-    // CustomUserDetail userDetails = (CustomUserDetail)
-    // authentication.getPrincipal();
-
-    // response.setStatus(HttpServletResponse.SC_OK);
-    // response.setContentType("application/json");
-    // response.setCharacterEncoding("UTF-8");
-    // response.getWriter().write(String.format("{\"id\":%d,\"nickname\":\"%s\",\"email\":\"%s\"}",
-    // userDetails.getId(),
-    // userDetails.getNickname(),
-    // userDetails.getUsername()
-    // ));
-    // };
-    // }
 }
