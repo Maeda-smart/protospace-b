@@ -115,10 +115,11 @@ svg{
   stroke-width: 1.5;
 }
 
-/* .comments_list li{
-  list-style: none;
-  display: flex;
-  align-items: center;
-  padding: 1px;
-  margin-top: 10px;
-} */
+.pined_icon{
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  font-size: 15px;
+  color: rgb(236, 95, 95);
+  z-index: 2;
+}
