@@ -1,5 +1,6 @@
 package in.tech_camp.protospace_b.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -94,5 +95,34 @@ public class TagService {
                         + prototype.getId());
             }
         });
+    }
+
+    public List<PrototypeEntity> tagBundle(List<PrototypeEntity> prototypes) {
+        /*
+         * 同じprototype idは連続すること。でないとバグります
+         */
+        if (prototypes.isEmpty())
+            return prototypes;
+        List<PrototypeEntity> retPrototypes = new ArrayList<>();
+        PrototypeEntity currentPrototype = null;
+        List<TagEntity> tags = new ArrayList<>();
+        for (PrototypeEntity prototype : prototypes) {
+            if (currentPrototype == null || currentPrototype.getId() != prototype.getId()) {
+                if (currentPrototype != null) {
+                    currentPrototype.setTags(tags);
+                    tags = new ArrayList<>();
+                    retPrototypes.add(currentPrototype);
+                }
+                currentPrototype = prototype;
+                if (prototype.getTag() != null)
+                    tags.add(prototype.getTag());
+            } else {
+                tags.add(prototype.getTag());
+            }
+        }
+        if (currentPrototype != null)
+            currentPrototype.setTags(tags);
+        retPrototypes.add(currentPrototype);
+        return retPrototypes;
     }
 }
