@@ -74,7 +74,8 @@ tbody th:nth-child(2){
   border-radius: 2px;
   font-size: 0.80em;
   line-height: 1.6;
-  padding-top: 10px;
+  padding-top: 5px;
+  margin-bottom: 15px;
 }
 
 .userName {
