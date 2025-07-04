@@ -195,7 +195,6 @@ a {
 
 .top-layout {
   display: flex;
-  justify-content: space-between; /* 左右に配置 */
   align-items: center;
   padding: 20px 0;
   position: relative;

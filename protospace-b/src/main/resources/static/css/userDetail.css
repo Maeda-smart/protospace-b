@@ -39,7 +39,7 @@
 
 /* ===== テーブルレイアウト ===== */
 /* ===== ユーザー情報テーブルのラップ：中央寄せ & 角丸 ===== */
-.user-info-table-wrapper {
+.user_info_table_wrapper {
   max-width: 600px;
   margin: 0 auto 40px auto;
   border-radius: 8px;
