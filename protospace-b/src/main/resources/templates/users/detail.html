@@ -63,11 +63,13 @@
 
       <h2 class="bracket-title"><span th:text="${user.nickname}"></span>さんのプロトタイプ</h2>
 
-      <h3>ピン止めプロトタイプ</h3>
-      <div th:replace="~{prototypes :: prototypes(${pinnedPrototypes})}"></div>
-
-      <h3>その他のプロトタイプ</h3>
-      <div th:replace="~{prototypes :: prototypes(${unpinnedPrototypes})}"></div>
+      <h3>プロトタイプ</h3>
+      <div class="card_wrapper">
+        <div class="card" th:each="prototype : ${sortedByPinPrototypes}">
+          <div class="pined_icon" th:if="${prototype.pin} and ${#strings.equals(pageType, 'detail')}">▶</div>
+          <div th:replace="~{card :: card(${prototype})}"></div>
+        </div>
+      </div>
 
       <th:block th:if="${draftPrototypes != null} and ${#lists.size(draftPrototypes)} > 0">
         <h3>下書きプロトタイプ</h3>
