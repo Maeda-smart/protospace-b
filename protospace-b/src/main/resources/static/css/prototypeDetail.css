@@ -34,7 +34,7 @@
   display: flex;
   justify-content: space-between;
   align-items: end;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .title {
@@ -54,10 +54,10 @@
 .edit_delete {
   display: flex;
   justify-content: right;
-  padding-top: 16px;
+  padding-top: 10px;
 }
 
-.btn {
+.detail-btn {
     padding: 0.3em 1.2em;
     font-size: 14px;
     color: #4c4c4c;
@@ -70,12 +70,15 @@
     background-color: white;
 }
 
+.detail-btn:hover{
+  background-color: #cdcdcd;
+}
+
 .prototype_img {
     display: block;
     margin: 0 auto;
     width: 100%;
-    padding: 10px 0;
-    text-align: center;
+    border: solid 2px;
 }
 
 .prototype_detail {
@@ -171,11 +174,17 @@ button.pin-off {
   transition: all 0.3s ease;
 }
 
+.under_img{
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #999;
+}
+
 .button-wrapper{
   display: flex;
-  justify-content: right;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #999;
+  justify-content: left;
 }
 
 /* ピンボタン */

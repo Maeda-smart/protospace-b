@@ -12,24 +12,6 @@
   margin: 0;
 }
 
-/* ===== 共通ボタンスタイル（編集・ログアウトなど） ===== */
-.action-btn {
-  display: inline-block;
-  padding: 8px 16px;
-  font-size: 0.9rem;
-  color: #fff;
-  background-color: #87CEFA;
-  border: 1px solid #87CEFA;
-  border-radius: 4px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.action-btn:hover {
-  background-color: #5dbbe9;
-}
-
 .userName > div {
   display: flex;
   gap: 10px;
@@ -132,24 +114,6 @@ h3 {
 
 .user-actions form {
   margin: 0;
-}
-
-/* ボタンの共通スタイル（すでにあるなら合わせてください） */
-.action-btn {
-  display: inline-block;
-  padding: 8px 16px;
-  font-size: 0.9rem;
-  color: #fff;
-  background-color: #87CEFA;
-  border: 1px solid #87CEFA;
-  border-radius: 4px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.action-btn:hover {
-  background-color: #5dbbe9;
 }
 
 .user-actions {

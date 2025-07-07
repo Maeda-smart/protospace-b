@@ -21,8 +21,8 @@
       </div>
 
       <!-- エラー表示 -->
-       <div th:if="${error}">
-          <p th:text="${error}" style="color:red;"></p>
+      <div th:if="${error}">
+        <p th:text="${error}" style="color:red;"></p>
       </div>
 
       <div class="login-inner">
@@ -46,7 +46,7 @@
                 <input type="password" th:field="*{password}" id="password" name="password" required="required">
               </div>
               <div class='submit-btn'>
-                <input type="submit" value="ログイン" class="btn">
+                <input type="submit" value="ログイン" class="action-btn">
               </div>
             </div>
           </div>

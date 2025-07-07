@@ -3,24 +3,26 @@
 }
 
 .search-container {
-  max-width: 600px;
+  /* max-width: 600px; */
   margin: 0 auto 30px;
   text-align: center;
 }
 
 .form-wrapper {
-  margin: 30px auto 20px; /* ← ここを追加して中央配置 */
+  margin: 30px; /* ← ここを追加して中央配置 */
   height: 50px;
-  width: 60vh;
+  width: 60%;
+  max-width: 650px;
   border-radius: 100px;
   border: #87CEFA solid 2px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
 .search-box {
-  width: calc(50vh);
+  padding-left: 10px;
+  width: 50%;
   margin: 5px;
   font-size: 16px;
   border: 1px solid rgb(255, 255, 255);
@@ -44,6 +46,8 @@ input.search-box:-webkit-autofill {
 .search-button {
   height: 30px;
   width: 50px;
+  padding: 0 1pxpx;
+  margin-right: 10px;
   background: transparent;
   text-decoration: none;
   border: 2px #87CEFA solid;
@@ -83,4 +87,11 @@ input.search-box:-webkit-autofill {
   text-align: center;
   color: #999;
   margin-top: 20px;
+}
+
+.top-layout {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  position: relative;
 }
