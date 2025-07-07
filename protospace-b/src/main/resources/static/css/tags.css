@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .tag {
   border: 1px solid #092740;

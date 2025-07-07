@@ -19,8 +19,8 @@
       <form th:action="@{/prototypes}" th:object="${prototypeForm}" method="post" enctype="multipart/form-data">
         <div th:replace="~{prototypeEditor :: prototype-editor}"></div>
         <div class="submit-wrapper">
-          <button class="new-proto-btn" type="submit" name="mode" value="draft"> 下書き保存 </button>
-          <button class="new-proto-btn" type="submit" name="mode" value="submit"> 投稿 </button>
+          <button class="action-btn" type="submit" name="mode" value="draft"> 下書き保存 </button>
+          <button class="action-btn" type="submit" name="mode" value="submit"> 投稿 </button>
         </div>
       </form>
     </div>

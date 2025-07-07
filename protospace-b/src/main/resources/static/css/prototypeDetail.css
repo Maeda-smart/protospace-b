@@ -2,29 +2,39 @@
   box-sizing: border-box;
 }
 
-.prototype_inner {
+.prototype_wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.prototype_wrapper {
-  /* min-height: calc(100vh - 161px); */
+.prototype_inner{
+  width: calc(100% - 40px);
   background-color: #f6f6f6;
-  padding: 40px;
-  margin: 0 50px;
+  padding: 20px 30px;
 }
 
+
 @media (min-width: 800px) {
-  .prototype_wrapper {
+  .prototype_inner {
     width: 720px;
   }
 }
 
-.prototypes-header{
+.timestamp_wrapper{
+  display: flex;
+  justify-content: right;
+}
+
+.timestamp_content{
+  font-size: 12px;
+}
+
+.prototypes_header{
   display: flex;
   justify-content: space-between;
   align-items: end;
+  margin: 5px 0;
 }
 
 .title {
@@ -44,10 +54,10 @@
 .edit_delete {
   display: flex;
   justify-content: right;
-  padding-top: 16px;
+  padding-top: 10px;
 }
 
-.btn {
+.detail-btn {
     padding: 0.3em 1.2em;
     font-size: 14px;
     color: #4c4c4c;
@@ -60,12 +70,15 @@
     background-color: white;
 }
 
+.detail-btn:hover{
+  background-color: #cdcdcd;
+}
+
 .prototype_img {
     display: block;
     margin: 0 auto;
     width: 100%;
-    padding: 10px 0;
-    text-align: center;
+    border: solid 2px;
 }
 
 .prototype_detail {
@@ -161,11 +174,17 @@ button.pin-off {
   transition: all 0.3s ease;
 }
 
+.under_img{
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #999;
+}
+
 .button-wrapper{
   display: flex;
-  justify-content: right;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #999;
+  justify-content: left;
 }
 
 /* ピンボタン */
