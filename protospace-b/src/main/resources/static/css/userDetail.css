@@ -24,7 +24,7 @@
 .user_info_table_wrapper {
   width: 600px;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   margin: 0 0 40px 0;
   border-radius: 8px;
   overflow: hidden;
@@ -39,15 +39,8 @@ table.user-info-table {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
 }
 
-table.user-info-table th{
-  width: 150px;
-    padding: 12px 16px;
-    border: 1px solid #dddddd9f;
-    text-align: left;
-}
-
+table.user-info-table th,
 table.user-info-table td {
-  width: 450px;
   padding: 12px 16px;
   border: 1px solid #ddd;
   text-align: left;
