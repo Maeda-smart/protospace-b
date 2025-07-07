@@ -4,11 +4,11 @@
 <head>
   <meta name="_csrf" th:content="${_csrf.token}" />
   <meta name="_csrf_header" th:content="${_csrf.headerName}" />
-  <link th:href="@{/css/userDetail.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/edit.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/prototypes.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/tags.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/userDetail.css}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -19,23 +19,25 @@
         <div class="user_name">
           <div class="user-info-header">
             <h2>ユーザー：<span th:text="${user.nickname}"></span>さん</h2>
-            <div class="user-actions"
-              th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == user.id}">
-              <a th:href="@{/users/{userId}/edit(userId=${user.id})}" class="action-btn">編集する</a>
+            <div class="user-actions" th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == user.id}">
               <form th:action="@{/users/logout}" method="POST">
-                <button type="submit" class="action-btn" rel="nofollow" data-method="delete">ログアウト</button>
+                <button type="submit" class="action-btn action-btn-user" rel="nofollow" data-method="delete">ログアウト</button>
               </form>
             </div>
-            <div class="user-actions"
-              th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() != user.id}">
+            <div class="user-actions" th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() != user.id}">
               <form method="post" th:action="@{/dm/{id}(id=${user.id})}">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <button type="submit" class="action-btn">このユーザーとチャットする</button>
+                <button type="submit" class="action-btn action-btn-user">チャット</button>
               </form>
             </div>
           </div>
         </div>
-        <h2 class="bracket-title"><span th:text="${user.nickname}"></span>さんの情報</h2>
+        <div class="user_table_top">
+          <h2 class="bracket-title"><span th:text="${user.nickname}"></span>さんの情報</h2>
+          <div class="user-actions" th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == user.id}">
+            <a th:href="@{/users/{userId}/edit(userId=${user.id})}" class="action-btn action-btn-user" >編集する</a>
+          </div>
+        </div>
         <div class="user_info_table_wrapper">
           <table class="user-info-table">
             <tbody>

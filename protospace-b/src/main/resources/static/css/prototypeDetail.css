@@ -176,7 +176,7 @@ button.pin-off {
 
 .under_img{
   display: flex;
-  align-items: start;
+  align-items: end;
   justify-content: space-between;
   padding: 12px 0;
   border-bottom: 1px solid #999;
