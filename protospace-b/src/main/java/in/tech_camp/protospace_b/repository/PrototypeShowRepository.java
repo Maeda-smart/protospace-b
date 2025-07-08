@@ -369,37 +369,52 @@ public interface PrototypeShowRepository {
 
     // 下書きのみ取得
     @Select("""
-                SELECT
-                    p.id p_id,
-                    p.prototypeName,
-                    p.catchCopy,
-                    p.concept,
-                    p.img,
-                    p.created_at,
-                    p.updated_at,
-                    p.published,
-                    u.id u_id,
-                    u.nickname nickname,
-                    COALESCE(n.niceCount, 0) niceCount,
-                    n.isNice
-                FROM
-                    prototype p
-                LEFT JOIN users u ON p.user_id = u.id
-                LEFT JOIN (
-                SELECT
-                    nice.prototype_id,
-                    MAX(CASE WHEN nice.user_id = #{currentUserId} THEN 1 ELSE 0 END) isNice,
-                    COUNT(*) niceCount
-                FROM
-                    nice
-                GROUP BY
-                    nice.prototype_id
-            ) n ON p.id = n.prototype_id
-                WHERE
-                    p.published = false
-                    AND p.user_id = #{userId}
-                ORDER BY p.updated_at DESC
-                """)
+                    SELECT
+                        p.id p_id,
+                        p.prototypeName,
+                        p.catchCopy,
+                        p.concept,
+                        p.img,
+                        p.created_at,
+                        p.updated_at,
+                        p.published,
+                        u.id u_id,
+                        u.nickname nickname,
+                        COALESCE(n.niceCount, 0) niceCount,
+                        n.isNice,
+                        MAX(CASE WHEN r.user_id = #{userId} THEN 1 ELSE 0 END) read
+                    FROM
+                        prototype p
+                    LEFT JOIN users u ON p.user_id = u.id
+                    LEFT JOIN (
+                    SELECT
+                        nice.prototype_id,
+                        MAX(CASE WHEN nice.user_id = #{userId} THEN 1 ELSE 0 END) isNice,
+                        COUNT(*) niceCount
+                    FROM
+                        nice
+                    GROUP BY
+                        nice.prototype_id
+                ) n ON p.id = n.prototype_id
+                LEFT JOIN prototype_read_status r ON r.prototype_id = p.id AND r.user_id = #{userId}
+                    WHERE
+                        p.published = false
+                        AND p.user_id = #{userId}
+                    GROUP BY
+                        p.id,
+                        p.prototypeName,
+                        p.catchCopy,
+                        p.concept,
+                        p.img,
+                        p.created_at,
+                        p.updated_at,
+                        p.published,
+                        u.id,
+                        u.nickname,
+                        n.niceCount,
+                        n.isNice
+                    ORDER BY p.updated_at DESC
+                    """)
     @Results(value = {
             @Result(property = "id", column = "p_id"),
             @Result(property = "user.id", column = "u_id"),
@@ -413,8 +428,7 @@ public interface PrototypeShowRepository {
             @Result(property = "published", column = "published")
     })
     List<PrototypeEntity> findDraftsByUserId(
-        @Param("userId") Integer userId,
-        @Param("currentUserId") Integer currentUserId);
+            @Param("userId") Integer userId);
 
     @Select("""
             SELECT

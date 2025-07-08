@@ -48,7 +48,7 @@ public class UserDetailController {
         model.addAttribute("pageType", "detail");
 
         if (loginUserId != null && loginUserId.equals(userId)) {
-            List<PrototypeEntity> draftPrototypes = prototypeShowRepository.findDraftsByUserId(userId, userId);
+            List<PrototypeEntity> draftPrototypes = prototypeShowRepository.findDraftsByUserId(userId);
             model.addAttribute("draftPrototypes", draftPrototypes);
         }
 
