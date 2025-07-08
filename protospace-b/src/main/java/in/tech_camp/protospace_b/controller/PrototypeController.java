@@ -93,8 +93,11 @@ public class PrototypeController {
         prototypeForm.setConcept(prototypeEntity.getConcept());
         prototypeForm.setImgPath(prototypeEntity.getImgPath());
 
+        boolean published = prototypeEntity.isPublished();
+
         model.addAttribute("prototypeForm", prototypeForm);
         model.addAttribute("prototypeId", prototypeId);
+        model.addAttribute("published", published);
         // formに型を追加して渡してもOK
         model.addAttribute("imgPath", prototypeEntity.getImgPath());
         model.addAttribute("tags", prototypeEntity.getTags());
@@ -153,8 +156,8 @@ public class PrototypeController {
                 model.addAttribute("prototypeForm", prototypeForm);
                 return "prototype/prototypeNew";
             } else {
-                // テキトウな画像の用意
-                newImgPath = "/uploads/noimg.png";
+                // ダミー画像
+                newImgPath = "/image/noimg.png";
             }
 
             Integer userId = (currentUser != null) ? currentUser.getId() : null;

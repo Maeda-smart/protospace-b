@@ -1,5 +1,6 @@
 package in.tech_camp.protospace_b.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -40,10 +41,11 @@ public class UserDetailController {
         List<PrototypeEntity> prototypes = prototypeShowRepository.showByUserId(loginUserId, userId);
         Map<Boolean, List<PrototypeEntity>> partitioned = prototypes.stream()
                 .collect(Collectors.partitioningBy(prototype -> prototype.isPin()));
-        List<PrototypeEntity> pinnedPrototypes = partitioned.get(true);
-        List<PrototypeEntity> unpinnedPrototypes = partitioned.get(false);
-        model.addAttribute("pinnedPrototypes", pinnedPrototypes);
-        model.addAttribute("unpinnedPrototypes", unpinnedPrototypes);
+        List<PrototypeEntity> sortedByPinPrototypes = new ArrayList<>();
+        sortedByPinPrototypes.addAll(partitioned.get(true)); // ピン付き
+        sortedByPinPrototypes.addAll(partitioned.get(false)); // ピンなし
+        model.addAttribute("sortedByPinPrototypes", sortedByPinPrototypes);
+        model.addAttribute("pageType", "detail");
 
         if (loginUserId != null && loginUserId.equals(userId)) {
             List<PrototypeEntity> draftPrototypes = prototypeShowRepository.findDraftsByUserId(userId, userId);

@@ -19,9 +19,13 @@
       <form th:action="@{/prototypes/{prototypeId}/edit/submit(prototypeId=${prototypeId})}"
         th:object="${prototypeForm}" method="post" enctype="multipart/form-data">
         <div th:replace="~{prototypeEditor :: prototype-editor}"></div>
-        <div class="notice">※ 画像を変更しない場合はそのまま保存</div>
-        <button class="new-proto-btn" type="submit" name="mode" value="draft"> 下書き保存 </button>
-        <button class="new-proto-btn" type="submit" name="mode" value="submit"> 保存 </button>
+        <div class="notice">※ 画像を変更しない場合は選択不要</div>
+        <div class="edit_btn_wrapper">
+          <button class="action-btn " type="submit" name="mode" value="draft"
+            th:text="${published} ? '非公開' : '下書き保存' "></button>
+          <button class="action-btn" type="submit" name="mode" value="submit"
+            th:text="${published} ? '変更を保存' : '公開' "></button>
+        </div>
       </form>
     </div>
   </div>

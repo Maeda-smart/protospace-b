@@ -27,16 +27,6 @@ input[type=submit],submit{
   box-shadow: lightgray 0 2px 2px;
 }
 
-.new-proto-btn {
-  margin-right: 30px;
-  width: 120px;
-  height: 30px;
-  border: none;
-  border-radius: 2px;
-  background-color: #6abeff;
-  color: white;
-}
-
 .submit-wrapper{
   width: 500px;
   margin-top: 30px;
@@ -74,7 +64,8 @@ tbody th:nth-child(2){
   border-radius: 2px;
   font-size: 0.80em;
   line-height: 1.6;
-  padding-top: 10px;
+  padding-top: 5px;
+  margin-bottom: 15px;
 }
 
 .userName {
@@ -93,4 +84,8 @@ tbody th:nth-child(2){
     transition: 0.4s ease;
     margin: 0 4px;
     background-color: white;
+}
+
+.edit_btn_wrapper{
+  gap: 20px;
 }

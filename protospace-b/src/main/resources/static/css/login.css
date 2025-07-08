@@ -21,15 +21,6 @@ input[type="password"] {
   border: 1px solid #ccc;
 }
 
-input[type=submit].btn{
-  background-color: rgb(72, 119, 177);
-  color: white;
-  height: 30px;
-  font-size: 15px;
-  padding: 0 15px;
-  border: none;
-  margin-top: 12px;
-  border-radius: 2px;
-  box-shadow: lightgray 0 2px 2px;
-  width: 120px;
+input[type="password"] {
+  margin-bottom: 30px;
 }
