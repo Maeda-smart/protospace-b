@@ -15,7 +15,6 @@ import in.tech_camp.protospace_b.entity.PrototypeEntity;
 @Mapper
 public interface PrototypeShowRepository {
 
-    // OPTIMIZE: N+1
     @Select("""
             SELECT
                 p.id p_id,
@@ -64,7 +63,7 @@ public interface PrototypeShowRepository {
                 n.isNice,
                 n.niceCount,
                 t.id
-            ORDER BY p.created_at DESC
+            ORDER BY p.created_at DESC, p.id ASC
             """)
     @Results(value = {
             @Result(property = "id", column = "p_id"),
@@ -80,7 +79,6 @@ public interface PrototypeShowRepository {
     })
     List<PrototypeEntity> showAll(Integer currentUserId);
 
-    // OPTIMIZE: N+1
     @Select("""
             SELECT
                 p.id p_id,
@@ -97,7 +95,9 @@ public interface PrototypeShowRepository {
                 n.isNice,
                 MAX(CASE WHEN r.user_id = #{currentUserId} THEN 1 ELSE 0 END) read,
                 MAX(CASE WHEN pin.user_id = #{userId} THEN 1 ELSE 0 END) pinned,
-                MAX(CASE WHEN b.user_id = #{userId} THEN 1 ELSE 0 END) is_bookmark
+                MAX(CASE WHEN b.user_id = #{userId} THEN 1 ELSE 0 END) is_bookmark,
+                t.id t_id,
+                t.tag_name
             FROM
                 prototype p
             LEFT JOIN users u ON p.user_id = u.id
@@ -114,6 +114,7 @@ public interface PrototypeShowRepository {
             LEFT JOIN prototype_tags pt ON p.id = pt.prototype_id
             LEFT JOIN bookmark b ON p.id = b.prototype_id
             LEFT JOIN pin ON p.id = pin.prototype_id
+            LEFT JOIN tags t ON t.id = pt.tags_id
             WHERE p.published = true  AND u.id = #{userId}
             GROUP BY
                 p.id,
@@ -127,14 +128,17 @@ public interface PrototypeShowRepository {
                 u.id,
                 u.nickname,
                 n.isNice,
-                n.niceCount
+                n.niceCount,
+                t.id
+            ORDER BY p.created_at DESC, p.id ASC
             """)
     @Results(value = {
             @Result(property = "id", column = "p_id"),
             @Result(property = "user.id", column = "u_id"),
             @Result(property = "user.nickname", column = "nickname"),
             @Result(property = "imgPath", column = "img"),
-            @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
+            @Result(property = "tag.id", column = "t_id"),
+            @Result(property = "tag.tagName", column = "tag_name"),
             @Result(property = "pin", column = "pinned"),
             @Result(property = "bookmark", column = "is_bookmark"),
             @Result(property = "createdAt", column = "created_at"),
@@ -215,10 +219,16 @@ public interface PrototypeShowRepository {
                 u.nickname nickname,
                 COALESCE(n.niceCount, 0) niceCount,
                 n.isNice,
-                MAX(CASE WHEN r.user_id = #{currentUserId} THEN 1 ELSE 0 END) read
-            FROM
-                prototype p
-            LEFT JOIN prototype_tags pt ON pt.prototype_id = p.id
+                MAX(CASE WHEN r.user_id = #{currentUserId} THEN 1 ELSE 0 END) read,
+                t.id t_id,
+                t.tag_name
+            FROM (
+                SELECT *
+                FROM prototype_tags
+                WHERE tags_id = #{tagId}
+            ) pt
+            LEFT JOIN prototype p ON pt.prototype_id = p.id
+            LEFT JOIN tags t ON t.id = pt.tags_id
             LEFT JOIN users u ON p.user_id = u.id
             LEFT JOIN (
                 SELECT
@@ -244,14 +254,17 @@ public interface PrototypeShowRepository {
                 u.id,
                 u.nickname,
                 n.isNice,
-                n.niceCount
+                n.niceCount,
+                t.id
+            ORDER BY p.created_at DESC, p.id ASC
             """)
     @Results(value = {
             @Result(property = "id", column = "p_id"),
             @Result(property = "user.id", column = "u_id"),
             @Result(property = "user.nickname", column = "nickname"),
             @Result(property = "imgPath", column = "img"),
-            @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
+            @Result(property = "tag.id", column = "t_id"),
+            @Result(property = "tag.tagName", column = "tag_name"),
             @Result(property = "createdAt", column = "created_at"),
             @Result(property = "updatedAt", column = "updated_at"),
             @Result(property = "published", column = "published")
