@@ -204,7 +204,6 @@ public interface PrototypeShowRepository {
     })
     PrototypeEntity findByPrototypeId(Integer currentUserId, Integer id);
 
-    // OPTIMIZE: N+1
     @Select("""
             SELECT
                 p.id p_id,
@@ -222,13 +221,8 @@ public interface PrototypeShowRepository {
                 MAX(CASE WHEN r.user_id = #{currentUserId} OR p.user_id = #{currentUserId} THEN 1 ELSE 0 END) read,
                 t.id t_id,
                 t.tag_name
-            FROM (
-                SELECT *
-                FROM prototype_tags
-                WHERE tags_id = #{tagId}
-            ) pt
-            LEFT JOIN prototype p ON pt.prototype_id = p.id
-            LEFT JOIN tags t ON t.id = pt.tags_id
+            FROM 
+                prototype p
             LEFT JOIN users u ON p.user_id = u.id
             LEFT JOIN (
                 SELECT
@@ -241,7 +235,13 @@ public interface PrototypeShowRepository {
                     nice.prototype_id
             ) n ON p.id = n.prototype_id
             LEFT JOIN prototype_read_status r ON r.prototype_id = p.id AND r.user_id = #{currentUserId}
-            WHERE pt.tags_id = #{tagId} AND p.published = true AND p.prototypeName LIKE CONCAT('%', #{prototypeName}, '%')
+            LEFT JOIN prototype_tags pt ON pt.prototype_id = p.id
+            LEFT JOIN tags t ON t.id = pt.tags_id
+            WHERE p.published = true AND p.prototypeName LIKE CONCAT('%', #{prototypeName}, '%') AND p.id IN (
+                SELECT prototype_id
+                FROM prototype_tags
+                WHERE tags_id = #{tagId}
+            )
             GROUP BY
                 p.id,
                 p.prototypeName,
