@@ -369,36 +369,52 @@ public interface PrototypeShowRepository {
 
     // 下書きのみ取得
     @Select("""
-            SELECT
-                p.id p_id,
-                p.prototypeName,
-                p.catchCopy,
-                p.concept,
-                p.img,
-                p.created_at,
-                p.updated_at,
-                p.published,
-                u.id u_id,
-                u.nickname nickname
-            FROM
-                prototype p
-            LEFT JOIN users u ON p.user_id = u.id
-            WHERE
-                p.published = false
-                AND p.user_id = #{userId}
-            ORDER BY p.updated_at DESC
-            """)
+                SELECT
+                    p.id p_id,
+                    p.prototypeName,
+                    p.catchCopy,
+                    p.concept,
+                    p.img,
+                    p.created_at,
+                    p.updated_at,
+                    p.published,
+                    u.id u_id,
+                    u.nickname nickname,
+                    COALESCE(n.niceCount, 0) niceCount,
+                    n.isNice
+                FROM
+                    prototype p
+                LEFT JOIN users u ON p.user_id = u.id
+                LEFT JOIN (
+                SELECT
+                    nice.prototype_id,
+                    MAX(CASE WHEN nice.user_id = #{currentUserId} THEN 1 ELSE 0 END) isNice,
+                    COUNT(*) niceCount
+                FROM
+                    nice
+                GROUP BY
+                    nice.prototype_id
+            ) n ON p.id = n.prototype_id
+                WHERE
+                    p.published = false
+                    AND p.user_id = #{userId}
+                ORDER BY p.updated_at DESC
+                """)
     @Results(value = {
             @Result(property = "id", column = "p_id"),
             @Result(property = "user.id", column = "u_id"),
             @Result(property = "user.nickname", column = "nickname"),
             @Result(property = "imgPath", column = "img"),
             @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
+            @Result(property = "niceCount", column = "niceCount"),
+            @Result(property = "isNice", column = "isNice"),
             @Result(property = "createdAt", column = "created_at"),
             @Result(property = "updatedAt", column = "updated_at"),
             @Result(property = "published", column = "published")
     })
-    List<PrototypeEntity> findDraftsByUserId(@Param("userId") Integer userId);
+    List<PrototypeEntity> findDraftsByUserId(
+        @Param("userId") Integer userId,
+        @Param("currentUserId") Integer currentUserId);
 
     @Select("""
             SELECT
@@ -444,13 +460,13 @@ public interface PrototypeShowRepository {
             ORDER BY p.created_at ASC
             """)
     @Results(value = {
-        @Result(property = "id", column = "p_id"),
-        @Result(property = "user.id", column = "u_id"),
-        @Result(property = "user.nickname", column = "nickname"),
-        @Result(property = "imgPath", column = "img"),
-        @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
-        @Result(property = "createdAt", column = "created_at"),
-        @Result(property = "updatedAt", column = "updated_at")
+            @Result(property = "id", column = "p_id"),
+            @Result(property = "user.id", column = "u_id"),
+            @Result(property = "user.nickname", column = "nickname"),
+            @Result(property = "imgPath", column = "img"),
+            @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
+            @Result(property = "createdAt", column = "created_at"),
+            @Result(property = "updatedAt", column = "updated_at")
     })
     List<PrototypeEntity> showAllOrderByCreatedAtAsc(@Param("currentUserId") Integer currentUserId);
 }
