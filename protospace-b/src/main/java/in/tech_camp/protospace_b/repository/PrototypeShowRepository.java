@@ -272,7 +272,6 @@ public interface PrototypeShowRepository {
     List<PrototypeEntity> findByPrototypeNameWithTag(@Param("currentUserId") Integer currentUserId,
             @Param("prototypeName") String prototypeName, @Param("tagId") Integer tagId);
 
-    // OPTIMIZE: N+1
     @Select("""
             SELECT
                 p.id p_id,
@@ -287,7 +286,9 @@ public interface PrototypeShowRepository {
                 u.nickname nickname,
                 COALESCE(n.niceCount, 0) niceCount,
                 n.isNice,
-                MAX(CASE WHEN r.user_id = #{currentUserId} OR p.user_id = #{currentUserId} THEN 1 ELSE 0 END) read
+                MAX(CASE WHEN r.user_id = #{currentUserId} OR p.user_id = #{currentUserId} THEN 1 ELSE 0 END) read,
+                t.id t_id,
+                t.tag_name
             FROM
                 prototype p
             LEFT JOIN users u ON p.user_id = u.id
@@ -302,6 +303,8 @@ public interface PrototypeShowRepository {
                     nice.prototype_id
             ) n ON p.id = n.prototype_id
             LEFT JOIN prototype_read_status r ON r.prototype_id = p.id AND r.user_id = #{currentUserId}
+            LEFT JOIN prototype_tags pt ON pt.prototype_id = p.id
+            LEFT JOIN tags t ON t.id = pt.tags_id
             WHERE p.published = true AND p.prototypeName LIKE CONCAT('%', #{prototypeName}, '%')
             GROUP BY
                 p.id,
@@ -315,14 +318,17 @@ public interface PrototypeShowRepository {
                 u.id,
                 u.nickname,
                 n.isNice,
-                n.niceCount
+                n.niceCount,
+                t.id
+            ORDER BY p.created_at DESC, p.id ASC
             """)
     @Results(value = {
             @Result(property = "id", column = "p_id"),
             @Result(property = "user.id", column = "u_id"),
             @Result(property = "user.nickname", column = "nickname"),
             @Result(property = "imgPath", column = "img"),
-            @Result(property = "tags", column = "p_id", many = @Many(select = "in.tech_camp.protospace_b.repository.TagRepository.prototypeTags")),
+            @Result(property = "tag.id", column = "t_id"),
+            @Result(property = "tag.tagName", column = "tag_name"),
             @Result(property = "createdAt", column = "created_at"),
             @Result(property = "updatedAt", column = "updated_at"),
             @Result(property = "published", column = "published")
