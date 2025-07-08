@@ -1,25 +1,32 @@
 <div th:fragment="card(prototype)">
-  <a th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}">
-    <img class="card_img" th:src="@{${prototype.imgPath}}">
-  </a>
+  <!-- NEWアイコン -->
+  <span class="new-icon" th:if="${#authorization.expression('isAuthenticated()') and !prototype.read}">NEW</span>
+  <p class="timestamp_wrapper">
+    <!-- 絵文字 -->
+    <svg class="card_svg" width="10" height="10" viewBox="0 0 25 25">
+      <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" />
+    </svg>
+    <span class="timestamp_text" th:text="${#temporals.format(prototype.createdAt, 'yy/MM/dd')}"></span>
+    <span class="timestamp_edited" th:if="${prototype.createdAt} != ${prototype.updatedAt}">
+    </span>
+  </p>
+  <div class="card_img_wrapper">
+    <a th:href="@{/prototypes/{prototypeId}/detail(prototypeId=${prototype.id})}">
+      <img class="card_img" th:src="@{${prototype.imgPath}}">
+    </a>
+  </div>
   <div class="card_body">
-    <a class="card_title" th:href="@{'/prototypes/' + ${prototype.id} + '/detail'}"
-      th:text="${prototype.prototypeName}"></a>
-    <div th:replace="~{tags :: prototype-tags(${prototype.tags})}"></div>
+    <div class="card_body_top">
+      <a class="card_title" th:href="@{'/prototypes/' + ${prototype.id} + '/detail'}"
+        th:text="${prototype.prototypeName}"></a>
+      <span class="nice"
+        th:text="${prototype.isNice} ? '♥' + ' ' + ${prototype.niceCount}: '♡' + ' ' + ${prototype.niceCount}"></span>
+    </div>
     <p class="card_summary" th:text="${prototype.catchCopy}"></p>
-    <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
-        th:text="${prototype.user.nickname}"></span></a>
-    <span class="nice"
-      th:text="${prototype.isNice} ? '♥' + ' ' + ${prototype.niceCount}: '♡' + ' ' + ${prototype.niceCount}"></span>
-    <p class="timestamp_wrapper">
-      <span th:text="${#temporals.format(prototype.createdAt, 'yyyy/MM/dd HH:mm')}"></span>
-      <span class="timestamp_edited" th:if="${prototype.createdAt} != ${prototype.updatedAt}">
-        <!-- 絵文字 -->
-        <svg width="10" height="10" viewBox="0 0 25 25">
-          <path d="M16.5 3.5l4 4L7 21H3v-4L16.5 3.5z" />
-        </svg>
-      </span>
-    </p>
-
+    <div class="card_body_bottom">
+      <div th:replace="~{tags :: prototype-tags(${prototype.tags})}"></div>
+      <a class="card_user" th:if="${prototype.user}" th:href="@{'/users/'+${prototype.user.id}}">by <span
+          th:text="${prototype.user.nickname}"></span></a>
+    </div>
   </div>
 </div>

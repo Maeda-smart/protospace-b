@@ -29,7 +29,7 @@ public interface PrototypeShowRepository {
                 u.nickname nickname,
                 COALESCE(n.niceCount, 0) niceCount,
                 n.isNice,
-                MAX(CASE WHEN r.user_id = #{currentUserId} THEN 1 ELSE 0 END) read,
+                MAX(CASE WHEN r.user_id = #{currentUserId} OR p.user_id = #{currentUserId} THEN 1 ELSE 0 END) read,
                 t.id t_id,
                 t.tag_name
             FROM
@@ -93,7 +93,7 @@ public interface PrototypeShowRepository {
                 u.nickname nickname,
                 COALESCE(n.niceCount, 0) niceCount,
                 n.isNice,
-                MAX(CASE WHEN r.user_id = #{currentUserId} THEN 1 ELSE 0 END) read,
+                MAX(CASE WHEN r.user_id = #{currentUserId} OR p.user_id = #{currentUserId} THEN 1 ELSE 0 END) read,
                 MAX(CASE WHEN pin.user_id = #{userId} THEN 1 ELSE 0 END) pinned,
                 MAX(CASE WHEN b.user_id = #{userId} THEN 1 ELSE 0 END) is_bookmark,
                 t.id t_id,
@@ -160,7 +160,7 @@ public interface PrototypeShowRepository {
                 p.user_id u_id,
                 COALESCE(n.niceCount, 0) niceCount,
                 n.isNice,
-                MAX(CASE WHEN r.user_id = #{currentUserId} THEN 1 ELSE 0 END) read,
+                MAX(CASE WHEN r.user_id = #{currentUserId} OR p.user_id = #{currentUserId} THEN 1 ELSE 0 END) read,
                 MAX(CASE WHEN pin.user_id = #{currentUserId} THEN 1 ELSE 0 END) pinned,
                 MAX(CASE WHEN b.user_id = #{currentUserId} THEN 1 ELSE 0 END) bookmark
             FROM (
@@ -219,7 +219,7 @@ public interface PrototypeShowRepository {
                 u.nickname nickname,
                 COALESCE(n.niceCount, 0) niceCount,
                 n.isNice,
-                MAX(CASE WHEN r.user_id = #{currentUserId} THEN 1 ELSE 0 END) read,
+                MAX(CASE WHEN r.user_id = #{currentUserId} OR p.user_id = #{currentUserId} THEN 1 ELSE 0 END) read,
                 t.id t_id,
                 t.tag_name
             FROM (
@@ -287,7 +287,7 @@ public interface PrototypeShowRepository {
                 u.nickname nickname,
                 COALESCE(n.niceCount, 0) niceCount,
                 n.isNice,
-                MAX(CASE WHEN r.user_id = #{currentUserId} THEN 1 ELSE 0 END) read
+                MAX(CASE WHEN r.user_id = #{currentUserId} OR p.user_id = #{currentUserId} THEN 1 ELSE 0 END) read
             FROM
                 prototype p
             LEFT JOIN users u ON p.user_id = u.id
@@ -344,7 +344,7 @@ public interface PrototypeShowRepository {
                 u.nickname nickname,
                 COALESCE(n.niceCount, 0) niceCount,
                 n.isNice,
-                MAX(CASE WHEN r.user_id = #{currentUserId} THEN 1 ELSE 0 END) read
+                MAX(CASE WHEN r.user_id = #{currentUserId} OR p.user_id = #{currentUserId} THEN 1 ELSE 0 END) read
             FROM
                 prototype p
             LEFT JOIN users u ON p.user_id = u.id
@@ -433,7 +433,7 @@ public interface PrototypeShowRepository {
                 u.nickname nickname,
                 COALESCE(n.niceCount, 0) niceCount,
                 n.isNice,
-                MAX(CASE WHEN r.user_id = #{currentUserId} THEN 1 ELSE 0 END) read
+                MAX(CASE WHEN r.user_id = #{currentUserId} OR p.user_id = #{currentUserId} THEN 1 ELSE 0 END) read
             FROM
                 prototype p
             LEFT JOIN users u ON p.user_id = u.id
