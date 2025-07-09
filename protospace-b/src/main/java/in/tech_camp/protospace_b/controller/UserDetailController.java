@@ -16,6 +16,7 @@ import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.entity.UserEntity;
 import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserDetailRepository;
+import in.tech_camp.protospace_b.service.TagService;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -24,6 +25,7 @@ public class UserDetailController {
 
     private final UserDetailRepository userDetailRepository;
     private final PrototypeShowRepository prototypeShowRepository;
+    private final TagService tagService;
 
     // ユーザー詳細ページ遷移
     @GetMapping("/users/{userId}")
@@ -38,7 +40,7 @@ public class UserDetailController {
         Integer loginUserId = (currentUser != null) ? currentUser.getId() : null;
 
         // ユーザーの投稿一覧取得
-        List<PrototypeEntity> prototypes = prototypeShowRepository.showByUserId(loginUserId, userId);
+        List<PrototypeEntity> prototypes = tagService.tagBundle(prototypeShowRepository.showByUserId(loginUserId, userId));
         Map<Boolean, List<PrototypeEntity>> partitioned = prototypes.stream()
                 .collect(Collectors.partitioningBy(prototype -> prototype.isPin()));
         List<PrototypeEntity> sortedByPinPrototypes = new ArrayList<>();

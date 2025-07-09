@@ -1,7 +1,6 @@
 package in.tech_camp.protospace_b.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -16,6 +15,7 @@ import in.tech_camp.protospace_b.entity.TagEntity;
 import in.tech_camp.protospace_b.form.PrototypeSearchForm;
 import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.TagRepository;
+import in.tech_camp.protospace_b.service.TagService;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -23,6 +23,7 @@ import lombok.AllArgsConstructor;
 public class PrototypeSearchController {
     private final PrototypeShowRepository prototypeShowRepository;
     private final TagRepository tagRepository;
+    private final TagService tagService;
 
     @GetMapping("/prototypes/search")
     public String searchPrototypes(@ModelAttribute("prototypeSearchForm") PrototypeSearchForm prototypeSearchForm,
@@ -43,14 +44,14 @@ public class PrototypeSearchController {
                 return "redirect:/";
             } else {
                 // 入力が空だがtagsがある場合
-                prototypes = prototypeShowRepository.findByPrototypeNameWithTag(userId, "", tagId);
+                prototypes = tagService.tagBundle(prototypeShowRepository.findByPrototypeNameWithTag(userId, "", tagId));
                 tag = tagRepository.getById(tagId);
             }
         } else {
             if (tagId == null) {
-                prototypes = prototypeShowRepository.findByPrototypeName(userId, keyword);
+                prototypes = tagService.tagBundle(prototypeShowRepository.findByPrototypeName(userId, keyword));
             } else {
-                prototypes = prototypeShowRepository.findByPrototypeNameWithTag(userId, keyword, tagId);
+                prototypes = tagService.tagBundle(prototypeShowRepository.findByPrototypeNameWithTag(userId, keyword, tagId));
                 tag = tagRepository.getById(tagId);
             }
         }

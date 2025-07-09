@@ -14,6 +14,7 @@ import in.tech_camp.protospace_b.entity.PrototypeEntity;
 import in.tech_camp.protospace_b.form.PrototypeSearchForm;
 import in.tech_camp.protospace_b.repository.PrototypeShowRepository;
 import in.tech_camp.protospace_b.repository.UserDetailRepository;
+import in.tech_camp.protospace_b.service.TagService;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -22,6 +23,7 @@ public class TopPageController {
 
     private final PrototypeShowRepository prototypeShowRepository;
     private final UserDetailRepository userDetailRepository;
+    private final TagService tagService;
 
     @GetMapping("/")
     public String topPage(@AuthenticationPrincipal CustomUserDetail currentUser,
@@ -32,9 +34,9 @@ public class TopPageController {
         model.addAttribute("user", userDetailRepository.findById(userId));
 
         // 並び順に応じてプロトタイプを取得
-        List<PrototypeEntity> prototypes = "asc".equalsIgnoreCase(sort)
+        List<PrototypeEntity> prototypes = tagService.tagBundle("asc".equalsIgnoreCase(sort)
             ? prototypeShowRepository.showAllOrderByCreatedAtAsc(userId)
-            : prototypeShowRepository.showAll(userId);
+            : prototypeShowRepository.showAll(userId));
 
         // 公開プロトタイプだけを抽出
         List<PrototypeEntity> publishedPrototypes = prototypes.stream()
