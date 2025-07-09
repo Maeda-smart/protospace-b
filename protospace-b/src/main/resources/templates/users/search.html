@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
   <title>User Search</title>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
   <link rel="stylesheet" th:href="@{/css/search.css}" />
@@ -13,9 +15,9 @@
 
   <div class="main">
     <div class="search-container">
-      <form th:action="@{/users/search}" th:object="${form}" method="get">
+      <form th:action="@{/users/search}" th:object="${form}" method="get" class="form-wrapper">
         <input type="text" th:field="*{keyword}" placeholder="Search by nickname or email" class="search-box" />
-        <button type="submit" class="search-button">Search</button>
+        <button type="submit" class="search-button">🔍</button>
       </form>
     </div>
 

@@ -1,46 +1,121 @@
 .card_wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; /* カード間の余白 */
-  justify-content: flex-start;
-  margin: 40px 0 10px;
+  gap: 20px;
+  /* justify-content: space-between; */
+  margin: 50px auto 10px auto;
 }
 
 .card {
-  flex: 0 1 calc(33.333% - 20px); /* 3列、gap考慮 */
+  flex-basis: 100%;
   box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  padding: 0 12px;
+  border: 2px solid gray;
+  border-radius: 10px;
   overflow: hidden;
   background-color: #fff;
-  margin-bottom: 40px;
+  margin-bottom: 6%;
   position: relative;
+  transition: transform 0.18s cubic-bezier(.4,0,.2,1);
+}
+
+.card:hover {
+  transform: scale(1.025);
+}
+
+@media (min-width: 600px) { 
+  .card { 
+    flex-basis: calc((100% - 20px) / 2); 
+    margin-bottom: calc((100% - 20px) / 2 * 0.1); /* カード幅の20% */
+  }
+}
+@media (min-width: 900px) { 
+  .card { 
+    flex-basis: calc((100% - 40px) / 3); 
+    margin-bottom: calc((100% - 40px) / 3 * 0.1);
+  }
+}
+@media (min-width: 1200px) { 
+  .card { 
+    flex-basis: calc((100% - 60px) / 4);
+    margin-bottom: calc((100% - 60px) / 4 * 0.1);
+  }
 }
 
 .new-icon {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: red;
+  top: 35px;
+  right: 20px;
+  background-color: rgb(212, 71, 71);
   color: white;
   font-weight: bold;
   font-size: 8px;
   padding: 3px 6px;
-  border-radius: 12px;
+  border-radius: 10px;
   z-index: 10;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.timestamp_wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  font-size: 12px;
+  margin: 5px 3px 4px 0;
+}
+
+.card_svg{
+  display: flex;
+  align-items: center;
+  margin-right: 3px;
+}
+
+.timestamp_text{
+  text-align: center;
+  padding-top: 1px;
+}
+
+.timestamp_edited {
+  color: #333;
+  margin-left: 2px;
+  margin-bottom: 3px;
+}
+
+.timestamp_edited svg path{
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.card_img_wrapper{
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #555;
 }
 
 /* 画像サイズ調整 */
 .card_img {
   width: 100%;
-  height: auto;
+  aspect-ratio: 5 / 3;
+  object-fit: cover;
   display: block;
+  border: solid 2px;
 }
 
 /* カード内容のパディング */
 .card_body {
-  padding: 12px;
+  padding: 12px 8px;
+}
+
+.card_body_top{
+  display: flex;
+  justify-content: space-between;
+}
+
+.card_body_bottom{
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
 }
 
 /* 各テキストの見た目 */
@@ -56,46 +131,25 @@
 .card_summary {
   font-size: 14px;
   color: #555;
-  margin-bottom: 8px;
+  margin: 0 0 8px 0;
 }
 
 .card_user {
   font-size: 12px;
   color: #777;
-  text-decoration: none;
+  /* text-decoration: none; */
+  border-bottom: #777;
 }
 
 .nice {
   color: red;
 }
 
-.timestamp_wrapper{
-  display: flex;
-  align-items: center;
-  font-size: 12px;
+.pined_icon{
+  position: absolute;
+  top: 3px;
+  left: 10px;
+  font-size: 18px;
+  color: rgb(236, 95, 95);
+  z-index: 2;
 }
-
-svg{
-  display: flex;
-  align-items: center;
-}
-
-.timestamp_edited {
-  color: #333;
-  margin-left: 2px;
-  margin-bottom: 3px;
-}
-
-.timestamp_edited svg path{
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.5;
-}
-
-/* .comments_list li{
-  list-style: none;
-  display: flex;
-  align-items: center;
-  padding: 1px;
-  margin-top: 10px;
-} */

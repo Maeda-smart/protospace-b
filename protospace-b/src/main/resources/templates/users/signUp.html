@@ -3,6 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
   <link rel="stylesheet" th:href="@{/css/style.css}" />
   <link rel="stylesheet" th:href="@{/css/signUp.css}" type="text/css">
@@ -12,27 +14,28 @@
 <body>
 
   <div th:insert="~{header :: header}"></div>
+  <div class="main">
+    <div class="inner">
+      <div class="signUp-wrapper">
+        <h2 class="page-heading">
+          ユーザー新規登録
+        </h2>
 
-  <div class="inner">
-    <div class="signUp-wrapper">
-      <h2 class="page-heading">
-        ユーザー新規登録
-      </h2>
-
-      <!-- バリデーションメッセージ -->
-      <div th:if="${errorMessages}" th:each="error : ${errorMessages}">
-        <div th:text="${error}"></div>
-      </div>
-
-      <form th:action="@{/user}" th:method="post" th:object="${userForm}" class="signUp-wrapper">
-
-        <!-- フォーム -->
-        <div th:insert="~{userFields :: userFields}"></div>
-
-        <div class="actions">
-          <input type="submit" value="新規登録" class="form-btn">
+        <!-- バリデーションメッセージ -->
+        <div th:if="${errorMessages}" th:each="error : ${errorMessages}">
+          <div th:text="${error}"></div>
         </div>
-      </form>
+
+        <form th:action="@{/user}" th:method="post" th:object="${userForm}" class="signUp-wrapper">
+
+          <!-- フォーム -->
+          <div th:insert="~{userFields :: userFields}"></div>
+
+          <div class="actions">
+            <input type="submit" value="新規登録" class="action-btn">
+          </div>
+        </form>
+      </div>
     </div>
   </div>
   <div th:insert="~{footer :: footer}"></div>

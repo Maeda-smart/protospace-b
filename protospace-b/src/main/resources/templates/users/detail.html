@@ -2,63 +2,90 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ja">
 
 <head>
-  <link th:href="@{/css/userDetail.css}" rel="stylesheet" type="text/css">
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
   <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
-  <link th:href="@{/css/edit.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/prototypes.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/tags.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/userDetail.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/edit.css}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
   <div th:insert="~{header :: header}"></div>
-  <div class="main-content">
-    <div class="userName">
-      <div class="user-info-header">
-      <h2><span th:text="${user.nickname}"></span>さんの情報</h2>
-      <div class="user-actions" th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == user.id}">
-        <a th:href="@{/users/{userId}/edit(userId=${user.id})}" class="action-btn">編集する</a>
-        <form th:action="@{/users/logout}" method="POST">
-          <button type="submit" class="action-btn" rel="nofollow" data-method="delete">ログアウト</button>
-        </form>
+  <div class="main">
+    <div class="inner">
+      <div class="user_info_wrapper">
+        <div class="user_name">
+          <div class="user-info-header">
+            <h2>ユーザー：<span th:text="${user.nickname}"></span>さん</h2>
+            <div class="user-actions" th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == user.id}">
+              <form th:action="@{/users/logout}" method="POST">
+                <button type="submit" class="action-btn action-btn-user" rel="nofollow" data-method="delete">ログアウト</button>
+              </form>
+            </div>
+            <div class="user-actions" th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() != user.id}">
+              <form method="post" th:action="@{/dm/{id}(id=${user.id})}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="action-btn action-btn-user">チャット</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="user_table_top">
+          <h2 class="bracket-title"><span th:text="${user.nickname}"></span>さんの情報</h2>
+          <div class="user-actions" th:if="${#authorization.expression('isAuthenticated()') and #authentication?.principal.getId() == user.id}">
+            <a th:href="@{/users/{userId}/edit(userId=${user.id})}" class="action-btn action-btn-user" >編集する</a>
+          </div>
+        </div>
+        <div class="user_info_table_wrapper">
+          <table class="user-info-table">
+            <tbody>
+              <tr>
+                <th>名前</th>
+                <th><span th:text="${user.nickname}"></span></th>
+              </tr>
+              <tr>
+                <th>プロフィール</th>
+                <th><span th:text="${user.profile}"></span></th>
+              </tr>
+              <tr>
+                <th>所属</th>
+                <th><span th:text="${user.affiliation}"></span></th>
+              </tr>
+              <tr>
+                <th>役職</th>
+                <th><span th:text="${user.position}"></span></th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+
+
+      <h2 class="bracket-title"><span th:text="${user.nickname}"></span>さんのプロトタイプ</h2>
+
+      <h3>プロトタイプ</h3>
+      <div class="card_wrapper">
+        <div class="card" th:each="prototype : ${sortedByPinPrototypes}">
+          <div class="pined_icon" th:if="${prototype.pin} and ${#strings.equals(pageType, 'detail')}">▶</div>
+          <div th:replace="~{card :: card(${prototype})}"></div>
+        </div>
+      </div>
+
+      <th:block th:if="${draftPrototypes != null} and ${#lists.size(draftPrototypes)} > 0">
+        <h3>下書きプロトタイプ</h3>
+        <div class="card_wrapper">
+          <div class="card" th:each="prototype : ${draftPrototypes}">
+            <div th:replace="~{card :: card(${prototype})}"></div>
+          </div>
+        </div>
+      </th:block>
+
+      <!-- ブックマークした投稿の一覧表示 -->
+      <h3>ブックマークしたプロトタイプ</h3>
+      <div th:replace="~{prototype/bookmark :: bookmark}"></div>
     </div>
-    </div>
-    
-  <div class="user-info-table-wrapper">
-    <table class="user-info-table">
-      <tbody>
-        <tr>
-          <th>名前</th>
-          <th><span th:text="${user.nickname}"></span></th>
-        </tr>
-        <tr>
-          <th>プロフィール</th>
-          <th><span th:text="${user.profile}"></span></th>
-        </tr>
-        <tr>
-          <th>所属</th>
-          <th><span th:text="${user.affiliation}"></span></th>
-        </tr>
-        <tr>
-          <th>役職</th>
-          <th><span th:text="${user.position}"></span></th>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-
-    <h2 class="bracket-title"><span th:text="${user.nickname}"></span>さんのプロトタイプ</h2>
-
-    <h3>ピン止プロトタイプ</h3>
-    <div th:replace="~{prototypes :: prototypes(${pinnedPrototypes})}"></div>
-
-    <h3>その他プロトタイプ</h3>
-    <div th:replace="~{prototypes :: prototypes(${unpinnedPrototypes})}"></div>
-
-    <!-- ブックマークした投稿の一覧表示 -->
-    <h3>ブックマークしたプロトタイプ</h3>
-    <div th:replace="~{prototype/bookmark :: bookmark}"></div>
   </div>
   <div th:insert="~{footer :: footer}"></div>
 </body>

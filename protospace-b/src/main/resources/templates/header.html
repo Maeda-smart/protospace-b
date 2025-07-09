@@ -12,10 +12,14 @@
       </div>
       <div class="nav_right" th:if="${#authorization.expression('isAuthenticated()')}">
         <button id="notificationButton" class="notification-btn">🔔</button>
-        <a th:href="@{/users/{userId}(userId=${user.id})}" class="nav_btn">My Page</a>
+        <!-- ユーザー管理リンク（モデレータ or 管理者だけに表示） -->
+        <div th:if="${userRole == 'ROLE_MODERATOR' or userRole == 'ROLE_ADMIN'}">
+          <a th:href="@{/moderate/users}" class="nav_btn">ユーザー管理</a>
+        </div>
+        <a th:href="@{/users/{userId}(userId=${user.id})}" class="nav_btn">マイページ</a>
         
-        <a class="nav_btn" th:href="@{/prototype/prototypeNew}">New Proto</a>
-        <a class="nav_btn" th:href="@{/users/search}">User Search</a>
+        <a class="nav_btn" th:href="@{/prototype/prototypeNew}">新規投稿</a>
+        <a class="nav_btn" th:href="@{/users/search}">ユーザー検索</a>
       </div>
       <div class="nav_right" th:if="${#authorization.expression('!isAuthenticated()')}">
         <a class="nav_btn" th:href="@{/users/sign_up}">新規登録</a>
@@ -34,5 +38,4 @@
   <script th:src="@{/javascript/notification.js}" defer></script>
 
 </header>
-
 </html>

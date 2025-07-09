@@ -3,6 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
   <title>PROTO SPACE</title>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
   <link rel="stylesheet" th:href="@{/css/login.css}" />
@@ -12,45 +14,49 @@
 <body>
 
   <div th:insert="~{header :: header}"></div>
+  <div class="main">
+    <div class="inner">
+      <div class="login-subtitle">
+        <h5>ユーザーログイン</h5>
+      </div>
 
-  <div class="login-wrapper">
-    <div class="login-subtitle">
-      <h5>ユーザーログイン</h5>
-    </div>
+      <!-- エラー表示 -->
+      <div th:if="${error}">
+        <p th:text="${error}" style="color:red;"></p>
+      </div>
 
-    <div th:if="${loginError}" class="error-message" th:text="${loginError}"></div>
-
-    <div class="login-inner">
-      <form th:action="@{/login}" th:object="${loginForm}" method="post">
-        <div class="field-wrapper">
-          <div class="field">
-            <div class="field-label">
-              <label for="email">メールアドレス</label>
+      <div class="login-inner">
+        <form th:action="@{/login}" th:object="${loginForm}" method="post">
+          <div class="field-wrapper">
+            <div class="field">
+              <div class="field-label">
+                <label for="email">メールアドレス</label>
+              </div>
+              <div class="field-input">
+                <!-- nameはconfig用 -->
+                <input type="email" id="email" th:field="*{email}" name="username" required="required" />
+              </div>
             </div>
-            <div class="field-input">
-              <!-- nameはconfig用 -->
-              <input type="email" id="email" th:field="*{email}" name="username" required="required" />
+
+            <div class="field">
+              <div class='field-label'>
+                <label for="password">パスワード(6文字以上)</label>
+              </div>
+              <div class='field-input'>
+                <input type="password" th:field="*{password}" id="password" name="password" required="required">
+              </div>
+              <div class='submit-btn'>
+                <input type="submit" value="ログイン" class="action-btn">
+              </div>
             </div>
           </div>
-
-          <div class="field">
-            <div class='field-label'>
-              <label for="password">パスワード(6文字以上)</label>
-            </div>
-            <div class='field-input'>
-              <input type="password" th:field="*{password}" id="password" name="password" required="required">
-            </div>
-            <div class='submit-btn'>
-              <input type="submit" value="ログイン" class="btn">
-            </div>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
-  
+
   <div th:insert="~{footer :: footer}"></div>
-  
+
 </body>
 
 </html>

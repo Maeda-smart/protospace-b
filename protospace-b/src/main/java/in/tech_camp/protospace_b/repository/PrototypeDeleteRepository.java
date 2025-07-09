@@ -5,6 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface PrototypeDeleteRepository {
-  @Delete("DELETE FROM prototype WHERE id = #{id}")
-  void deleteById(Integer id);
+    @Delete("DELETE FROM prototype WHERE id = #{id}")
+    void deleteById(Integer id);
 }

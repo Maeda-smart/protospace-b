@@ -11,9 +11,20 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class NotificationService {
-  private final CommentNotificationRepository commentNotificationRepository;
 
-  public List<CommentNotificationEntity> getCommentNotifications(Integer userId) {
-    return commentNotificationRepository.findCommentNotificationByUserId(userId);
-  }
+    private final CommentNotificationRepository notificationRepository;
+
+    public List<CommentNotificationEntity> getUnreadNotifications(Integer userId) {
+        return notificationRepository.findUnreadByRecipientId(userId);
+    }
+
+    public void markAsRead(Integer notificationId) {
+        System.out.println("markAsRead called with notificationId = " + notificationId);
+        notificationRepository.markAsRead(notificationId);
+        System.out.println("update executed for notificationId = " + notificationId);
+    }
+
+    public void createNotification(CommentNotificationEntity notification) {
+        notificationRepository.insertNotification(notification);
+    }
 }

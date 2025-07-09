@@ -1,6 +1,7 @@
 package in.tech_camp.protospace_b;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -13,15 +14,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserModelAttribute {
 
-  private final UserDetailRepository userDetailRepository;
+    private final UserDetailRepository userDetailRepository;
 
-  // ログインしていれば自動でユーザー情報をモデルに渡す
-  @ModelAttribute("user")
-  public UserEntity addUserToModel(@AuthenticationPrincipal CustomUserDetail currentUser) {
-    if (currentUser != null) {
-      return userDetailRepository.findById(currentUser.getId());
+    // ログインしていれば自動でユーザー情報をモデルに渡す
+    @ModelAttribute
+    public void addUserToModel(@AuthenticationPrincipal CustomUserDetail currentUser, Model model) {
+        if (currentUser != null) {
+            UserEntity user = userDetailRepository.findById(currentUser.getId());
+            model.addAttribute("user", user);
+            model.addAttribute("userRole", user.getRoleName());
+        }
     }
-    return null;
-  }
-  
 }

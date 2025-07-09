@@ -3,12 +3,15 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
   <title>User Search</title>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
   <link rel="stylesheet" th:href="@{/css/search.css}" />
   <link rel="stylesheet" th:href="@{/css/style.css}" />
   <link rel="stylesheet" th:href="@{/css/prototypes.css}" />
   <link th:href="@{/css/tags.css}" rel="stylesheet" type="text/css">
+  <script th:src="@{/javascript/tag_search.js}"></script>
 </head>
 
 <body>
@@ -17,16 +20,21 @@
 
   <div class="main">
     <div class="inner">
-      <div class="search-container">
-        <form th:action="@{/prototypes/search}" th:object="${prototypeSearchForm}" method="get">
+      <form th:action="@{/prototypes/search}" th:object="${prototypeSearchForm}" method="get">
+        <div class="form-wrapper">
           <input type="text" th:field="*{prototypeName}" placeholder="Search by prototype name" class="search-box" />
-          <button type="submit" class="search-button">Search</button>
-        </form>
-      </div>
-
-        <div th:if="${prototypes != null and !prototypes.isEmpty()}">
-          <div th:replace="~{prototypes :: prototypes(${prototypes})}" class="card"></div>
+          <button type="submit" class="search-button">🔍</button>
         </div>
+        <div class="tags">
+          <div class="tag" th:if="${tag != null}"><span th:text="${tag.tagName}"></span><span
+              class="delete-button">×</span><input type="text" name="tag" class="hidden" th:value="${tag.id}">
+          </div>
+        </div>
+      </form>
+
+      <div th:if="${prototypes != null and !prototypes.isEmpty()}">
+        <div th:replace="~{prototypes :: prototypes(${prototypes})}" class="card"></div>
+      </div>
 
       <div class="no-results" th:if="${prototypes != null and prototypes.isEmpty()}">
         No prototypes found.

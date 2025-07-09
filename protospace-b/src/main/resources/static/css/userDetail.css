@@ -12,24 +12,6 @@
   margin: 0;
 }
 
-/* ===== 共通ボタンスタイル（編集・ログアウトなど） ===== */
-.action-btn {
-  display: inline-block;
-  padding: 8px 16px;
-  font-size: 0.9rem;
-  color: #fff;
-  background-color: #87CEFA;
-  border: 1px solid #87CEFA;
-  border-radius: 4px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.action-btn:hover {
-  background-color: #5dbbe9;
-}
-
 .userName > div {
   display: flex;
   gap: 10px;
@@ -39,9 +21,11 @@
 
 /* ===== テーブルレイアウト ===== */
 /* ===== ユーザー情報テーブルのラップ：中央寄せ & 角丸 ===== */
-.user-info-table-wrapper {
-  max-width: 600px;
-  margin: 0 auto 40px auto;
+.user_info_table_wrapper {
+  width: 600px;
+  display: flex;
+  justify-content: left;
+  margin: 0 0 40px 0;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -87,12 +71,11 @@ h3 {
 .bracket-title {
   position: relative;
   font-size: 1.5rem;
-  margin-top: 40px;
-  margin-bottom: 15px;
+  margin: 15px 0;
   color: #333;
   text-align: left;
-  padding: 0.2em 0.6em;
   display: inline-block;
+  margin-right: 20px;
 }
 
 /* 角カッコタイプ */
@@ -112,9 +95,11 @@ h3 {
 
 
 .user-info-header {
+  width: 600px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
   margin-bottom: 20px;
   flex-wrap: wrap; /* スマホなど狭い画面で折り返し対応 */
 }
@@ -122,6 +107,13 @@ h3 {
 .user-info-header h2 {
   font-size: 1.8rem;
   margin: 0;
+}
+
+.user_table_top{
+  width: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .user-actions {
@@ -134,20 +126,9 @@ h3 {
   margin: 0;
 }
 
-/* ボタンの共通スタイル（すでにあるなら合わせてください） */
-.action-btn {
-  display: inline-block;
-  padding: 8px 16px;
-  font-size: 0.9rem;
-  color: #fff;
-  background-color: #87CEFA;
-  border: 1px solid #87CEFA;
-  border-radius: 4px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.action-btn:hover {
-  background-color: #5dbbe9;
+.action-btn-user{
+  height: 30px;
+  width: 110px;
+  text-align: center;
+  padding: 3px 16px;
 }

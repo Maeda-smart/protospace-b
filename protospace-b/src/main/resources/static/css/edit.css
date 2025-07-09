@@ -5,13 +5,8 @@ body{
   margin: 0;
   height: 100%;
 }
-.main-content{
-  margin: 0 100px;
-  /* height: 85vh; */
-  overflow: visible;
-  min-height: calc(100vh - 100px); /* ヘッダー＋フッターを差し引いた高さに調整 */
-  margin-bottom: 40px; 
-}
+
+
 input{
   display: block;
 }
@@ -21,7 +16,7 @@ input.prototype{
 textarea.catchcopy, textarea.concept{
   width: 500px;
 }
-input[type=submit]{
+input[type=submit],submit{
   margin-top: 30px;
   width: 120px;
   height: 30px;
@@ -31,20 +26,17 @@ input[type=submit]{
   color: white;
   box-shadow: lightgray 0 2px 2px;
 }
-.logout-btn {
-    margin-top: 30px;
-    width: 120px;
-    height: 30px;
-    border: none;
-    border-radius: 2px;
-    background-color: #92cefc;
-    color: white;
-    box-shadow: lightgray 0 2px 2px;
+
+.submit-wrapper{
+  width: 500px;
+  margin-top: 30px;
 }
+
 table{
   text-align: left;
   border-collapse: collapse;
 }
+
 tbody th{
   padding: 10px 20px 10px 5px;
   border: 1px solid #dddddd;
@@ -72,7 +64,8 @@ tbody th:nth-child(2){
   border-radius: 2px;
   font-size: 0.80em;
   line-height: 1.6;
-  padding-top: 10px;
+  padding-top: 5px;
+  margin-bottom: 15px;
 }
 
 .userName {
@@ -91,4 +84,8 @@ tbody th:nth-child(2){
     transition: 0.4s ease;
     margin: 0 4px;
     background-color: white;
+}
+
+.edit_btn_wrapper{
+  gap: 20px;
 }
