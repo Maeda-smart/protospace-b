@@ -22,6 +22,7 @@ public class UserModelAttribute {
         if (currentUser != null) {
             UserEntity user = userDetailRepository.findById(currentUser.getId());
             model.addAttribute("user", user);
+            model.addAttribute("loginUser", user.getId());
             model.addAttribute("userRole", user.getRoleName());
         }
     }

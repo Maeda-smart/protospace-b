@@ -16,7 +16,7 @@
         <div th:if="${userRole == 'ROLE_MODERATOR' or userRole == 'ROLE_ADMIN'}">
           <a th:href="@{/moderate/users}" class="nav_btn">ユーザー管理</a>
         </div>
-        <a th:href="@{/users/{userId}(userId=${user.id})}" class="nav_btn">マイページ</a>
+        <a th:href="@{/users/{userId}(userId=${loginUser})}" class="nav_btn">マイページ</a>
         
         <a class="nav_btn" th:href="@{/prototype/prototypeNew}">新規投稿</a>
         <a class="nav_btn" th:href="@{/users/search}">ユーザー検索</a>
